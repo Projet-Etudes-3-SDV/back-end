@@ -18,6 +18,18 @@ export class UserService {
     return await this.userRepository.create(userData);
   }
 
+  async loginUser(email: string, password: string): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) {
+      throw new AppError("Invalid email or password", 401);
+    }
+    const isPasswordCorrect = await user.comparePassword(password);
+    if (!isPasswordCorrect) {
+      throw new AppError("Invalid email or password", 401);
+    }
+    return user;
+  }
+
   async getUser(id: string): Promise<IUser> {
     const user = await this.userRepository.findById(id);
     if (!user) {

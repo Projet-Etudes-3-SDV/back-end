@@ -5,13 +5,15 @@ import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria } from ".
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
-import { UserRole } from "../models/user.model";
+import { JWTService } from "../services/jwt.service";
 
 export class UserController {
   private userService: UserService;
+  private jwtService: JWTService;
 
   constructor() {
     this.userService = new UserService();
+    this.jwtService = new JWTService()
   }
 
   async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -104,6 +106,37 @@ export class UserController {
       const user = await this.userService.patchUser(req.params.id, req.body);
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
       res.status(200).json(userPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { email, password } = req.body;
+      const user = await this.userService.loginUser(email, password);
+
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+
+      const accessToken = this.jwtService.generateAccessToken(user)
+      const refreshToken = this.jwtService.generateRefreshToken(user)
+
+      res.status(200).json({ userPresenter, accessToken, refreshToken });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async refresh(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { refreshToken } = req.body;
+      const decoded = await this.jwtService.verifyJWTSecret(refreshToken);
+      const user = plainToClass(UserPresenter, decoded.user, { excludeExtraneousValues: true });
+
+      const accessToken = this.jwtService.generateAccessToken(user)
+      const newRefreshToken = this.jwtService.generateRefreshToken(user)
+
+      res.status(200).json({ accessToken, refreshToken: newRefreshToken });
     } catch (error) {
       next(error);
     }

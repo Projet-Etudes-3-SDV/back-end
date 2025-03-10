@@ -6,6 +6,8 @@ const router = Router();
 const userController = new UserController();
 
 router.post("/", (req, res, next) => userController.createUser(req, res, next));
+router.post("/login", (req, res, next) => userController.login(req, res, next));
+router.post("/refresh", (req, res, next) => userController.refresh(req, res, next));
 router.get("/:id", (req, res, next) => userController.getUser(req as unknown as EncodedRequest, res, next));
 router.get("/", (req, res, next) => userController.getUsers(req as EncodedRequest, res, next));
 router.put("/:id", (req, res, next) => userController.updateUser(req, res, next));
