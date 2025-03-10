@@ -1,6 +1,7 @@
-import { IsString, IsNumber, Min, Max, IsOptional } from "class-validator";
+import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray } from "class-validator";
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
+import { ProductPresenter } from "./productDtos";
 
 export class UserToCreate {
   @IsString()
@@ -101,4 +102,10 @@ export class UserPresenter {
 
   @Expose()
   phone?: string;
+
+  @Expose()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductPresenter)
+  cart!: ProductPresenter[];
 }
