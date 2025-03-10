@@ -1,4 +1,4 @@
-import { IsString, IsUUID, IsOptional, Min, Max, IsNumber } from "class-validator";
+import { IsString, IsOptional, Min, Max, IsNumber } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 
@@ -50,7 +50,7 @@ export class CategoryToReplace extends CategoryToCreate {}
 
 export class CategoryPresenter {
   @Expose()
-  id!: string;
+  _id!: string;
 
   @Expose()
   name!: string;

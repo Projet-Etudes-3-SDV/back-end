@@ -1,11 +1,17 @@
 import type { Request, Response, NextFunction } from "express";
-import CategoryService from "../services/categoryService";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { CategoryPresenter, CategoryToCreate, CategoryToModify, SearchCategoryCriteria } from "../types/dtos/categoryDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
+import { CategoryService } from "../services/category.service";
+import { CategoryPresenter, CategoryToCreate, CategoryToModify, SearchCategoryCriteria } from "../types/dtos/categoryDtos";
 
 export class CategoryController {
+  private categoryService: CategoryService;
+
+  constructor() {
+    this.categoryService = new CategoryService();
+  }
+
   async createCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const categoryData = plainToClass(CategoryToCreate, req.body);
@@ -17,7 +23,7 @@ export class CategoryController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const category = await CategoryService.createCategory(categoryData);
+      const category = await this.categoryService.createCategory(categoryData);
       const categoryPresenter = plainToClass(CategoryPresenter, category, { excludeExtraneousValues: true });
       res.status(201).json(categoryPresenter);
     } catch (error) {
@@ -27,7 +33,10 @@ export class CategoryController {
 
   async getCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const category = await CategoryService.getCategoryById(req.params.id);
+      const category = await this.categoryService.getCategoryById(req.params.id);
+      if (!category) {
+        throw new AppError("Category not found", 404);
+      }
       const categoryPresenter = plainToClass(CategoryPresenter, category, { excludeExtraneousValues: true });
       res.status(200).json(categoryPresenter);
     } catch (error) {
@@ -46,8 +55,8 @@ export class CategoryController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const categories = await CategoryService.searchCategories(searchCriteria);
-      const categoryPresenters = plainToInstance(CategoryPresenter, categories, { excludeExtraneousValues: true });
+      const result = await this.categoryService.searchCategories(searchCriteria);
+      const categoryPresenters = plainToInstance(CategoryPresenter, result.categories, { excludeExtraneousValues: true });
       res.status(200).json(categoryPresenters);
     } catch (error) {
       next(error);
@@ -65,7 +74,10 @@ export class CategoryController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const category = await CategoryService.updateCategory(req.params.id, categoryData);
+      const category = await this.categoryService.updateCategory(req.params.id, categoryData);
+      if (!category) {
+        throw new AppError("Category not found", 404);
+      }
       const categoryPresenter = plainToClass(CategoryPresenter, category, { excludeExtraneousValues: true });
       res.status(200).json(categoryPresenter);
     } catch (error) {
@@ -75,8 +87,8 @@ export class CategoryController {
 
   async deleteCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      await CategoryService.deleteCategory(req.params.id);
-      res.status(200).json({ message: "Category deleted" });
+      await this.categoryService.deleteCategory(req.params.id);
+      res.status(204).end();
     } catch (error) {
       next(error);
     }

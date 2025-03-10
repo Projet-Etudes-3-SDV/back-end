@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 
 // Product model
 export interface IProduct extends Document {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   categoryId: string;
@@ -15,7 +15,6 @@ export interface IProduct extends Document {
 
 const ProductSchema: Schema = new Schema(
   {
-    id: { type: String, default: uuidv4, unique: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
     categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },

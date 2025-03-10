@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUUID, IsBoolean, IsOptional, Min, Max, ValidateNested } from "class-validator";
+import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 
@@ -11,7 +11,7 @@ export class ProductToCreate {
   @Expose()
   description!: string;
 
-  @IsUUID()
+  @IsString()
   @Expose()
   categoryId!: string;
 
@@ -40,7 +40,7 @@ export class ProductToModify {
   @Expose()
   description?: string;
 
-  @IsUUID()
+  @IsString()
   @IsOptional()
   @Expose()
   categoryId?: string;
@@ -82,7 +82,7 @@ export class SearchProductCriteria {
   @Expose()
   yearlyPrice?: number;
 
-  @IsUUID()
+  @IsString()
   @IsOptional()
   @Expose()
   categoryId?: string;
@@ -107,7 +107,7 @@ export class ProductToReplace extends ProductToCreate {}
 
 export class ProductPresenter {
   @Expose()
-  id!: string;
+  _id!: string;
 
   @Expose()
   name!: string;

@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUUID, Min, Max, IsOptional, ValidateNested } from "class-validator";
+import { IsString, IsNumber, Min, Max, IsOptional } from "class-validator";
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
 
@@ -88,7 +88,7 @@ export class UserToReplace extends UserToCreate {}
 
 export class UserPresenter {
   @Expose()
-  id!: string;
+  _id!: string;
 
   @Expose()
   lastName!: string;

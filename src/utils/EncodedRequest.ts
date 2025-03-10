@@ -3,7 +3,7 @@ import { UserRole } from '../models/user.model';
 
 export interface DecodedUser {
     user: {
-        id: string;
+        _id: string;
         email: string;
         role: UserRole;
     };

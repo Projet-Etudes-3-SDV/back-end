@@ -30,8 +30,8 @@ export class UserService {
     return user;
   }
 
-  async getUser(id: string): Promise<IUser> {
-    const user = await this.userRepository.findById(id);
+  async getUser(_id: string): Promise<IUser> {
+    const user = await this.userRepository.findById(_id);
     if (!user) {
       throw new AppError("User not found", 404);
     }
@@ -45,35 +45,35 @@ export class UserService {
     return { users, total, pages };
   }
 
-  async updateUser(id: string, userData: UserToModify): Promise<IUser> {
-    const user = await this.userRepository.findById(id);
+  async updateUser(_id: string, userData: UserToModify): Promise<IUser> {
+    const user = await this.userRepository.findById(_id);
     if (!user) {
       throw new AppError("User not found", 404);
     }
-    const updatedUser = await this.userRepository.update(id, userData);
+    const updatedUser = await this.userRepository.update(_id, userData);
     if (!updatedUser) {
       throw new AppError("User not found", 404);
     }
     return updatedUser;
   }
 
-  async deleteUser(id: string): Promise<void> {
-    const user = await this.userRepository.findById(id);
+  async deleteUser(_id: string): Promise<void> {
+    const user = await this.userRepository.findById(_id);
     if (!user) {
       throw new AppError("User not found", 404);
     }
-    const result = await this.userRepository.delete(id);
+    const result = await this.userRepository.delete(_id);
     if (!result) {
       throw new AppError("Failed to delete user", 500);
     }
   }
 
-  async patchUser(id: string, userData: Partial<IUser>): Promise<IUser> {
-    const user = await this.userRepository.findById(id);
+  async patchUser(_id: string, userData: Partial<IUser>): Promise<IUser> {
+    const user = await this.userRepository.findById(_id);
     if (!user) {
       throw new AppError("User not found", 404);
     }
-    const updatedUser = await this.userRepository.update(id, userData);
+    const updatedUser = await this.userRepository.update(_id, userData);
     if (!updatedUser) {
       throw new AppError("User not found", 404);
     }

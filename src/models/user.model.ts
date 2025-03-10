@@ -10,7 +10,7 @@ export enum UserRole {
 }
 
 export interface IUser extends Document {
-  id: string;
+  _id: string;
   lastName: string;
   firstName: string;
   email: string;
@@ -24,7 +24,6 @@ export interface IUser extends Document {
 
 const UserSchema: Schema = new Schema(
   {
-    id: { type: String, default: uuidv4, unique: true },
     lastName: { type: String, required: true },
     firstName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
