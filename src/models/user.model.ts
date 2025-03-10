@@ -1,6 +1,7 @@
 import mongoose, { Schema, type Document } from "mongoose"
 import { v4 as uuidv4 } from "uuid"
 import bcrypt from "bcrypt"
+import { IProduct } from "./product.model";
 
 export enum UserRole {
   USER = "user",
@@ -10,7 +11,7 @@ export enum UserRole {
 }
 
 export interface IUser extends Document {
-  _id: string;
+  id: string;
   lastName: string;
   firstName: string;
   email: string;
@@ -19,11 +20,13 @@ export interface IUser extends Document {
   role: UserRole;
   registrationDate: Date;
   lastLogin?: Date;
+  cart: IProduct["_id"][];
   comparePassword(candidatePassword: string): Promise<boolean>
 }
 
 const UserSchema: Schema = new Schema(
   {
+    id: { type: String, default: uuidv4, unique: true },
     lastName: { type: String, required: true },
     firstName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -32,6 +35,7 @@ const UserSchema: Schema = new Schema(
     role: { type: String, enum: ["admin", "client", "support"], default: "client" },
     registrationDate: { type: Date, default: Date.now },
     lastLogin: { type: Date },
+    cart: [{ type: Schema.Types.ObjectId, ref: "Product", default: [] }],
   },
   { versionKey: false, timestamps: true }
 );

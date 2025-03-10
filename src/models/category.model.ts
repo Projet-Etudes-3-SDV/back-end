@@ -3,13 +3,14 @@ import { v4 as uuidv4 } from "uuid"
 
 // Category model
 export interface ICategory extends Document {
-  _id: string;
+  id: string;
   name: string;
   description: string;
 }
 
 const CategorySchema: Schema = new Schema(
   {
+    id: { type: String, default: uuidv4, unique: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
   },

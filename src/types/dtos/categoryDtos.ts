@@ -50,7 +50,7 @@ export class CategoryToReplace extends CategoryToCreate {}
 
 export class CategoryPresenter {
   @Expose()
-  _id!: string;
+  id!: string;
 
   @Expose()
   name!: string;

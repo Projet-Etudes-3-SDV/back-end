@@ -1,12 +1,13 @@
 import mongoose, { Schema, type Document } from "mongoose"
 import { v4 as uuidv4 } from "uuid"
+import { ICategory } from "./category.model";
 
 // Product model
 export interface IProduct extends Document {
-  _id: string;
+  id: string;
   name: string;
   description: string;
-  categoryId: string;
+  category: ICategory["_id"];
   monthlyPrice: number;
   yearlyPrice: number;
   available: boolean;
@@ -15,9 +16,10 @@ export interface IProduct extends Document {
 
 const ProductSchema: Schema = new Schema(
   {
+    id: { type: String, default: uuidv4, unique: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
-    categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
     monthlyPrice: { type: Number, required: true },
     yearlyPrice: { type: Number, required: true },
     available: { type: Boolean, default: true },

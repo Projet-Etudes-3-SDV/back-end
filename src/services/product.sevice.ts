@@ -27,17 +27,19 @@ export class ProductService {
       throw new AppError("Stock cannot be negative", 400);
     }
 
-    const category = await this.categoryRepository.findById(productData.categoryId);
+    const category = await this.categoryRepository.findOneBy({ id: productData.category });
 
     if (!category) {
       throw new AppError("Category not found", 404);
     }
 
+    productData.category = category._id;
+
     return await this.productRepository.create(productData);
   }
 
-    async getProduct(_id: string): Promise<IProduct> {
-      const product = await this.productRepository.findById(_id);
+    async getProduct(id: string): Promise<IProduct> {
+      const product = await this.productRepository.findOneBy({ id });
       if (!product) {
             throw new AppError("Product not found", 404);
         }
@@ -51,25 +53,25 @@ export class ProductService {
       return { products, total, pages };
     }
 
-		async updateProduct(_id: string, productData: ProductToModify): Promise<IProduct> {
-			const product = await this.productRepository.findById(_id);
+		async updateProduct(id: string, productData: ProductToModify): Promise<IProduct> {
+			const product = await this.productRepository.findById(id);
 			if (!product) {
 				throw new AppError("Product not found", 404);
 			}
-			const updatedProduct = await this.productRepository.update(_id, productData);
+			const updatedProduct = await this.productRepository.update(id, productData);
 			if (!updatedProduct) {
 				throw new AppError("Product not found", 404);
 			}
 			return updatedProduct;
 		}
 
-		async deleteProduct(_id: string): Promise<void> {
-			const product = await this.productRepository.findById(_id);
+		async deleteProduct(id: string): Promise<void> {
+			const product = await this.productRepository.findById(id);
 
 			if (!product) {
 				throw new AppError("Product not found", 404);
 			}
-			const result = await this.productRepository.delete(_id);
+			const result = await this.productRepository.delete(id);
 			if (!result) {
 				throw new AppError("Failed to delete product", 500);
 			}

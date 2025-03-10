@@ -9,7 +9,7 @@ export class ProductRepository {
   }
 
   async findById(id: string): Promise<IProduct | null> {
-    return await Product.findOne({ id });
+    return await Product.findOne({ id }).populate("category");
   }
 
   async findOneBy(filters: FilterQuery<SearchProductCriteria>): Promise<IProduct | null> {
@@ -20,13 +20,13 @@ export class ProductRepository {
     if (filters.yearlyPrice) query.yearlyPrice = filters.yearlyPrice;
     if (filters.categoryId) query.categoryId = filters.categoryId;
 
-    return await Product.findOne(query);
+    return await Product.findOne(query).populate("category");
   }
 
   async findAll(page: number, limit: number): Promise<{ products: IProduct[]; total: number }> {
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([
-      Product.find().skip(skip).limit(limit),
+      Product.find().populate("category").skip(skip).limit(limit),
       Product.countDocuments()
     ]);
     return { products, total };
@@ -40,10 +40,10 @@ export class ProductRepository {
     if (filters.available) query.available = filters.available;
     if (filters.monthlyPrice) query.monthlyPrice = filters.monthlyPrice;
     if (filters.yearlyPrice) query.yearlyPrice = filters.yearlyPrice;
-    if (filters.categoryId) query.categoryId = filters.categoryId;
+    if (filters.category) query.category = filters.category;
 
     const [products, total] = await Promise.all([
-      Product.find(query).skip(skip).limit(limit),
+      Product.find(query).populate("category").skip(skip).limit(limit),
       Product.countDocuments(query)
     ]);
     return { products, total };

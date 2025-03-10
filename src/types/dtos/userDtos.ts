@@ -88,7 +88,7 @@ export class UserToReplace extends UserToCreate {}
 
 export class UserPresenter {
   @Expose()
-  _id!: string;
+  id!: string;
 
   @Expose()
   lastName!: string;

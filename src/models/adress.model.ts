@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { IUser } from "./user.model"
 
 export interface IAddress extends Document {
-  _id: string;
+  id: string;
   userId: IUser["_id"];
   street: string;
   city: string;
@@ -14,6 +14,7 @@ export interface IAddress extends Document {
 
 const AddressSchema: Schema = new Schema(
   {
+    id: { type: String, default: uuidv4, unique: true },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     street: { type: String, required: true },
     city: { type: String, required: true },

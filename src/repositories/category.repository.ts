@@ -9,7 +9,7 @@ export class CategoryRepository {
   }
 
   async findById(id: string): Promise<ICategory | null> {
-    return await Category.findById(id).exec();
+    return await Category.findOne({id});
   }
 
   async findOneBy(filters: FilterQuery<SearchCategoryCriteria>): Promise<ICategory | null> {

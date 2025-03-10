@@ -1,6 +1,7 @@
-import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max } from "class-validator";
+import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
+import { CategoryPresenter } from "./categoryDtos";
 
 export class ProductToCreate {
   @IsString()
@@ -11,9 +12,9 @@ export class ProductToCreate {
   @Expose()
   description!: string;
 
-  @IsString()
+  @IsUUID()
   @Expose()
-  categoryId!: string;
+  category!: string;
 
   @IsNumber()
   @Expose()
@@ -40,10 +41,10 @@ export class ProductToModify {
   @Expose()
   description?: string;
 
-  @IsString()
+  @IsUUID()
   @IsOptional()
   @Expose()
-  categoryId?: string;
+  category?: string;
 
   @IsNumber()
   @IsOptional()
@@ -82,10 +83,10 @@ export class SearchProductCriteria {
   @Expose()
   yearlyPrice?: number;
 
-  @IsString()
+  @IsUUID()
   @IsOptional()
   @Expose()
-  categoryId?: string;
+  category?: string;
 
   @IsNumber()
   @IsOptional()
@@ -107,7 +108,7 @@ export class ProductToReplace extends ProductToCreate {}
 
 export class ProductPresenter {
   @Expose()
-  _id!: string;
+  id!: string;
 
   @Expose()
   name!: string;
@@ -116,7 +117,8 @@ export class ProductPresenter {
   description!: string;
 
   @Expose()
-  categoryId!: string;
+  @Type(() => CategoryPresenter)
+  category!: CategoryPresenter;
 
   @Expose()
   monthlyPrice!: number;
