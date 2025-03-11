@@ -21,7 +21,9 @@ export interface IUser extends Document {
   registrationDate: Date;
   lastLogin?: Date;
   cart: IProduct["_id"][];
+  resetPasswordToken?: string;
   comparePassword(candidatePassword: string): Promise<boolean>
+  generatePasswordToken(): string
 }
 
 const UserSchema: Schema = new Schema(
@@ -36,6 +38,7 @@ const UserSchema: Schema = new Schema(
     registrationDate: { type: Date, default: Date.now },
     lastLogin: { type: Date },
     cart: [{ type: Schema.Types.ObjectId, ref: "Product", default: [] }],
+    resetPasswordToken: { type: String, default: null },
   },
   { versionKey: false, timestamps: true }
 );
@@ -47,6 +50,12 @@ UserSchema.pre<IUser>("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt)
   next()
 })
+
+UserSchema.methods.generatePasswordToken = function (): string {
+  const token = uuidv4()
+  this.resetPasswordToken = token
+  return token
+}
 
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password)

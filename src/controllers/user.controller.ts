@@ -141,4 +141,14 @@ export class UserController {
       next(error);
     }
   }
+
+  async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { email } = req.body;
+      await this.userService.forgotPassword(email);
+      res.status(200).json({ message: "Email sent" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

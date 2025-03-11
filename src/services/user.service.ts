@@ -2,6 +2,7 @@ import { UserRepository } from "../repositories/user.repository";
 import type { IUser } from "../models/user.model";
 import { AppError } from "../utils/AppError";
 import { UserToCreate, UserToModify, SearchUserCriteria } from "../types/dtos/userDtos";
+import { sendEmail } from "./mail.service";
 
 export class UserService {
   private userRepository: UserRepository;
@@ -78,5 +79,17 @@ export class UserService {
       throw new AppError("User not found", 404);
     }
     return updatedUser;
+  }
+
+  async forgotPassword(email: string): Promise<void> {
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    user.generatePasswordToken();
+    sendEmail(user.email, "Password reset", `Click here to reset your password: http://localhost:3000/reset-password/${user.resetPasswordToken}`);
+
+    await user.save();
   }
 }

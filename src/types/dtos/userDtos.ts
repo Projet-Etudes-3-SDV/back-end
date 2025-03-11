@@ -69,6 +69,11 @@ export class SearchUserCriteria {
   @Expose()
   email?: string;
 
+  @IsString()
+  @IsOptional()
+  @Expose()
+  resetPasswordToken?: string;
+
   @IsNumber()
   @IsOptional()
   @Min(1)
