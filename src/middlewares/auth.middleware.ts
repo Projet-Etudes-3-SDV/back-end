@@ -2,8 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/AppError';
-import { DecodedUser, EncodedRequest } from '../types/EncodedRequest';
-import { UserRole } from '../models/user.model';
+import { DecodedUser, EncodedRequest } from '../utils/EncodedRequest';
 
 dotenv.config();
 

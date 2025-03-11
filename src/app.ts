@@ -9,12 +9,16 @@ import userRoute from './routes/user.routes';
 import categoryRoutes from './routes/category.routes';
 import cartRoutes from './routes/cart.routes';
 import { errorHandler } from './middlewares/errorHandler';
+import logger from './middlewares/logger.middleware';
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
+app.use(logger);
 
 // Routes
 app.use('/api/users', userRoute);
