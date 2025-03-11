@@ -118,8 +118,8 @@ export class UserController {
 
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
 
-      const accessToken = this.jwtService.generateAccessToken(user)
-      const refreshToken = this.jwtService.generateRefreshToken(user)
+      const accessToken = this.jwtService.generateAccessToken(userPresenter)
+      const refreshToken = this.jwtService.generateRefreshToken(userPresenter)
 
       res.status(200).json({ userPresenter, accessToken, refreshToken });
     } catch (error) {
@@ -143,12 +143,6 @@ export class UserController {
   }
 
   async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const { email } = req.body;
-      await this.userService.forgotPassword(email);
-      res.status(200).json({ message: "Email sent" });
-    } catch (error) {
-      next(error);
-    }
+    
   }
 }

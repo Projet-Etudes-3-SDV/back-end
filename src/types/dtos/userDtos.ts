@@ -1,7 +1,7 @@
 import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray } from "class-validator";
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
-import { ProductPresenter } from "./productDtos";
+import { CartItemPresenter } from "./cartDtos";
 
 export class UserToCreate {
   @IsString()
@@ -111,6 +111,6 @@ export class UserPresenter {
   @Expose()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => ProductPresenter)
-  cart!: ProductPresenter[];
+  @Type(() => CartItemPresenter)
+  cart?: CartItemPresenter;
 }

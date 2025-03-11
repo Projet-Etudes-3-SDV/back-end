@@ -68,4 +68,26 @@ export class CartController {
       next(error);
     }
   }
+
+  async updateCart(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { userId, cart } = req.body;
+
+      const cartDto = plainToClass(ResetCartDto, cart);
+
+      const dtoErrors = await validate(cartDto);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+
+      const updatedUser = await this.cartService.updateCart(userId, cart);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

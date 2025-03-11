@@ -10,8 +10,11 @@ export class UserRepository {
 
   async findById(id: string): Promise<IUser | null> {
     return await User.findOne({ id }).populate({
-      path: "cart",
-      populate: { path: "category" }
+      path: 'cart',
+      populate: {
+        path: 'products.product',
+        populate: { path: 'category' }
+      }
     });
   }
 
@@ -22,18 +25,24 @@ export class UserRepository {
     if (filters.email) query.email = filters.email;
 
     return await User.findOne(query).populate({
-      path: "cart",
-      populate: { path: "category" }
+      path: 'cart',
+      populate: {
+        path: 'products.product',
+        populate: { path: 'category' }
+      }
     });
   }
 
   async findAll(page: number, limit: number): Promise<{ users: IUser[]; total: number }> {
     const skip = (page - 1) * limit;
     const [users, total] = await Promise.all([
-      User.find().populate({
-        path: "cart",
-        populate: { path: "category" }
-      }).skip(skip).limit(limit),
+      User.find().skip(skip).limit(limit).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: { path: 'category' }
+        }
+      }),
       User.countDocuments()
     ]);
     return { users, total };
@@ -48,10 +57,13 @@ export class UserRepository {
     if (filters.email) query.email = filters.email;
 
     const [users, total] = await Promise.all([
-      User.find(query).populate({
-        path: "cart",
-        populate: { path: "category" }
-      }).skip(skip).limit(limit),
+      User.find(query).skip(skip).limit(limit).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: { path: 'category' }
+        }
+      }),
       User.countDocuments(query)
     ]);
     return { users, total };
@@ -59,8 +71,11 @@ export class UserRepository {
 
   async update(id: string, userData: Partial<IUser>): Promise<IUser | null> {
     return await User.findOneAndUpdate({ id }, userData, { new: true }).populate({
-      path: "cart",
-      populate: { path: "category" }
+      path: 'cart',
+      populate: {
+        path: 'products.product',
+        populate: { path: 'category' }
+      }
     });
   }
 
