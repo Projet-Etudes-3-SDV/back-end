@@ -163,4 +163,24 @@ export class UserController {
       next(error);
     }
   }
+
+  async validateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { authToken } = req.body;
+      const user = await this.userService.validateUser(authToken);
+      res.status(200).json({ message: "User validated", user });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async resetPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { token, newPassword } = req.body;
+      await this.userService.resetPassword(token, newPassword);
+      res.status(200).json({ message: "Password reset" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

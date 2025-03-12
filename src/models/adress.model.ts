@@ -2,6 +2,11 @@ import mongoose, { Schema, type Document } from "mongoose"
 import { v4 as uuidv4 } from "uuid"
 import { IUser } from "./user.model"
 
+export enum AdressType {
+  BILLING = "billing",
+  SHIPPING = "shipping",
+}
+
 export interface IAddress extends Document {
   id: string;
   userId: IUser["_id"];
@@ -9,7 +14,8 @@ export interface IAddress extends Document {
   city: string;
   postalCode: string;
   country: string;
-  type: "billing" | "shipping";
+  type: AdressType;
+  phone?: string;
 }
 
 const AddressSchema: Schema = new Schema(
@@ -20,7 +26,8 @@ const AddressSchema: Schema = new Schema(
     city: { type: String, required: true },
     postalCode: { type: String, required: true },
     country: { type: String, required: true },
-    type: { type: String, enum: ["billing", "shipping"], required: true },
+    type: { type: String, enum: AdressType, required: true },
+    phone: { type: String },
   },
   { versionKey: false, timestamps: true }
 );

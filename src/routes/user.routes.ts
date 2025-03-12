@@ -111,6 +111,54 @@ router.post("/forgot-password", (req, res, next) => userController.forgotPasswor
 
 /**
  * @swagger
+ * /user/validate:
+ *   post:
+ *     summary: Validate user account
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               authToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User validated
+ *       400:
+ *         description: Invalid input
+ */
+router.post("/validate", (req, res, next) => userController.validateUser(req, res, next));
+
+/**
+ * @swagger
+ * /user/reset-password:
+ *   post:
+ *     summary: Reset user password
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Password reset
+ *       400:
+ *         description: Invalid input
+ */
+router.post("/reset-password", (req, res, next) => userController.resetPassword(req, res, next));
+
+/**
+ * @swagger
  * /user/{id}:
  *   get:
  *     summary: Get a user by ID

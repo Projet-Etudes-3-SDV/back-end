@@ -24,6 +24,10 @@ export class UserService {
     const cart = await this.cartRepository.create({ owner: user._id });
     user.cart = cart._id;
     
+    user.generateAuthToken();
+
+    sendEmail(user.email, "Account validation", `Click here to validate your account: http://localhost:3000/account-validation/${user.authToken}`);
+
     return await user.save();
   }
 
@@ -36,7 +40,23 @@ export class UserService {
     if (!isPasswordCorrect) {
       throw new AppError("Invalid email or password", 401);
     }
+
+    if (!user.isValidated) {
+      throw new AppError("You have to validate your account", 401);
+    }
+
     return user;
+  }
+
+  async validateUser(authToken: string): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ authToken });
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    user.isValidated = true;
+    user.authToken = undefined;
+    return await user.save();
   }
 
   async getUser(_id: string): Promise<IUser> {
@@ -97,6 +117,18 @@ export class UserService {
 
     user.generatePasswordToken();
     sendEmail(user.email, "Password reset", `Click here to reset your password: http://localhost:3000/reset-password/${user.resetPasswordToken}`);
+
+    await user.save();
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const user = await this.userRepository.findOneBy({ resetPasswordToken: token });
+    if (!user) {
+      throw new AppError("Invalid token", 400);
+    }
+
+    user.password = newPassword;
+    user.resetPasswordToken = undefined;
 
     await user.save();
   }
