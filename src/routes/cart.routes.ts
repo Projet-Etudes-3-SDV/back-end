@@ -13,7 +13,7 @@ const cartController = new CartController();
 
 /**
  * @swagger
- * /cart/add:
+ * /api/cart/add:
  *   post:
  *     summary: Add an item to the cart
  *     tags: [Cart]
@@ -38,7 +38,7 @@ router.post("/add", (req, res, next) => cartController.addItemToCart(req, res, n
 
 /**
  * @swagger
- * /cart/update:
+ * /api/cart/update:
  *   put:
  *     summary: Update the cart
  *     tags: [Cart]
@@ -63,7 +63,7 @@ router.put("/update", (req, res, next) => cartController.updateCart(req, res, ne
 
 /**
  * @swagger
- * /cart/delete:
+ * /api/cart/delete:
  *   delete:
  *     summary: Delete an item from the cart
  *     tags: [Cart]
@@ -86,7 +86,7 @@ router.delete("/delete", (req, res, next) => cartController.deleteItemFromCart(r
 
 /**
  * @swagger
- * /cart/reset:
+ * /api/cart/reset:
  *   delete:
  *     summary: Reset the cart
  *     tags: [Cart]

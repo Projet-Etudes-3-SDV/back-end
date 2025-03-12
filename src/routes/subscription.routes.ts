@@ -13,7 +13,7 @@ const subscriptionController = new SubscriptionController();
 
 /**
  * @swagger
- * /subscription/activate:
+ * /api/subscription/activate:
  *   post:
  *     summary: Activate a subscription
  *     tags: [Subscription]
@@ -38,7 +38,7 @@ router.post("/activate", (req, res) => subscriptionController.activateSubscripti
 
 /**
  * @swagger
- * /subscription/cancel:
+ * /api/subscription/cancel:
  *   post:
  *     summary: Cancel a subscription
  *     tags: [Subscription]
@@ -61,7 +61,7 @@ router.post("/cancel", (req, res, next) => subscriptionController.cancelSubscrip
 
 /**
  * @swagger
- * /subscription/update-end-date:
+ * /api/subscription/update-end-date:
  *   post:
  *     summary: Update subscription end date
  *     tags: [Subscription]
@@ -87,7 +87,7 @@ router.post("/update-end-date", (req, res, next) => subscriptionController.updat
 
 /**
  * @swagger
- * /subscription/is-active/{userId}:
+ * /api/subscription/is-active/{userId}:
  *   get:
  *     summary: Check if a subscription is active
  *     tags: [Subscription]

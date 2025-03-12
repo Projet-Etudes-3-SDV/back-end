@@ -14,7 +14,7 @@ const productController = new ProductController();
 
 /**
  * @swagger
- * /product:
+ * /api/product:
  *   post:
  *     summary: Create a new product
  *     tags: [Product]
@@ -39,7 +39,7 @@ router.post("/", (req, res, next) => productController.createProduct(req, res, n
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   get:
  *     summary: Get a product by ID
  *     tags: [Product]
@@ -60,7 +60,7 @@ router.get("/:id", (req, res, next) => productController.getProduct(req as unkno
 
 /**
  * @swagger
- * /product:
+ * /api/product:
  *   get:
  *     summary: Get all products
  *     tags: [Product]
@@ -74,7 +74,7 @@ router.get("/", (req, res, next) => productController.getProducts(req as Encoded
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   put:
  *     summary: Update a product by ID
  *     tags: [Product]
@@ -106,7 +106,7 @@ router.put("/:id", (req, res, next) => productController.updateProduct(req as un
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   delete:
  *     summary: Delete a product by ID
  *     tags: [Product]

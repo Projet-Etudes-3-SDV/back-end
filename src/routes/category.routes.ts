@@ -13,7 +13,7 @@ const categoryController = new CategoryController();
 
 /**
  * @swagger
- * /categories:
+ * /api/categories:
  *   post:
  *     summary: Create a new categories
  *     tags: [Category]
@@ -36,7 +36,7 @@ router.post("/", categoryController.createCategory.bind(categoryController));
 
 /**
  * @swagger
- * /categories/{id}:
+ * /api/categories/{id}:
  *   get:
  *     summary: Get a categories by ID
  *     tags: [Category]
@@ -57,7 +57,7 @@ router.get("/:id", categoryController.getCategory.bind(categoryController));
 
 /**
  * @swagger
- * /categories:
+ * /api/categories:
  *   get:
  *     summary: Get all categories
  *     tags: [Category]
@@ -71,7 +71,7 @@ router.get("/", categoryController.getCategories.bind(categoryController));
 
 /**
  * @swagger
- * /categories/{id}:
+ * /api/categories/{id}:
  *   put:
  *     summary: Update a categories by ID
  *     tags: [Category]
@@ -101,7 +101,7 @@ router.put("/:id", categoryController.updateCategory.bind(categoryController));
 
 /**
  * @swagger
- * /categories/{id}:
+ * /api/categories/{id}:
  *   delete:
  *     summary: Delete a categories by ID
  *     tags: [Category]
