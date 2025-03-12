@@ -40,7 +40,7 @@ router.post("/", (req, res, next) => userController.createUser(req, res, next));
 
 /**
  * @swagger
- * /user/login:
+ * /users/login:
  *   post:
  *     summary: User login
  *     tags: [User]
@@ -65,7 +65,7 @@ router.post("/login", (req, res, next) => userController.login(req as EncodedReq
 
 /**
  * @swagger
- * /user/refresh:
+ * /users/refresh:
  *   post:
  *     summary: Refresh user token
  *     tags: [User]
@@ -88,7 +88,7 @@ router.post("/refresh", (req, res, next) => userController.refresh(req, res, nex
 
 /**
  * @swagger
- * /user/forgot-password:
+ * /users/forgot-password:
  *   post:
  *     summary: Forgot password
  *     tags: [User]
@@ -111,7 +111,7 @@ router.post("/forgot-password", (req, res, next) => userController.forgotPasswor
 
 /**
  * @swagger
- * /user/validate:
+ * /users/validate:
  *   post:
  *     summary: Validate user account
  *     tags: [User]
@@ -134,7 +134,7 @@ router.post("/validate", (req, res, next) => userController.validateUser(req, re
 
 /**
  * @swagger
- * /user/reset-password:
+ * /users/reset-password:
  *   post:
  *     summary: Reset user password
  *     tags: [User]
@@ -159,7 +159,7 @@ router.post("/reset-password", (req, res, next) => userController.resetPassword(
 
 /**
  * @swagger
- * /user/{id}:
+ * /users/{id}:
  *   get:
  *     summary: Get a user by ID
  *     tags: [User]
@@ -194,7 +194,7 @@ router.get("/", (req, res, next) => userController.getUsers(req as EncodedReques
 
 /**
  * @swagger
- * /user/{id}:
+ * /users/{id}:
  *   put:
  *     summary: Update a user by ID
  *     tags: [User]
@@ -226,7 +226,7 @@ router.put("/:id", (req, res, next) => userController.updateUser(req, res, next)
 
 /**
  * @swagger
- * /user/{id}:
+ * /users/{id}:
  *   delete:
  *     summary: Delete a user by ID
  *     tags: [User]
@@ -247,7 +247,7 @@ router.delete("/:id", (req, res, next) => userController.deleteUser(req, res, ne
 
 /**
  * @swagger
- * /user/{id}:
+ * /users/{id}:
  *   patch:
  *     summary: Patch a user by ID
  *     tags: [User]

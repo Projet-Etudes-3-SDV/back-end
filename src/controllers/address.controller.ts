@@ -33,6 +33,9 @@ export class AddressController {
   async getAddress(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
+      if (!id) {
+        throw new AppError("Validation failed", 400, [{ field: "id", constraints: ["id should not be empty"] }]);
+      }
       const address = await this.addressService.getAddress(id);
       res.status(200).json(address);
     } catch (error) {
@@ -62,6 +65,9 @@ export class AddressController {
   async deleteAddress(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
+      if (!id) {
+        throw new AppError("Validation failed", 400, [{ field: "id", constraints: ["id should not be empty"] }]);
+      }
       await this.addressService.deleteAddress(id);
       res.status(204).send();
     } catch (error) {

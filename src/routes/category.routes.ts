@@ -13,9 +13,9 @@ const categoryController = new CategoryController();
 
 /**
  * @swagger
- * /category:
+ * /categories:
  *   post:
- *     summary: Create a new category
+ *     summary: Create a new categories
  *     tags: [Category]
  *     requestBody:
  *       required: true
@@ -36,9 +36,9 @@ router.post("/", categoryController.createCategory.bind(categoryController));
 
 /**
  * @swagger
- * /category/{id}:
+ * /categories/{id}:
  *   get:
- *     summary: Get a category by ID
+ *     summary: Get a categories by ID
  *     tags: [Category]
  *     parameters:
  *       - in: path
@@ -57,7 +57,7 @@ router.get("/:id", categoryController.getCategory.bind(categoryController));
 
 /**
  * @swagger
- * /category:
+ * /categories:
  *   get:
  *     summary: Get all categories
  *     tags: [Category]
@@ -71,9 +71,9 @@ router.get("/", categoryController.getCategories.bind(categoryController));
 
 /**
  * @swagger
- * /category/{id}:
+ * /categories/{id}:
  *   put:
- *     summary: Update a category by ID
+ *     summary: Update a categories by ID
  *     tags: [Category]
  *     parameters:
  *       - in: path
@@ -101,9 +101,9 @@ router.put("/:id", categoryController.updateCategory.bind(categoryController));
 
 /**
  * @swagger
- * /category/{id}:
+ * /categories/{id}:
  *   delete:
- *     summary: Delete a category by ID
+ *     summary: Delete a categories by ID
  *     tags: [Category]
  *     parameters:
  *       - in: path

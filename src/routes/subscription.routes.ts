@@ -57,7 +57,7 @@ router.post("/activate", (req, res) => subscriptionController.activateSubscripti
  *       400:
  *         description: Invalid input
  */
-router.post("/cancel", (req, res) => subscriptionController.cancelSubscription(req, res));
+router.post("/cancel", (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ router.post("/cancel", (req, res) => subscriptionController.cancelSubscription(r
  *       400:
  *         description: Invalid input
  */
-router.post("/update-end-date", (req, res) => subscriptionController.updateSubscriptionEndDate(req, res));
+router.post("/update-end-date", (req, res, next) => subscriptionController.updateSubscriptionEndDate(req, res, next));
 
 /**
  * @swagger
@@ -104,6 +104,6 @@ router.post("/update-end-date", (req, res) => subscriptionController.updateSubsc
  *       400:
  *         description: Invalid input
  */
-router.get("/is-active/:userId", (req, res) => subscriptionController.isSubscriptionActive(req, res));
+router.get("/is-active/:userId", (req, res, next) => subscriptionController.isSubscriptionActive(req, res, next));
 
 export default router;

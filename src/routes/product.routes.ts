@@ -39,7 +39,7 @@ router.post("/", (req, res, next) => productController.createProduct(req, res, n
 
 /**
  * @swagger
- * /product/{id}:
+ * /products/{id}:
  *   get:
  *     summary: Get a product by ID
  *     tags: [Product]
@@ -74,7 +74,7 @@ router.get("/", (req, res, next) => productController.getProducts(req as Encoded
 
 /**
  * @swagger
- * /product/{id}:
+ * /products/{id}:
  *   put:
  *     summary: Update a product by ID
  *     tags: [Product]
@@ -106,7 +106,7 @@ router.put("/:id", (req, res, next) => productController.updateProduct(req as un
 
 /**
  * @swagger
- * /product/{id}:
+ * /products/{id}:
  *   delete:
  *     summary: Delete a product by ID
  *     tags: [Product]
