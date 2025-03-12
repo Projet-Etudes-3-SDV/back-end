@@ -1,4 +1,3 @@
-import swaggerJsdoc from 'swagger-jsdoc';
 import { Router } from "express";
 import { CartController } from "../controllers/cart.controller";
 

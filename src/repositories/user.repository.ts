@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import User, { type IUser } from "../models/user.model";
-import { UserToCreate, UserToModify, SearchUserCriteria } from "../types/dtos/userDtos";
+import { UserToCreate, SearchUserCriteria } from "../types/dtos/userDtos";
 
 export class UserRepository {
   async create(userData: UserToCreate): Promise<IUser> {

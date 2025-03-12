@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/user.repository";
-import CartItem, { ICart } from "../models/cart.model";
+import { ICart } from "../models/cart.model";
 import { AppError } from "../utils/AppError";
 import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
@@ -99,7 +99,7 @@ export class CartService {
       throw new AppError("User not found", 404);
     }
 
-    let cart = await this.cartRepository.findByUserId(userId);
+    const cart = await this.cartRepository.findByUserId(userId);
     if (!cart) {
       throw new AppError("ICart not found", 404);
     }
@@ -121,7 +121,7 @@ export class CartService {
       throw new AppError("User not found", 404);
     }
 
-    let cart = await this.cartRepository.findByUserId(userId);
+    const cart = await this.cartRepository.findByUserId(userId);
     if (!cart) {
       throw new AppError("ICart not found", 404);
     }

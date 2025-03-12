@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter } from "../types/dtos/userDtos";
+import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
@@ -37,6 +37,7 @@ export class UserController {
 
   async getUser(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
+      console.log(req.decoded);
       const user = await this.userService.getUser(req.params.id);
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
       res.status(200).json(userPresenter);
@@ -114,6 +115,17 @@ export class UserController {
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { email, password } = req.body;
+
+      const userData = plainToClass(UserLogin, req.body);
+      const dtoErrors = await validate(userData);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+
       const user = await this.userService.loginUser(email, password);
 
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
@@ -143,6 +155,12 @@ export class UserController {
   }
 
   async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
-    
+    try {
+      const { email } = req.body;
+      await this.userService.forgotPassword(email);
+      res.status(200).json({ message: "Password reset email sent" });
+    } catch (error) {
+      next(error);
+    }
   }
 }

@@ -1,14 +1,15 @@
 import { Request } from 'express';
-import { UserRole } from '../models/user.model';
+import { IUser } from '../models/user.model';
+import { JwtPayload } from 'jsonwebtoken';
 
 export interface DecodedUser {
-    user: {
-        _id: string;
-        email: string;
-        role: UserRole;
-    };
+    user: IUser
 }
 
 export interface EncodedRequest extends Request {
     decoded: DecodedUser
+}
+
+export interface EncodedPayload extends JwtPayload {
+    decoded: DecodedUser  
 }

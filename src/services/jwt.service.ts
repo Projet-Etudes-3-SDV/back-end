@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { UserPresenter } from '../types/dtos/userDtos';
+import { EncodedPayload } from '../utils/EncodedRequest';
 
 dotenv.config();
 
@@ -16,16 +17,16 @@ export class JWTService {
     return jwt.sign({ user: user }, this.SECRET_KEY_REFRESH, { expiresIn: "7d" })
   }
 
-  verifyJWT = async (token: string): Promise<any> => {
-    return jwt.verify(token, this.SECRET_KEY);
+  verifyJWT = async (token: string): Promise<EncodedPayload> => {
+    return jwt.verify(token, this.SECRET_KEY) as EncodedPayload;
   };
 
-  verifyJWTSecret = async (token: string): Promise<any> => {
-    return jwt.verify(token, this.SECRET_KEY_REFRESH);
+  verifyJWTSecret = async (token: string): Promise<EncodedPayload> => {
+    return jwt.verify(token, this.SECRET_KEY_REFRESH) as EncodedPayload;
   };
 
-  decodeJWT = async (token: string): Promise<any> => {
-    return jwt.decode(token);
+  decodeJWT = async (token: string): Promise<EncodedPayload> => {
+    return jwt.decode(token) as EncodedPayload;
   };
 }
 

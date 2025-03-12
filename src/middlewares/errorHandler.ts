@@ -17,4 +17,6 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
     statusCode: 500,
     message: 'An unexpected error occurred'
   });
+
+  next();
 };

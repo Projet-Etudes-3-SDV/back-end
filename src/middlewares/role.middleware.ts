@@ -5,7 +5,7 @@ import { EncodedRequest } from "../utils/EncodedRequest"
 
 export const adminMiddleware = (req: EncodedRequest, res: Response, next: NextFunction, role: UserRole[]) => {
 
-    if (role.indexOf(req.decoded.user.role) === -1) {
+    if (role.indexOf(req.decoded.role) === -1) {
       return next(new AppError("Forbidden", 403))
     }
 

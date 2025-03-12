@@ -1,5 +1,5 @@
 import { Expose, Type } from "class-transformer";
-import { IsString, IsNotEmpty, IsUUID } from "class-validator";
+import { IsNotEmpty, IsUUID } from "class-validator";
 import { ProductPresenter } from "./productDtos";
 
 export class AddItemToCartDto {

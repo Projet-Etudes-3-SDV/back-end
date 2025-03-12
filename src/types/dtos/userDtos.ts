@@ -1,8 +1,7 @@
 import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate } from "class-validator";
-import { Expose, Transform, Type } from "class-transformer";
+import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
-import { ISubscription } from "../../models/user.model";
 import { SubscriptionPresenter } from "./subscriptionDtos";
 
 export class UserToCreate {
@@ -140,6 +139,16 @@ export class SearchUserCriteria {
   @Type(() => Number)
   @Expose()
   limit: number = 10;
+}
+
+export class UserLogin {
+  @IsString()
+  @Expose()
+  email!: string;
+
+  @IsString()
+  @Expose()
+  password!: string;
 }
 
 export class UserToReplace extends UserToCreate {}

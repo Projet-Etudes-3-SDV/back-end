@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import Product, { type IProduct } from "../models/product.model";
-import { ProductToReplace, ProductToCreate, SearchProductCriteria,  } from "../types/dtos/productDtos";
+import { ProductToCreate, SearchProductCriteria } from "../types/dtos/productDtos";
 
 export class ProductRepository {
   async create(userData: ProductToCreate): Promise<IProduct> {

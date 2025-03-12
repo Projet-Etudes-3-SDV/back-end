@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { EncodedRequest } from "../utils/EncodedRequest";
+import * as Auth from "../middlewares/auth.middleware"
 
 const router = Router();
 const userController = new UserController();
@@ -60,7 +61,7 @@ router.post("/", (req, res, next) => userController.createUser(req, res, next));
  *       400:
  *         description: Invalid input
  */
-router.post("/login", (req, res, next) => userController.login(req, res, next));
+router.post("/login", (req, res, next) => userController.login(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -127,7 +128,7 @@ router.post("/forgot-password", (req, res, next) => userController.forgotPasswor
  *       400:
  *         description: Invalid input
  */
-router.get("/:id", (req, res, next) => userController.getUser(req as unknown as EncodedRequest, res, next));
+router.get("/:id", Auth.checkJWT, (req, res, next) => userController.getUser(req as unknown as EncodedRequest, res, next));
 
 /**
  * @swagger
