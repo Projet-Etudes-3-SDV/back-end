@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray } from "class-validator";
+import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate } from "class-validator";
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
@@ -24,6 +24,31 @@ export class UserToCreate {
   @IsOptional()
   @Expose()
   phone?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  subscriptionPlan?: "monthly" | "yearly" | "free-trial";
+
+  @IsDate()
+  @IsOptional()
+  @Expose()
+  subscriptionStartDate?: Date;
+
+  @IsDate()
+  @IsOptional()
+  @Expose()
+  subscriptionEndDate?: Date;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  subscriptionStatus?: "active" | "cancelled" | "expired" | "trial";
+
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  subscriptionAutoRenew?: boolean;
 }
 
 export class UserToModify {
@@ -51,6 +76,31 @@ export class UserToModify {
   @IsOptional()
   @Expose()
   phone?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  subscriptionPlan?: "monthly" | "yearly" | "free-trial";
+
+  @IsDate()
+  @IsOptional()
+  @Expose()
+  subscriptionStartDate?: Date;
+
+  @IsDate()
+  @IsOptional()
+  @Expose()
+  subscriptionEndDate?: Date;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  subscriptionStatus?: "active" | "cancelled" | "expired" | "trial";
+
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  subscriptionAutoRenew?: boolean;
 }
 
 export class SearchUserCriteria {
@@ -113,4 +163,19 @@ export class UserPresenter {
   @ValidateNested({ each: true })
   @Type(() => CartItemPresenter)
   cart?: CartItemPresenter;
+
+  @Expose()
+  subscriptionPlan!: "monthly" | "yearly" | "free-trial";
+
+  @Expose()
+  subscriptionStartDate!: Date;
+
+  @Expose()
+  subscriptionEndDate!: Date;
+
+  @Expose()
+  subscriptionStatus!: "active" | "cancelled" | "expired" | "trial";
+
+  @Expose()
+  subscriptionAutoRenew!: boolean;
 }
