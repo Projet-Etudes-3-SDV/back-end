@@ -66,10 +66,10 @@ const UserSchema: Schema = new Schema(
     cart: { type: Schema.Types.ObjectId, ref: "Cart", default: null },
     resetPasswordToken: { type: String, default: null },
     subscription: {
-      plan: { type: String, enum: ["monthly", "yearly", "free-trial"], default: "free-trial" },
+      plan: { type: String, enum: SubscriptionPlan, default: "free-trial" },
       startDate: { type: Date, default: Date.now },
       endDate: { type: Date, default: null },
-      status: { type: String, enum: ["active", "cancelled", "expired", "trial"], default: "trial" },
+      status: { type: String, enum: SubscriptionStatus, default: "trial" },
       autoRenew: { type: Boolean, default: true },
     }
   },

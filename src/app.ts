@@ -1,15 +1,16 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import productRoutes from './routes/product.routes';
-// import paymentRoutes from './src/routes/paymentRoutes';
 import userRoute from './routes/user.routes';
 import categoryRoutes from './routes/category.routes';
 import cartRoutes from './routes/cart.routes';
 import subscriptionRoutes from './routes/subscription.routes';
 import { errorHandler } from './middlewares/errorHandler';
 import logger from './middlewares/logger.middleware';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import path from 'path';
 
 dotenv.config();
 
@@ -19,6 +20,24 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(logger);
+
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Cyna API",
+      version: "1.0.0",
+      description: "Documentation de l'API pour le projet Cyna",
+    },
+  },
+  apis: [path.join(__dirname, "routes/*.ts")], // Résolution correcte du chemin
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 // Routes
 app.use('/api/users', userRoute);

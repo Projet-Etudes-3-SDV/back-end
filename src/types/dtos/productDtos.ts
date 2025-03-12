@@ -128,7 +128,4 @@ export class ProductPresenter {
 
   @Expose()
   available!: boolean;
-
-  @Expose()
-  addedDate!: Date;
 }

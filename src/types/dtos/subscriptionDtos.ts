@@ -25,3 +25,25 @@ export class SubscriptionDto {
   @Expose()
   autoRenew!: boolean;
 }
+
+export class SubscriptionPresenter {
+  @IsString()
+  @Expose()
+  plan!: SubscriptionPlan;
+
+  @IsDate()
+  @Expose()
+  startDate!: Date;
+
+  @IsDate()
+  @Expose()
+  endDate!: Date;
+
+  @IsString()
+  @Expose()
+  status!: SubscriptionStatus;
+
+  @IsBoolean()
+  @Expose()
+  autoRenew!: boolean;
+}

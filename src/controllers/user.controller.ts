@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria } from "../types/dtos/userDtos";
+import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
@@ -28,7 +28,7 @@ export class UserController {
         throw new AppError("Validation failed", 400, errors);
       }
       const user = await this.userService.createUser(userData);
-      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      const userPresenter = plainToClass(UserCreationPresenter, user, { excludeExtraneousValues: true });
       res.status(201).json(userPresenter);
     } catch (error) {
       next(error);

@@ -3,12 +3,15 @@ import type { IUser } from "../models/user.model";
 import { AppError } from "../utils/AppError";
 import { UserToCreate, UserToModify, SearchUserCriteria } from "../types/dtos/userDtos";
 import { sendEmail } from "./mail.service";
+import { CartRepository } from "../repositories/cart.repository";
 
 export class UserService {
   private userRepository: UserRepository;
+  private cartRepository: CartRepository;
 
   constructor() {
     this.userRepository = new UserRepository();
+    this.cartRepository = new CartRepository();
   }
 
   async createUser(userData: UserToCreate): Promise<IUser> {
@@ -16,7 +19,12 @@ export class UserService {
     if (existingUser) {
       throw new AppError("Email already in use", 400);
     }
-    return await this.userRepository.create(userData);
+
+    const user = await this.userRepository.create(userData);
+    const cart = await this.cartRepository.create({ owner: user._id });
+    user.cart = cart._id;
+    
+    return await user.save();
   }
 
   async loginUser(email: string, password: string): Promise<IUser> {

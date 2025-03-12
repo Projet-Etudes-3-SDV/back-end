@@ -2,6 +2,8 @@ import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBo
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
+import { ISubscription } from "../../models/user.model";
+import { SubscriptionPresenter } from "./subscriptionDtos";
 
 export class UserToCreate {
   @IsString()
@@ -165,17 +167,62 @@ export class UserPresenter {
   cart?: CartItemPresenter;
 
   @Expose()
-  subscriptionPlan!: "monthly" | "yearly" | "free-trial";
+  @Type(() => SubscriptionPresenter)
+  subscription?: SubscriptionPresenter;
+}
+
+export class UserCreationPresenter {
+  @Expose()
+  id!: string;
 
   @Expose()
-  subscriptionStartDate!: Date;
+  lastName!: string;
 
   @Expose()
-  subscriptionEndDate!: Date;
+  firstName!: string;
 
   @Expose()
-  subscriptionStatus!: "active" | "cancelled" | "expired" | "trial";
+  email!: string;
 
   @Expose()
-  subscriptionAutoRenew!: boolean;
+  phone?: string;
+}
+
+export class AdminUserPresenter {
+  @Expose()
+  id!: string;
+
+  @Expose()
+  lastName!: string;
+
+  @Expose()
+  firstName!: string;
+
+  @Expose()
+  email!: string;
+
+  @Expose()
+  phone?: string;
+
+  @Expose()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CartItemPresenter)
+  cart?: CartItemPresenter;
+
+  @Expose()
+  @Type(() => SubscriptionPresenter)
+  subscription?: SubscriptionPresenter;
+
+  @Expose()
+  password!: string;
+
+  @Expose()
+  resetPasswordToken?: string;
+
+  @Expose()
+  createdAt!: Date;
+
+  @Expose()
+  updatedAt!: Date;
 }
