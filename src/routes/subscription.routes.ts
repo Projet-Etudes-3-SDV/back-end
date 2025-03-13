@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { SubscriptionController } from "../controllers/subscription.controller";
+import * as Auth from "../middlewares/auth.middleware";
 
 const router = Router();
 const subscriptionController = new SubscriptionController();
@@ -13,9 +14,9 @@ const subscriptionController = new SubscriptionController();
 
 /**
  * @swagger
- * /api/subscription/activate:
+ * /api/subscriptions:
  *   post:
- *     summary: Activate a subscription
+ *     summary: Create a new subscription
  *     tags: [Subscription]
  *     requestBody:
  *       required: true
@@ -29,16 +30,46 @@ const subscriptionController = new SubscriptionController();
  *               planId:
  *                 type: string
  *     responses:
- *       200:
- *         description: Subscription activated
+ *       201:
+ *         description: Subscription created
  *       400:
  *         description: Invalid input
  */
-router.post("/activate", (req, res) => subscriptionController.activateSubscription(req, res));
+router.post("/", (req, res, next) => subscriptionController.addSubscription(req, res, next));
 
 /**
  * @swagger
- * /api/subscription/cancel:
+ * /api/subscriptions/{id}:
+ *   patch:
+ *     summary: Update a subscription by ID
+ *     tags: [Subscription]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Subscription ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               planId:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Subscription updated
+ *       400:
+ *         description: Invalid input
+ */
+router.patch("/:id", (req, res, next) => subscriptionController.patchSubscription(req, res, next));
+
+/**
+ * @swagger
+ * /api/subscriptions/cancel:
  *   post:
  *     summary: Cancel a subscription
  *     tags: [Subscription]
@@ -53,7 +84,7 @@ router.post("/activate", (req, res) => subscriptionController.activateSubscripti
  *                 type: string
  *     responses:
  *       200:
- *         description: Subscription canceled
+ *         description: Subscription cancelled
  *       400:
  *         description: Invalid input
  */
@@ -61,49 +92,50 @@ router.post("/cancel", (req, res, next) => subscriptionController.cancelSubscrip
 
 /**
  * @swagger
- * /api/subscription/update-end-date:
- *   post:
- *     summary: Update subscription end date
- *     tags: [Subscription]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *               endDate:
- *                 type: string
- *                 format: date
- *     responses:
- *       200:
- *         description: Subscription end date updated
- *       400:
- *         description: Invalid input
- */
-router.post("/update-end-date", (req, res, next) => subscriptionController.updateSubscriptionEndDate(req, res, next));
-
-/**
- * @swagger
- * /api/subscription/is-active/{userId}:
- *   get:
- *     summary: Check if a subscription is active
+ * /api/subscriptions/{id}:
+ *   delete:
+ *     summary: Delete a subscription by ID
  *     tags: [Subscription]
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: User ID
+ *         description: Subscription ID
  *     responses:
  *       200:
- *         description: Subscription status
+ *         description: Subscription deleted
  *       400:
  *         description: Invalid input
  */
-router.get("/is-active/:userId", (req, res, next) => subscriptionController.isSubscriptionActive(req, res, next));
+router.delete("/:id", (req, res, next) => subscriptionController.deleteSubscription(req, res, next));
+
+/**
+ * @swagger
+ * /api/subscriptions:
+ *   get:
+ *     summary: Get subscriptions with filters
+ *     tags: [Subscription]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: User ID
+ *       - in: query
+ *         name: planId
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Plan ID
+ *     responses:
+ *       200:
+ *         description: List of subscriptions
+ *       400:
+ *         description: Invalid input
+ */
+router.get("/", (req, res, next) => subscriptionController.getSubscriptionBy(req, res, next));
 
 export default router;

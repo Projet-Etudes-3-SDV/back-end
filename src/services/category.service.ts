@@ -19,33 +19,35 @@ export class CategoryService {
     return await this.categoryRepository.create(data);
   }
 
-  async getCategoryById(_id: string): Promise<ICategory> {
-    const category = await this.categoryRepository.findById(_id);
+  async getCategoryById(id: string): Promise<ICategory> {
+    const category = await this.categoryRepository.findOneBy({ id });
     if (!category) {
       throw new AppError("Category not found", 404);
     }
     return category;
   }
 
-  async updateCategory(_id: string, data: CategoryToModify): Promise<ICategory> {
-    const category = await this.categoryRepository.findById(_id);
+  async updateCategory(id: string, data: CategoryToModify): Promise<ICategory> {
+    const category = await this.categoryRepository.findOneBy({ id });
     if (!category) {
       throw new AppError("Category not found", 404);
     }
 
-    const updatedCategory = await this.categoryRepository.update(_id, data);
+    console.log(category.id);
+
+    const updatedCategory = await this.categoryRepository.update(category._id, data);
     if (!updatedCategory) {
       throw new AppError("Failed to update category", 500);
     }
     return updatedCategory;
   }
 
-  async deleteCategory(_id: string): Promise<void> {
-    const category = await this.categoryRepository.findById(_id);
+  async deleteCategory(id: string): Promise<void> {
+    const category = await this.categoryRepository.findOneBy({ id });
     if (!category) {
       throw new AppError("Category not found", 404);
     }
-    const result = await this.categoryRepository.delete(_id);
+    const result = await this.categoryRepository.delete(id);
     if (!result) {
       throw new AppError("Failed to delete category", 500);
     }

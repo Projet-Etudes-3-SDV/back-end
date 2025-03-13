@@ -11,6 +11,7 @@ export class AddressRepository {
     return await Address.findOne({ id });
   }
 
+
   async update(id: string, addressData: AddressToModify): Promise<IAddress | null> {
     return await Address.findOneAndUpdate({ id }, addressData, { new: true });
   }

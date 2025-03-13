@@ -66,6 +66,11 @@ export class SearchProductCriteria {
   @IsString()
   @IsOptional()
   @Expose()
+  id?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
   name?: string;
 
   @IsBoolean()

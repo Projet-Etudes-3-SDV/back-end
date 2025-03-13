@@ -29,27 +29,27 @@ export class UserToCreate {
   @IsString()
   @IsOptional()
   @Expose()
-  subscriptionPlan?: "monthly" | "yearly" | "free-trial";
+  subscriptionsPlan?: "monthly" | "yearly" | "free-trial";
 
   @IsDate()
   @IsOptional()
   @Expose()
-  subscriptionStartDate?: Date;
+  subscriptionsStartDate?: Date;
 
   @IsDate()
   @IsOptional()
   @Expose()
-  subscriptionEndDate?: Date;
+  subscriptionsEndDate?: Date;
 
   @IsString()
   @IsOptional()
   @Expose()
-  subscriptionStatus?: "active" | "cancelled" | "expired" | "trial";
+  subscriptionsStatus?: "active" | "cancelled" | "expired" | "trial";
 
   @IsBoolean()
   @IsOptional()
   @Expose()
-  subscriptionAutoRenew?: boolean;
+  subscriptionsAutoRenew?: boolean;
 }
 
 export class UserToModify {
@@ -81,30 +81,35 @@ export class UserToModify {
   @IsString()
   @IsOptional()
   @Expose()
-  subscriptionPlan?: "monthly" | "yearly" | "free-trial";
+  subscriptionsPlan?: "monthly" | "yearly" | "free-trial";
 
   @IsDate()
   @IsOptional()
   @Expose()
-  subscriptionStartDate?: Date;
+  subscriptionsStartDate?: Date;
 
   @IsDate()
   @IsOptional()
   @Expose()
-  subscriptionEndDate?: Date;
+  subscriptionsEndDate?: Date;
 
   @IsString()
   @IsOptional()
   @Expose()
-  subscriptionStatus?: "active" | "cancelled" | "expired" | "trial";
+  subscriptionsStatus?: "active" | "cancelled" | "expired" | "trial";
 
   @IsBoolean()
   @IsOptional()
   @Expose()
-  subscriptionAutoRenew?: boolean;
+  subscriptionsAutoRenew?: boolean;
 }
 
 export class SearchUserCriteria {
+  @IsString()
+  @IsOptional()
+  @Expose()
+  id?: string;
+
   @IsString()
   @IsOptional()
   @Expose()
@@ -176,8 +181,14 @@ export class UserPresenter {
   cart?: CartItemPresenter;
 
   @Expose()
+  @ValidateNested({ each: true })
   @Type(() => SubscriptionPresenter)
-  subscription?: SubscriptionPresenter;
+  subscriptions!: SubscriptionPresenter;
+
+  // @Expose()
+  // @ValidateNested({ each: true })
+  // @Type(() => AddressPresenter)
+  // addresses?: AddressPresenter;
 }
 
 export class UserCreationPresenter {
@@ -221,7 +232,7 @@ export class AdminUserPresenter {
 
   @Expose()
   @Type(() => SubscriptionPresenter)
-  subscription?: SubscriptionPresenter;
+  subscriptions?: SubscriptionPresenter;
 
   @Expose()
   password!: string;

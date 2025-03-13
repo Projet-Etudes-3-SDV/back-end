@@ -48,6 +48,13 @@ export class ProductService {
 
     async getProducts(searchCriteria: SearchProductCriteria): Promise<{ products: IProduct[]; total: number; pages: number }> {
       const { page = 1, limit = 10, ...filters } = searchCriteria;
+      if (filters.category) {
+        const category = await this.categoryRepository.findOneBy({ id: filters.category });
+        if (!category) {
+          throw new AppError("Category not found", 404);
+        }
+        filters.category = category._id;
+      }
       const { products, total } = await this.productRepository.findBy(filters, page, limit);
       const pages = Math.ceil(total / limit);
       return { products, total, pages };
@@ -60,7 +67,7 @@ export class ProductService {
 			}
 			const updatedProduct = await this.productRepository.update(id, productData);
 			if (!updatedProduct) {
-				throw new AppError("Product not found", 404);
+				throw new AppError("Failed to update product", 500);
 			}
 			return updatedProduct;
 		}

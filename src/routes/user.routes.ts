@@ -15,7 +15,7 @@ const userController = new UserController();
 
 /**
  * @swagger
- * /api/user:
+ * /api/users:
  *   post:
  *     summary: Create a new user
  *     tags: [User]
@@ -180,7 +180,7 @@ router.get("/:id", Auth.checkJWT, (req, res, next) => userController.getUser(req
 
 /**
  * @swagger
- * /api/user:
+ * /api/users:
  *   get:
  *     summary: Get all users
  *     tags: [User]

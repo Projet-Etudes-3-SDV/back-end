@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import bcrypt from "bcrypt"
 import { ICart } from "./cart.model";
 import { IAddress } from "./adress.model";
+import { ISubscription } from "./subscription.model";
 
 export enum UserRole {
   USER = "user",
@@ -31,29 +32,8 @@ export interface IUser extends Document {
   isSubscriptionActive(): boolean
   cancelSubscription(): void
   updateSubscriptionEndDate(newEndDate: Date): void
-  subscription: ISubscription
+  subscriptions: ISubscription["_id"][]
   addresses: IAddress["_id"][];
-}
-
-export enum SubscriptionPlan {
-  MONTHLY = "monthly",
-  YEARLY = "yearly",
-  FREE_TRIAL = "free-trial",
-}
-
-export enum SubscriptionStatus {
-  ACTIVE = "active",
-  CANCELLED = "cancelled",
-  EXPIRED = "expired",
-  TRIAL = "trial",
-}
-
-export interface ISubscription {
-  plan: "monthly" | "yearly" | "free-trial";
-  startDate: Date;
-  endDate: Date;
-  status: "active" | "cancelled" | "expired" | "trial";
-  autoRenew: boolean;
 }
 
 const UserSchema: Schema = new Schema(
@@ -71,14 +51,8 @@ const UserSchema: Schema = new Schema(
     resetPasswordToken: { type: String, default: null, unique: true },
     authToken: { type: String, default: null, unique: true },
     isValidated: { type: Boolean, default: false },
-    subscription: {
-      plan: { type: String, enum: SubscriptionPlan, default: "free-trial" },
-      startDate: { type: Date, default: Date.now },
-      endDate: { type: Date, default: null },
-      status: { type: String, enum: SubscriptionStatus, default: "trial" },
-      autoRenew: { type: Boolean, default: true },
-    },
-    addresses: [{ type: Schema.Types.ObjectId, ref: "Address" }],
+    subscriptions: [{ type: Schema.Types.ObjectId, ref: "Subscription", default: [] }],
+    addresses: [{ type: Schema.Types.ObjectId, ref: "Address", default: [] }],
   },
   { versionKey: false, timestamps: true }
 );

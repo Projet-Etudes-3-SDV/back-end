@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { SubscriptionService } from "../services/subscription.service";
-import { SubscriptionPlan } from "../models/user.model";
 import { validate } from "class-validator";
 import { plainToClass } from "class-transformer";
-import { SubscriptionDto } from "../types/dtos/subscriptionDtos";
+import { SubscriptionDto, SubscriptionPresenter, SubscriptionToCreate } from "../types/dtos/subscriptionDtos";
 import { AppError } from "../utils/AppError";
 
 export class SubscriptionController {
@@ -13,20 +12,68 @@ export class SubscriptionController {
     this.subscriptionService = new SubscriptionService();
   }
 
-  async activateSubscription(req: Request, res: Response): Promise<void> {
-    const subscriptionDto = plainToClass(SubscriptionDto, req.body);
-    const errors = await validate(subscriptionDto);
-    if (errors.length > 0) {
-      res.status(400).json(errors);
-      return;
+  async getSubscriptions(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const subscriptions = await this.subscriptionService.getSubscriptions();
+      const subscriptionPresenter = subscriptions?.map(subscription => plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true }));
+      res.status(200).json(subscriptionPresenter);
     }
+    catch (error) {
+      next(error);
+    }
+  }
 
-    const { userId, plan, endDate } = req.body;
-    const user = await this.subscriptionService.activateSubscription(userId, plan as SubscriptionPlan, new Date(endDate));
-    if (user) {
-      res.status(200).json(user);
-    } else {
-      res.status(404).json({ message: "User not found" });
+  async getSubscriptionBy(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const filters = req.query;
+      const subscriptions = await this.subscriptionService.getSubscriptionBy(filters);
+      const subscriptionPresenter = subscriptions?.map(subscription => plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true }));
+      res.status(200).json(subscriptionPresenter);
+    }
+    catch (error) {
+      next(error);
+    }
+  }
+
+  async addSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const subscriptionData = req.body;
+      const subscriptionDto = plainToClass(SubscriptionToCreate, subscriptionData);
+      const dtoErrors = await validate(subscriptionDto);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+      const subscription = await this.subscriptionService.addSubscription(subscriptionDto);
+      const subscriptionPresenter = plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true });
+      res.status(201).json(subscriptionPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async patchSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { subscriptionId } = req.query;
+      const subscriptionData = req.body;
+      const subscriptionDto = plainToClass(SubscriptionDto, subscriptionData);
+      const dtoErrors = await validate(subscriptionDto);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+      const subscription = await this.subscriptionService.patchSubscription(subscriptionId as string, subscriptionDto);
+      const subscriptionPresenter = plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true });
+      res.status(200).json(subscription);
+    }
+    catch (error) { 
+      next(error);
     }
   }
 
@@ -37,8 +84,9 @@ export class SubscriptionController {
         throw new AppError("Validation failed", 400, [{ field: "userId", constraints: ["userId should not be empty"] }]);
       }
       const user = await this.subscriptionService.cancelSubscription(userId);
+      const subscriptionPresenter = plainToClass(SubscriptionPresenter, user, { excludeExtraneousValues: true });
       if (user) {
-        res.status(200).json(user);
+        res.status(200).json(subscriptionPresenter);
       } else {
         res.status(404).json({ message: "User not found" });
       }
@@ -47,31 +95,14 @@ export class SubscriptionController {
     }
   }
 
-  async updateSubscriptionEndDate(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async deleteSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { userId, newEndDate } = req.body;
-      if (!userId || !newEndDate) {
-        throw new AppError("Validation failed", 400, [{ field: "userId", constraints: ["userId should not be empty"] }, { field: "newEndDate", constraints: ["newEndDate should not be empty"] }]);
+      const { subscriptionId } = req.query;
+      if (!subscriptionId) {
+        throw new AppError("Validation failed", 400, [{ field: "subscriptionId", constraints: ["subscriptionId should not be empty"] }]);
       }
-      const user = await this.subscriptionService.updateSubscriptionEndDate(userId, new Date(newEndDate));
-      if (user) {
-        res.status(200).json(user);
-      } else {
-        res.status(404).json({ message: "User not found" });
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async isSubscriptionActive(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const { userId } = req.params;
-      if (!userId) {
-        throw new AppError("Validation failed", 400, [{ field: "userId", constraints: ["userId should not be empty"] }]);
-      }
-      const isActive = await this.subscriptionService.isSubscriptionActive(userId);
-      res.status(200).json({ isActive });
+      const result = await this.subscriptionService.deleteSubscription(subscriptionId as string);
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

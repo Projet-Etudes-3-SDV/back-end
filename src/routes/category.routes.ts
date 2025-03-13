@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { CategoryController } from "../controllers/category.controller";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 const router = Router();
 const categoryController = new CategoryController();
@@ -97,7 +98,7 @@ router.get("/", categoryController.getCategories.bind(categoryController));
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", categoryController.updateCategory.bind(categoryController));
+router.put("/:id", (req, res, next) => categoryController.updateCategory(req as unknown as EncodedRequest, res, next));
 
 /**
  * @swagger

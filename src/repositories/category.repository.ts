@@ -15,6 +15,7 @@ export class CategoryRepository {
   async findOneBy(filters: FilterQuery<SearchCategoryCriteria>): Promise<ICategory | null> {
     const query: FilterQuery<SearchCategoryCriteria> = {};
     if (filters.name) query.name = { $regex: filters.name, $options: "i" };
+    if (filters.id) query.id = filters.id;
     return await Category.findOne(query);
   }
 
@@ -35,7 +36,7 @@ export class CategoryRepository {
   }
 
   async delete(id: string): Promise<boolean> {
-    const result = await Category.deleteOne({ _id: id });
+    const result = await Category.deleteOne({ id });
     return result.deletedCount === 1;
   }
 }

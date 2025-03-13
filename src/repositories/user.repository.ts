@@ -1,6 +1,7 @@
 import { FilterQuery } from "mongoose";
 import User, { type IUser } from "../models/user.model";
 import { UserToCreate, SearchUserCriteria } from "../types/dtos/userDtos";
+import path from "path";
 
 export class UserRepository {
   async create(userData: UserToCreate): Promise<IUser> {
@@ -15,6 +16,12 @@ export class UserRepository {
         path: 'products.product',
         populate: { path: 'category' }
       }
+    }).populate({
+      path: 'subscriptions',
+      populate: {
+        path: 'product',
+        populate: { path: 'category' }
+      }
     });
   }
 
@@ -23,11 +30,20 @@ export class UserRepository {
     if (filters.lastName) query.lastName = { $regex: filters.lastName, $options: "i" };
     if (filters.firstName) query.firstName = { $regex: filters.firstName, $options: "i" };
     if (filters.email) query.email = filters.email;
+    if (filters.phone) query.phone = filters.phone;
+    if (filters.role) query.role = filters.role;
+    if (filters.id) query.id = filters.id;  
 
     return await User.findOne(query).populate({
       path: 'cart',
       populate: {
         path: 'products.product',
+        populate: { path: 'category' }
+      }
+    }).populate({
+      path: 'subscriptions',
+      populate: {
+        path: 'product',
         populate: { path: 'category' }
       }
     });
@@ -42,7 +58,13 @@ export class UserRepository {
           path: 'products.product',
           populate: { path: 'category' }
         }
-      }),
+          }).populate({
+      path: 'subscriptions',
+      populate: {
+        path: 'product',
+        populate: { path: 'category' }
+      }
+    }),
       User.countDocuments()
     ]);
     return { users, total };
@@ -55,6 +77,7 @@ export class UserRepository {
     if (filters.lastName) query.lastName = { $regex: filters.lastName, $options: "i" };
     if (filters.firstName) query.firstName = { $regex: filters.firstName, $options: "i" };
     if (filters.email) query.email = filters.email;
+    if (filters.id) query.id = filters.id;  
 
     const [users, total] = await Promise.all([
       User.find(query).skip(skip).limit(limit).populate({
@@ -63,7 +86,13 @@ export class UserRepository {
           path: 'products.product',
           populate: { path: 'category' }
         }
-      }),
+    }).populate({
+      path: 'subscriptions',
+      populate: {
+        path: 'product',
+        populate: { path: 'category' }
+      }
+    }),
       User.countDocuments(query)
     ]);
     return { users, total };
@@ -74,6 +103,12 @@ export class UserRepository {
       path: 'cart',
       populate: {
         path: 'products.product',
+        populate: { path: 'category' }
+      }
+    }).populate({
+      path: 'subscriptions',
+      populate: {
+        path: 'product',
         populate: { path: 'category' }
       }
     });

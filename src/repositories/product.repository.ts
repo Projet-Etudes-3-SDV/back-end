@@ -18,7 +18,8 @@ export class ProductRepository {
     if (filters.available) query.available = filters.available;
     if (filters.monthlyPrice) query.monthlyPrice = filters.monthlyPrice;
     if (filters.yearlyPrice) query.yearlyPrice = filters.yearlyPrice;
-    if (filters.categoryId) query.categoryId = filters.categoryId;
+    if (filters.category) query.category = filters.category;
+    if (filters.id) query.id = filters.id;
 
     return await Product.findOne(query).populate("category");
   }
@@ -41,7 +42,8 @@ export class ProductRepository {
     if (filters.monthlyPrice) query.monthlyPrice = filters.monthlyPrice;
     if (filters.yearlyPrice) query.yearlyPrice = filters.yearlyPrice;
     if (filters.category) query.category = filters.category;
-
+    if (filters.id) query.id = filters.id;
+    
     const [products, total] = await Promise.all([
       Product.find(query).populate("category").skip(skip).limit(limit),
       Product.countDocuments(query)
@@ -50,7 +52,7 @@ export class ProductRepository {
   }
 
   async update(id: string, userData: Partial<IProduct>): Promise<IProduct | null> {
-    return await Product.findOneAndUpdate({ id }, userData, { new: true });
+    return await Product.findOneAndUpdate({ id }, userData, { new: true }).populate("category");
   }
 
   async delete(id: string): Promise<boolean> {

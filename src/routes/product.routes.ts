@@ -14,7 +14,7 @@ const productController = new ProductController();
 
 /**
  * @swagger
- * /api/product:
+ * /api/products:
  *   post:
  *     summary: Create a new product
  *     tags: [Product]
@@ -60,7 +60,7 @@ router.get("/:id", (req, res, next) => productController.getProduct(req as unkno
 
 /**
  * @swagger
- * /api/product:
+ * /api/products:
  *   get:
  *     summary: Get all products
  *     tags: [Product]
