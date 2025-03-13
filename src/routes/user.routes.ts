@@ -15,7 +15,7 @@ const userController = new UserController();
 
 /**
  * @swagger
- * /api/users:
+ * /api/users/register:
  *   post:
  *     summary: Create a new user
  *     tags: [User]
