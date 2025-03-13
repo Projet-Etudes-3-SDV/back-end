@@ -1,0 +1,5 @@
+Not connected 
+    - 2025-03-13T13:11:22.976Z 
+    - POST /api/products 
+    - 400 
+    - Product already exists

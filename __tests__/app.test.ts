@@ -20,7 +20,7 @@ describe('API Tests', () => {
 
     it('Devrait créer un utilisateur', async () => {
         const res = await request(app)
-            .post('/api/users/register') // Updated endpoint
+            .post('/api/users/register')
             .send({ 
                 lastName: "Test",
                 firstName: "User",
