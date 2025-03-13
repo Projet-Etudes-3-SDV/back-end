@@ -53,6 +53,12 @@ export class UserToCreate {
   subscriptionsAutoRenew?: boolean;
 }
 
+export class ValidateUserDTO {
+  @IsString()
+  @Expose()
+  authToken!: string;
+}
+
 export class UserToModify {
   @IsString()
   @IsOptional()

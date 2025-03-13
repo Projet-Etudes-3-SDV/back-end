@@ -1,7 +1,7 @@
 import { UserRepository } from "../repositories/user.repository";
 import type { IUser } from "../models/user.model";
 import { AppError } from "../utils/AppError";
-import { UserToCreate, UserToModify, SearchUserCriteria } from "../types/dtos/userDtos";
+import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO } from "../types/dtos/userDtos";
 import { sendEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
 
@@ -48,7 +48,7 @@ export class UserService {
     return user;
   }
 
-  async validateUser(authToken: string): Promise<IUser> {
+  async validateUser(authToken: ValidateUserDTO): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ authToken });
     if (!user) {
       throw new AppError("User not found", 404, [], "INVALID_TOKEN");

@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin } from "../types/dtos/userDtos";
+import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
@@ -177,8 +177,9 @@ export class UserController {
 
   async validateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { authToken } = req.body;
-      const user = await this.userService.validateUser(authToken);
+      const validateUserDTO = plainToClass(ValidateUserDTO, req.body, { excludeExtraneousValues: true });
+
+      const user = await this.userService.validateUser(validateUserDTO);
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
 
       res.status(200).json({ message: "User validated", userPresenter });
