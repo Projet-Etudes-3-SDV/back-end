@@ -66,8 +66,8 @@ npm start
 ## Routes principales
 | Méthode | Endpoint         | Description                        |
 |---------|-----------------|------------------------------------|
-| POST    | /auth/login     | Connexion de l'utilisateur        |
-| POST    | /auth/register  | Inscription d'un utilisateur      |
+| POST    | /users/login     | Connexion de l'utilisateur        |
+| POST    | /users/register  | Inscription d'un utilisateur      |
 | GET     | /users          | Liste des utilisateurs            |
 | GET     | /users/:id      | Récupérer un utilisateur          |
 | PUT     | /users/:id      | Mettre à jour un utilisateur      |
