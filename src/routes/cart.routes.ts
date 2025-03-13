@@ -24,10 +24,10 @@ const cartController = new CartController();
  *           schema:
  *             type: object
  *             properties:
- *               product:
+ *               productId:
  *                 type: string
- *               user:
- *                 type: integer
+ *               userId:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Item added to the cart

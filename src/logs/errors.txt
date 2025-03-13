@@ -18,3 +18,440 @@ Not connected - 127.0.0.1
     - POST /api/users/login 
     - 401 
     - You have to validate your account
+Not connected - 127.0.0.1 
+    - 2025-03-13T13:29:17.117Z 
+    - POST /api/cart/add 
+    - 400 
+    - Validation failed
+Not connected - 127.0.0.1 
+    - 2025-03-13T13:29:18.704Z 
+    - POST /api/cart/add 
+    - 400 
+    - Validation failed
+Not connected - 127.0.0.1 
+    - 2025-03-13T13:31:02.551Z 
+    - DELETE /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1 
+    - 404 
+    - Product not found
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:14:08.257Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+Not connected - 127.0.0.1 
+    - 2025-03-13T14:17:03.315Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:18:10.844Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:18:46.689Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 127.0.0.1 
+    - 2025-03-13T14:18:50.354Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:28:26.338Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 127.0.0.1 
+    - 2025-03-13T14:28:44.103Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:43:21.858Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:44:03.422Z 
+    - POST /api/users/login 
+    - 401 
+    - Invalid email or password
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:45:09.522Z 
+    - POST /api/users/login 
+    - 401 
+    - Invalid email or password
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:45:23.134Z 
+    - POST /api/users/login 
+    - 401 
+    - Invalid email or password
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:45:29.383Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:45:35.109Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 127.0.0.1 
+    - 2025-03-13T14:50:07.486Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:51:36.929Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:51:44.117Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:27.240Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:33.023Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:33.464Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:33.563Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:33.765Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:33.889Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:34.069Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:34.179Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:34.378Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:34.492Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:42.306Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:42.278Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:42.471Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:42.667Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:42.760Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:43.064Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:42.980Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:43.383Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:43.222Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:43.555Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:43.741Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:43.913Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:44.093Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:44.273Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:44.458Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:44.646Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:44.834Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:45.004Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:45.160Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:55.763Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:55.702Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.092Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.079Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.193Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.544Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.398Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.904Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:56.639Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:57.004Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:57.164Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:57.321Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:57.507Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:57.843Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:57.681Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:58.187Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:58.016Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:58.396Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:58.572Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:58.738Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:52:58.942Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+Not connected - 10.111.9.92 
+    - 2025-03-13T14:54:25.103Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - 400
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T14:54:25.105Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - 400
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T14:54:25.161Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - 400
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T14:54:25.162Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - 400
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T14:54:29.207Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - 400
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T14:54:36.183Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - 400
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:44:23.176Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:44:33.079Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:46:26.769Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:48:34.212Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:48:48.070Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:48:57.162Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    Not connected - 10.111.9.92 
+    - 2025-03-13T15:52:17.362Z 
+    - POST /api/users/validate 
+    - 400 
+    - User already validated
+    - ACCOUNT_ALREADY_VALIDATED
+
+    

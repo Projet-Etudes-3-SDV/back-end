@@ -9,7 +9,9 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
     - ${new Date().toISOString()} 
     - ${req.method} ${req.path} 
     - ${err instanceof AppError ? err.statusCode : 500} 
-    - ${err.message || "An unexpected error occurred"}\n`;
+    - ${err.message || "An unexpected error occurred"}
+    - ${err instanceof AppError ? err.code : ""}\n
+    `;
     
     fs.appendFile(logFilePath, logMessage, (err) => {
       if (err) console.error("Failed to write to log file:", err);
@@ -20,7 +22,8 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
       status: 'error',
       statusCode: err.statusCode,
       message: err.message,
-      details: err.details
+      details: err.details,
+      code: err.code
     });
   }
 

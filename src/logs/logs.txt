@@ -86,4 +86,352 @@ Not connected
   - 2025-03-13T13:28:13.546Z 
   - GET /api/categoriesNot connected 
   - 2025-03-13T13:28:15.396Z 
-  - GET /api/products
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:28:19.310Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:28:27.513Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-13T13:28:27.587Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-13T13:28:27.591Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-13T13:28:27.625Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-13T13:28:27.653Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-13T13:28:28.357Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-13T13:28:41.336Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-13T13:28:41.376Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-13T13:28:41.382Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-13T13:28:41.410Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-13T13:28:41.440Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-13T13:28:42.240Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-13T13:29:00.376Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:29:01.513Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:29:15.125Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:29:17.115Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-13T13:29:18.704Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-13T13:29:22.221Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:29:31.696Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:30:00.619Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:30:01.636Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:30:27.404Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:30:30.588Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-13T13:30:35.800Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:30:38.461Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:30:39.486Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:30:41.223Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:30:41.748Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:30:54.704Z 
+  - DELETE /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:31:00.229Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:31:01.640Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:31:02.524Z 
+  - DELETE /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:31:06.123Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:31:10.840Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-13T13:31:10.861Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-13T13:31:10.876Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-13T13:31:10.903Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-13T13:31:10.933Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-13T13:31:11.512Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-13T13:31:12.058Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:31:17.093Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:31:19.769Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:31:22.437Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:32:47.192Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:32:50.967Z 
+  - GET /api/products/d1f330e3-41d0-4e98-a1d3-373b43507046Not connected 
+  - 2025-03-13T13:32:53.151Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:33:57.556Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:33:58.775Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:34:45.685Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:35:15.410Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:39:06.222Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:39:11.830Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:39:54.925Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:40:00.861Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:40:40.639Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:40:51.876Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:41:01.371Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:41:27.336Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:42:19.836Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:42:23.176Z 
+  - GET /api/products/be6b2299-7d98-40b1-97a0-0dde9f269169Not connected 
+  - 2025-03-13T13:50:05.648Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:50:06.198Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:50:07.064Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:50:15.641Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T13:50:18.452Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:50:26.594Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:50:27.613Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T14:11:12.700Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T14:11:26.946Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T14:11:29.172Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T14:12:49.224Z 
+  - POST /api/usersNot connected 
+  - 2025-03-13T14:12:54.125Z 
+  - POST /api/usersNot connected 
+  - 2025-03-13T14:14:07.078Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:14:08.256Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:16:48.923Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:17:03.274Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:17:07.635Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:17:21.471Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:18:10.684Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:18:46.510Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:18:50.265Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:19:24.232Z 
+  - GET /account-validation/83af3a15-c96c-4be9-80f7-d65d90ff02caNot connected 
+  - 2025-03-13T14:19:49.902Z 
+  - GET /account-validation/83af3a15-c96c-4be9-80f7-d65d90ff02caNot connected 
+  - 2025-03-13T14:20:22.999Z 
+  - GET /account-validation/685eg4rg546erg4545ger45egrNot connected 
+  - 2025-03-13T14:27:45.427Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T14:27:48.460Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T14:28:00.360Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1eNot connected 
+  - 2025-03-13T14:28:26.152Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:28:43.938Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:43:08.943Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T14:43:21.724Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:44:03.406Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:45:09.492Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:45:23.042Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:45:29.248Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:45:34.986Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T14:50:07.475Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:51:23.285Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:51:36.863Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:51:44.075Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:27.191Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:32.948Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:33.424Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:33.524Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:33.725Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:33.833Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:34.031Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:34.140Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:34.340Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:34.437Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:42.241Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:42.268Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:42.433Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:42.723Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:42.632Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:42.944Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:43.019Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:43.348Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:43.179Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:43.703Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:43.515Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:43.879Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:44.054Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:44.233Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:44.423Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:44.611Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:44.788Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:44.961Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:45.128Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:55.653Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:55.719Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.013Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.028Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.155Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.338Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.604Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.462Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.841Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:56.966Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:57.125Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:57.284Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:57.472Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:57.805Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:57.644Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:57.976Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:58.149Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:58.352Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:58.701Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:58.522Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:52:58.907Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:54:24.905Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:54:24.913Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:54:25.111Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:54:25.114Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:54:29.157Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T14:54:36.140Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T15:44:22.766Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:44:33.013Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:46:26.684Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:46:59.682Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T15:47:48.778Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T15:47:57.492Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T15:47:58.604Z 
+  - GET /api/products/d1f330e3-41d0-4e98-a1d3-373b43507046Not connected 
+  - 2025-03-13T15:48:34.161Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:48:48.019Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:48:57.116Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:51:26.482Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T15:51:59.800Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T15:52:11.486Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T15:52:17.315Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T15:52:30.726Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T15:55:20.504Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-13T15:56:03.193Z 
+  - GET /api/categories
