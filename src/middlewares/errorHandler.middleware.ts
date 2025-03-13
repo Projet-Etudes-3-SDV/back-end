@@ -5,7 +5,7 @@ import fs from "fs";
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
     const logFilePath = path.join(__dirname, '../logs/errors.txt');
-    const logMessage = `${(req as any).decoded?.user ? (req as any).decoded.user.id : 'Not connected'} 
+    const logMessage = `${(req as any).decoded?.user ? (req as any).decoded.user.id : 'Not connected'} - ${req.ip} 
     - ${new Date().toISOString()} 
     - ${req.method} ${req.path} 
     - ${err instanceof AppError ? err.statusCode : 500} 

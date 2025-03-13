@@ -1,0 +1,13 @@
+Not connected 
+  - 2025-03-13T13:17:03.477Z 
+  - GET /api/usersNot connected 
+  - 2025-03-13T13:17:10.233Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T13:17:26.168Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:18:03.917Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:18:33.625Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T13:18:33.889Z 
+  - GET /api/categories

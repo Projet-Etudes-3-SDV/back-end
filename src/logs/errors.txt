@@ -3,3 +3,18 @@ Not connected
     - POST /api/products 
     - 400 
     - Product already exists
+Not connected 
+    - 2025-03-13T13:14:56.137Z 
+    - POST /api/products 
+    - 400 
+    - Product already exists
+Not connected 
+    - 2025-03-13T13:17:10.442Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+Not connected - 127.0.0.1 
+    - 2025-03-13T13:18:33.736Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
