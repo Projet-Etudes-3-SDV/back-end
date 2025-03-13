@@ -33,8 +33,6 @@ export class CategoryService {
       throw new AppError("Category not found", 404);
     }
 
-    console.log(category.id);
-
     const updatedCategory = await this.categoryRepository.update(category._id, data);
     if (!updatedCategory) {
       throw new AppError("Failed to update category", 500);

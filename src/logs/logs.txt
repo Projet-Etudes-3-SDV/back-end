@@ -468,4 +468,46 @@ Not connected
   - 2025-03-13T18:54:15.147Z 
   - POST /api/users/validateNot connected 
   - 2025-03-13T18:54:53.397Z 
-  - POST /api/users/validate
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T19:43:13.904Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T19:43:21.441Z 
+  - POST /api/users/registerNot connected 
+  - 2025-03-13T19:44:15.856Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T19:44:20.265Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-13T19:45:10.008Z 
+  - POST /api/users/meNot connected 
+  - 2025-03-13T19:45:25.849Z 
+  - POST /api/users/meNot connected 
+  - 2025-03-13T19:45:31.068Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:45:42.553Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:46:40.985Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:47:01.075Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:47:48.275Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:48:02.038Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:48:37.690Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:51:33.329Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:51:53.696Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:54:43.376Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:55:13.543Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:55:32.185Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:55:46.884Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:55:49.791Z 
+  - GET /api/users/meNot connected 
+  - 2025-03-13T19:57:25.022Z 
+  - GET /api/users/me

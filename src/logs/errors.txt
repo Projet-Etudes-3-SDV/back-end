@@ -482,4 +482,109 @@ Not connected - 10.111.9.92
     - User not found
     - INVALID_TOKEN
 
+    Not connected - 127.0.0.1 
+    - 2025-03-13T19:43:14.133Z 
+    - POST /api/users/register 
+    - 400 
+    - Email already in use
+    - EMAIL_ALREADY_IN_USE
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:45:31.253Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:45:42.574Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:46:41.845Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:47:01.107Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:47:48.352Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:48:02.066Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:48:37.725Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:51:33.369Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:51:53.736Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:54:43.561Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:55:13.569Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:55:32.217Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:55:46.921Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-13T19:55:49.870Z 
+    - GET /api/users/me 
+    - 404 
+    - User not found
+    - NO_USER_FOUND
+
     

@@ -63,8 +63,9 @@ export class UserService {
     return await user.save();
   }
 
-  async getUser(_id: string): Promise<IUser> {
-    const user = await this.userRepository.findById(_id);
+  async getUser(id: string): Promise<IUser> {
+    console.log('id', id);
+    const user = await this.userRepository.findById(id);
     if (!user) {
       throw new AppError("User not found", 404, [], "NO_USER_FOUND");
     }

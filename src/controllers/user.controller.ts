@@ -48,7 +48,6 @@ export class UserController {
 
   async getUser(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      console.log(req.decoded);
       const user = await this.userService.getUser(req.params.id);
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
       res.status(200).json(userPresenter);

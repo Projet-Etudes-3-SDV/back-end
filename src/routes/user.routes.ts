@@ -159,27 +159,6 @@ router.post("/reset-password", (req, res, next) => userController.resetPassword(
 
 /**
  * @swagger
- * /api/users/{id}:
- *   get:
- *     summary: Get a user by ID
- *     tags: [User]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: User ID
- *     responses:
- *       200:
- *         description: User details
- *       400:
- *         description: Invalid input
- */
-router.get("/:id", Auth.checkJWT, (req, res, next) => userController.getUser(req as unknown as EncodedRequest, res, next));
-
-/**
- * @swagger
  * /api/users:
  *   get:
  *     summary: Get all users
