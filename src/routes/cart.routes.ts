@@ -24,9 +24,9 @@ const cartController = new CartController();
  *           schema:
  *             type: object
  *             properties:
- *               productId:
+ *               product:
  *                 type: string
- *               quantity:
+ *               user:
  *                 type: integer
  *     responses:
  *       200:
@@ -49,7 +49,7 @@ router.post("/add", (req, res, next) => cartController.addItemToCart(req, res, n
  *           schema:
  *             type: object
  *             properties:
- *               productId:
+ *               product:
  *                 type: string
  *               quantity:
  *                 type: integer

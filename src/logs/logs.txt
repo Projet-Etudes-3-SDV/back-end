@@ -10,4 +10,80 @@ Not connected
   - 2025-03-13T13:18:33.625Z 
   - POST /api/users/loginNot connected 
   - 2025-03-13T13:18:33.889Z 
-  - GET /api/categories
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:19:24.948Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:19:40.824Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:21:37.057Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:21:50.777Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:21:53.522Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:22:01.842Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:22:26.238Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:22:35.028Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-13T13:22:35.340Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-13T13:22:35.343Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-13T13:22:35.557Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-13T13:22:35.560Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-13T13:22:36.299Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-13T13:22:37.808Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:22:51.295Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:23:11.486Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:23:14.154Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:23:20.332Z 
+  - GET /api/usersNot connected 
+  - 2025-03-13T13:23:34.079Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:23:40.794Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:24:07.972Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:24:16.549Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:24:35.247Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:24:39.824Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:25:27.372Z 
+  - GET /api/usersNot connected 
+  - 2025-03-13T13:25:30.534Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:26:01.320Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:26:02.220Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:26:05.307Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:26:36.614Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:26:42.288Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:26:46.535Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:26:47.335Z 
+  - GET /api/productsNot connected 
+  - 2025-03-13T13:26:49.634Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:27:29.341Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:28:13.480Z 
+  - GET /api/products/26ddfdff-d045-4e4b-a6b5-f447724e5ef1Not connected 
+  - 2025-03-13T13:28:13.546Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T13:28:15.396Z 
+  - GET /api/products
