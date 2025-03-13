@@ -27,16 +27,20 @@ export class UserRepository {
 
   async findOneBy(filters: FilterQuery<SearchUserCriteria>): Promise<IUser | null> {
     const query: FilterQuery<SearchUserCriteria> = {};
-    if (filters.lastName) query.lastName = { $regex: filters.lastName, $options: "i" };
-    if (filters.firstName) query.firstName = { $regex: filters.firstName, $options: "i" };
-    if (filters.email) query.email = filters.email;
-    if (filters.phone) query.phone = filters.phone;
-    if (filters.role) query.role = filters.role;
-    if (filters.id) query.id = filters.id;
-    if (filters.authToken) query.authToken = filters.authToken;
-    if (filters.isValidated) query.isValidated = filters.isValidated;
-    if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
-
+    if (filters) {
+      if (filters.lastName) query.lastName = { $regex: filters.lastName, $options: "i" };
+      if (filters.firstName) query.firstName = { $regex: filters.firstName, $options: "i" };
+      if (filters.email) query.email = filters.email;
+      if (filters.phone) query.phone = filters.phone;
+      if (filters.role) query.role = filters.role;
+      if (filters.id) query.id = filters.id;
+      if (filters.authToken) query.authToken = filters.authToken;
+      if (filters.isValidated) query.isValidated = filters.isValidated;
+      if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
+    } else {
+      return null;
+    }
+    
     return await User.findOne(query).populate({
       path: 'cart',
       populate: {

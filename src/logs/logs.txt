@@ -434,4 +434,6 @@ Not connected
   - 2025-03-13T15:55:20.504Z 
   - GET /api-docs/favicon-32x32.pngNot connected 
   - 2025-03-13T15:56:03.193Z 
-  - GET /api/categories
+  - GET /api/categoriesNot connected 
+  - 2025-03-13T18:43:51.008Z 
+  - GET /api/users
