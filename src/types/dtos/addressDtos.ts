@@ -18,3 +18,12 @@ export class AddressToModify {
   type?: AdressType;
   phone?: string;
 }
+
+export class AddressPresenter {
+  street!: string;
+  city!: string;
+  postalCode!: string;
+  country!: string;
+  type!: AdressType;
+  phone?: string;
+}

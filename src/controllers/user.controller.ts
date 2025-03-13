@@ -16,6 +16,17 @@ export class UserController {
     this.jwtService = new JWTService()
   }
 
+  async getMe(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const user = await this.userService.getUser(req.decoded.user.id);
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      res.status(200).json(userPresenter);
+    }
+    catch (error) {
+      next(error);
+    }
+  }
+
   async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const userData = plainToClass(UserToCreate, req.body);
@@ -168,7 +179,9 @@ export class UserController {
     try {
       const { authToken } = req.body;
       const user = await this.userService.validateUser(authToken);
-      res.status(200).json({ message: "User validated", user });
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+
+      res.status(200).json({ message: "User validated", userPresenter });
     } catch (error) {
       next(error);
     }

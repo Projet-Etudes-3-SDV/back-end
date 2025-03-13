@@ -277,4 +277,19 @@ router.delete("/:id", (req, res, next) => userController.deleteUser(req, res, ne
  */
 router.patch("/:id", (req, res, next) => userController.patchUser(req, res, next));
 
+
+/**
+ * @swagger
+ * /api/users/me:
+ *   get:
+ *     summary: Get the current user
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: User details
+ *       400:
+ *         description: Invalid input
+ */
+router.get("/me", Auth.checkJWT, (req, res, next) => userController.getMe(req as unknown as EncodedRequest, res, next));
+
 export default router;

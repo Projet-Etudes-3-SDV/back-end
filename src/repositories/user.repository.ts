@@ -32,7 +32,10 @@ export class UserRepository {
     if (filters.email) query.email = filters.email;
     if (filters.phone) query.phone = filters.phone;
     if (filters.role) query.role = filters.role;
-    if (filters.id) query.id = filters.id;  
+    if (filters.id) query.id = filters.id;
+    if (filters.authToken) query.authToken = filters.authToken;
+    if (filters.isValidated) query.isValidated = filters.isValidated;
+    if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
 
     return await User.findOne(query).populate({
       path: 'cart',
@@ -77,7 +80,9 @@ export class UserRepository {
     if (filters.lastName) query.lastName = { $regex: filters.lastName, $options: "i" };
     if (filters.firstName) query.firstName = { $regex: filters.firstName, $options: "i" };
     if (filters.email) query.email = filters.email;
-    if (filters.id) query.id = filters.id;  
+    if (filters.id) query.id = filters.id;
+    if (filters.authToken) query.authToken = filters.authToken;
+    if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
 
     const [users, total] = await Promise.all([
       User.find(query).skip(skip).limit(limit).populate({

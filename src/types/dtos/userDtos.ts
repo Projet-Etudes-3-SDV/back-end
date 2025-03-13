@@ -3,6 +3,7 @@ import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
 import { SubscriptionPresenter } from "./subscriptionDtos";
+import { AddressPresenter } from "./addressDtos";
 
 export class UserToCreate {
   @IsString()
@@ -130,6 +131,16 @@ export class SearchUserCriteria {
   @Expose()
   resetPasswordToken?: string;
 
+  @IsString()
+  @IsOptional()
+  @Expose()
+  authToken?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  role?: string;
+
   @IsNumber()
   @IsOptional()
   @Min(1)
@@ -185,10 +196,10 @@ export class UserPresenter {
   @Type(() => SubscriptionPresenter)
   subscriptions!: SubscriptionPresenter;
 
-  // @Expose()
-  // @ValidateNested({ each: true })
-  // @Type(() => AddressPresenter)
-  // addresses?: AddressPresenter;
+  @Expose()
+  @ValidateNested({ each: true })
+  @Type(() => AddressPresenter)
+  addresses?: AddressPresenter;
 }
 
 export class UserCreationPresenter {

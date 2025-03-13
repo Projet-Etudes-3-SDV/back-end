@@ -54,6 +54,10 @@ export class UserService {
       throw new AppError("User not found", 404);
     }
 
+    if (user.isValidated) {
+      throw new AppError("User already validated", 400);
+    }
+
     user.isValidated = true;
     user.authToken = undefined;
     return await user.save();
