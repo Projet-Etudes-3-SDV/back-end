@@ -36,7 +36,7 @@ const userController = new UserController();
  *       400:
  *         description: Invalid input
  */
-router.post("/", (req, res, next) => userController.createUser(req, res, next));
+router.post("/register", (req, res, next) => userController.createUser(req, res, next));
 
 /**
  * @swagger
