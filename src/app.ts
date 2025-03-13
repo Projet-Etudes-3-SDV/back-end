@@ -7,7 +7,7 @@ import categoryRoutes from './routes/category.routes';
 import cartRoutes from './routes/cart.routes';
 import subscriptionRoutes from './routes/subscription.routes';
 import addressRoutes from './routes/address.routes';
-import { errorHandler } from './middlewares/errorHandler';
+import { errorHandler } from './middlewares/errorHandler.middleware';
 import logger from './middlewares/logger.middleware';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
