@@ -436,4 +436,36 @@ Not connected
   - 2025-03-13T15:56:03.193Z 
   - GET /api/categoriesNot connected 
   - 2025-03-13T18:43:51.008Z 
-  - GET /api/users
+  - GET /api/usersNot connected 
+  - 2025-03-13T18:51:48.753Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-13T18:51:48.878Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-13T18:51:48.896Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-13T18:51:48.907Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-13T18:51:48.985Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-13T18:51:53.120Z 
+  - GET /api-docsNot connected 
+  - 2025-03-13T18:51:53.131Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-13T18:51:53.250Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-13T18:51:53.251Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-13T18:51:53.255Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-13T18:51:53.260Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-13T18:52:19.627Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T18:53:11.542Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T18:53:21.575Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T18:54:15.147Z 
+  - POST /api/users/validateNot connected 
+  - 2025-03-13T18:54:53.397Z 
+  - POST /api/users/validate

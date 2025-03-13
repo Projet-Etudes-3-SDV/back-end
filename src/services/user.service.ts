@@ -49,7 +49,7 @@ export class UserService {
   }
 
   async validateUser(authToken: ValidateUserDTO): Promise<IUser> {
-    const user = await this.userRepository.findOneBy({ authToken });
+    const user = await this.userRepository.findOneBy(authToken);
     if (!user) {
       throw new AppError("User not found", 404, [], "INVALID_TOKEN");
     }

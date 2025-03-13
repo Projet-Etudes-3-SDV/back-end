@@ -179,7 +179,17 @@ export class UserController {
     try {
       const validateUserDTO = plainToClass(ValidateUserDTO, req.body, { excludeExtraneousValues: true });
 
+      const dtoErrors = await validate(validateUserDTO);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+
       const user = await this.userService.validateUser(validateUserDTO);
+      
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
 
       res.status(200).json({ message: "User validated", userPresenter });
