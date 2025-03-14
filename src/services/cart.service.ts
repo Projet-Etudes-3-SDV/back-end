@@ -3,6 +3,8 @@ import { ICart } from "../models/cart.model";
 import { AppError } from "../utils/AppError";
 import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
+import { SubscriptionPlan } from "../models/subscription.model";
+import { isInstance } from "class-validator";
 
 export class CartService {
   private userRepository: UserRepository;
@@ -15,7 +17,7 @@ export class CartService {
     this.cartRepository = new CartRepository();
   }
 
-  async addItemToCart(userId: string, productId: string): Promise<ICart> {
+  async addItemToCart(userId: string, productId: string, plan: string): Promise<ICart> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new AppError("User not found", 404);
@@ -25,17 +27,22 @@ export class CartService {
       throw new AppError("Product not found", 404);
     }
 
+    if (plan !== SubscriptionPlan.MONTHLY && plan !== SubscriptionPlan.YEARLY && plan !== SubscriptionPlan.FREE_TRIAL) {
+      throw new AppError("Invalid plan", 400);
+    }
+
     let cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       cart = await this.cartRepository.create({ owner: user._id });
       user.cart = cart._id;
     }
 
-    const existingItem = cart.products.find((item) => item.product.id=== productId);
+    const existingItem = cart.products.find((item) => item.product.id === productId);
     if (existingItem) {
-      existingItem.quantity++;
+      // existingItem.quantity++;
+      throw new AppError("User is already subbed to this product", 400);
     } else {
-      cart.products.push({ product: product._id, quantity: 1 });
+      cart.products.push({ product: product._id, quantity: 1, plan: plan });
     }
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);
@@ -121,7 +128,7 @@ export class CartService {
       throw new AppError("User not found", 404);
     }
 
-    const cart = await this.cartRepository.findByUserId(userId);
+    const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new AppError("ICart not found", 404);
     }

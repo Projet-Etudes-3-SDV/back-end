@@ -24,10 +24,9 @@ export class CartController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const { userId, productId } = addItemToCartDto;
-      const updatedUser = await this.cartService.addItemToCart(userId, productId);
-      const cartPresenter = plainToClass(CartPresenter, updatedUser);
-      res.status(200).json(cartPresenter);
+      const { userId, productId, plan } = addItemToCartDto;
+      const cart = await this.cartService.addItemToCart(userId, productId, plan);
+      res.status(200).json(cart);
     } catch (error) {
       next(error);
     }

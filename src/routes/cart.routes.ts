@@ -102,7 +102,7 @@ router.delete("/reset", (req, res, next) => cartController.resetCart(req, res, n
 
 /**
  * @swagger
- * /api/cart:
+ * /api/cart/me:
  *   get:
  *     summary: Get the cart of the user
  *     tags: [Cart]

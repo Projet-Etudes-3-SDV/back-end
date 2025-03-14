@@ -1,15 +1,23 @@
 import { Expose, Type } from "class-transformer";
-import { IsNotEmpty, IsUUID } from "class-validator";
+import { IsNotEmpty, IsString, IsUUID, ValidateNested } from "class-validator";
 import { ProductPresenter } from "./productDtos";
+import { SubscriptionPlan } from "../../models/subscription.model";
 
 export class AddItemToCartDto {
   @IsUUID()
   @IsNotEmpty()
+  @Expose()
   userId!: string;
 
   @IsUUID()
   @IsNotEmpty()
+  @Expose()
   productId!: string;
+
+  @Expose()
+  @IsNotEmpty()
+  @IsString()
+  plan!: string;
 }
 
 export class DeleteItemFromCartDto {
@@ -35,6 +43,10 @@ export class Products {
 
   @Expose()
   quantity!: number;
+
+  @Expose()
+  @IsString()
+  plan!: string;
 }
 
 export class CartItemPresenter {
@@ -42,8 +54,9 @@ export class CartItemPresenter {
   id!: string;
 
   @Expose()
+  @ValidateNested({ each: true })
   @Type(() => Products)
-  products!: Products;
+  products!: Products[];
 }
 
 export class CartPresenter {
@@ -51,6 +64,7 @@ export class CartPresenter {
   id!: string;
 
   @Expose()
+  @ValidateNested({ each: true })
   @Type(() => Products)
   products!: Products[];
 

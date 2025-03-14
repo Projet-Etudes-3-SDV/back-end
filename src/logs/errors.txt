@@ -587,4 +587,109 @@ Not connected - 10.111.9.92
     - User not found
     - NO_USER_FOUND
 
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:17:32.442Z 
+    - POST /api/cart/add 
+    - 404 
+    - User not found
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:18:10.695Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:19:31.192Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:22:20.161Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:25:35.583Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:26:10.667Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:27:51.334Z 
+    - POST /api/cart/add 
+    - 400 
+    - User is already subbed to this product
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:28:19.173Z 
+    - POST /api/cart/add 
+    - 400 
+    - User is already subbed to this product
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:28:58.614Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:29:25.439Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:33:31.275Z 
+    - POST /api/cart/add 
+    - 400 
+    - User is already subbed to this product
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:36:33.740Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:38:36.481Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:39:31.813Z 
+    - POST /api/cart/add 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T09:40:21.904Z 
+    - POST /api/cart/add 
+    - 400 
+    - User is already subbed to this product
+    - undefined
+
     

@@ -542,4 +542,50 @@ Not connected
   - 2025-03-14T09:00:53.455Z 
   - GET /api-docs/swagger-ui-init.jsNot connected 
   - 2025-03-14T09:00:54.057Z 
-  - GET /api-docs/favicon-32x32.png
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T09:09:18.387Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T09:10:31.429Z 
+  - GET /api/productsNot connected 
+  - 2025-03-14T09:10:52.985Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T09:17:24.546Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T09:17:32.418Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:18:09.885Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:19:30.841Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:22:19.664Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:25:35.146Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:26:10.246Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:27:51.152Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:28:18.979Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:28:57.633Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:29:09.450Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T09:29:25.042Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:33:31.068Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:33:37.792Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T09:36:33.014Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:36:37.807Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T09:38:35.918Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:39:31.205Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:40:21.724Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T09:40:43.381Z 
+  - POST /api/cart/add
