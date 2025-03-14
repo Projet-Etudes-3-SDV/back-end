@@ -22,7 +22,13 @@ export class AddressService {
 
     addressData.userId = user._id;
 
-    return await this.addressRepository.create(addressData);
+
+    const address = await this.addressRepository.create(addressData);
+
+    user.addresses.push(address._id);
+    await this.userRepository.update(user.id, user);
+
+    return address;
   }
 
   async getAddress(id: string): Promise<IAddress> {

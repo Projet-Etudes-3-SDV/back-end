@@ -1,6 +1,6 @@
-import mongoose, { Schema, type Document } from "mongoose"
-import { v4 as uuidv4 } from "uuid"
-import bcrypt from "bcrypt"
+import mongoose, { Schema, type Document } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcrypt";
 import { ICart } from "./cart.model";
 import { IAddress } from "./adress.model";
 import { ISubscription } from "./subscription.model";
@@ -26,13 +26,13 @@ export interface IUser extends Document {
   resetPasswordToken?: string;
   authToken?: string;
   isValidated: boolean;
-  comparePassword(candidatePassword: string): Promise<boolean>
-  generatePasswordToken(): string
-  generateAuthToken(): string
-  isSubscriptionActive(): boolean
-  cancelSubscription(): void
-  updateSubscriptionEndDate(newEndDate: Date): void
-  subscriptions: ISubscription["_id"][]
+  comparePassword(candidatePassword: string): Promise<boolean>;
+  generatePasswordToken(): string;
+  generateAuthToken(): string;
+  isSubscriptionActive(): boolean;
+  cancelSubscription(): void;
+  updateSubscriptionEndDate(newEndDate: Date): void;
+  subscriptions: ISubscription["_id"][];
   addresses: IAddress["_id"][];
 }
 
@@ -58,28 +58,28 @@ const UserSchema: Schema = new Schema(
 );
 
 UserSchema.pre<IUser>("save", async function (next) {
-  if (!this.isModified("password")) return next()
+  if (!this.isModified("password")) return next();
 
-  const salt = await bcrypt.genSalt(10)
-  this.password = await bcrypt.hash(this.password, salt)
-  next()
-})
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 UserSchema.methods.generatePasswordToken = function (): string {
-  const token = uuidv4()
-  this.resetPasswordToken = token
-  return token
-}
+  const token = uuidv4();
+  this.resetPasswordToken = token;
+  return token;
+};
 
 UserSchema.methods.generateAuthToken = function (): string {
-  const token = uuidv4()
-  this.authToken = token
-  return token
-}
+  const token = uuidv4();
+  this.authToken = token;
+  return token;
+};
 
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
-  return bcrypt.compare(candidatePassword, this.password)
-}
+  return bcrypt.compare(candidatePassword, this.password);
+};
 
 UserSchema.methods.isSubscriptionActive = function (): boolean {
   return this.subscription && this.subscription.status === "active" && new Date() < new Date(this.subscription.endDate);
@@ -97,7 +97,7 @@ UserSchema.methods.updateSubscriptionEndDate = function (newEndDate: Date) {
   this.save();
 };
 
-export default mongoose.model<IUser>("User", UserSchema)
+export default mongoose.model<IUser>("User", UserSchema);
 
 
 

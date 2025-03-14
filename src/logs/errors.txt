@@ -874,4 +874,39 @@ Not connected - 10.111.9.92
     - User already subscribed to this product
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-03-14T12:14:15.123Z 
+    - POST /api/addresses 
+    - 404 
+    - User not found
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T12:14:34.378Z 
+    - POST /api/addresses 
+    - 500 
+    - Address validation failed: type: `HOME` is not a valid enum value for path `type`.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T12:19:13.558Z 
+    - GET /api/users 
+    - 500 
+    - Cannot populate path `address` because it is not in your schema. Set the `strictPopulate` option to false to override.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T12:20:22.532Z 
+    - GET /api/users 
+    - 500 
+    - Cannot populate path `Address` because it is not in your schema. Set the `strictPopulate` option to false to override.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T13:23:24.725Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+    - undefined
+
     

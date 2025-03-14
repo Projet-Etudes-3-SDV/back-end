@@ -1,7 +1,6 @@
 import { FilterQuery } from "mongoose";
 import User, { type IUser } from "../models/user.model";
 import { UserToCreate, SearchUserCriteria } from "../types/dtos/userDtos";
-import path from "path";
 
 export class UserRepository {
   async create(userData: UserToCreate): Promise<IUser> {
@@ -10,7 +9,7 @@ export class UserRepository {
   }
 
   async findById(id: string): Promise<IUser | null> {
-    return await User.findOne({ id }).populate({
+    return await User.findOne({ id }).populate([{
       path: 'cart',
       populate: [{
         path: 'products.product',
@@ -18,15 +17,16 @@ export class UserRepository {
       },
       {
         path: 'owner',
-      }
-    ]
-    }).populate({
+      }],
+    }, {
       path: 'subscriptions',
       populate: {
         path: 'product',
         populate: { path: 'category' }
       }
-    });
+    }, {
+      path: 'addresses'
+    }]);
   }
 
   async findOneBy(filters: FilterQuery<SearchUserCriteria>): Promise<IUser | null> {
@@ -45,7 +45,7 @@ export class UserRepository {
       return null;
     }
     
-    return await User.findOne(query).populate({
+    return await User.findOne(query).populate([{
       path: 'cart',
       populate: [{
         path: 'products.product',
@@ -53,37 +53,39 @@ export class UserRepository {
       },
       {
         path: 'owner',
-      }
-    ]
-    }).populate({
+      }],
+    }, {
       path: 'subscriptions',
       populate: {
         path: 'product',
         populate: { path: 'category' }
       }
-    });
+    }, {
+      path: 'addresses'
+    }]);
   }
 
   async findAll(page: number, limit: number): Promise<{ users: IUser[]; total: number }> {
     const skip = (page - 1) * limit;
     const [users, total] = await Promise.all([
-      User.find().skip(skip).limit(limit).populate({
-        path: 'cart',
+      User.find().skip(skip).limit(limit).populate([{
+      path: 'cart',
       populate: [{
         path: 'products.product',
         populate: { path: 'category' }
       },
       {
         path: 'owner',
-      }
-    ]
-          }).populate({
+      }],
+    }, {
       path: 'subscriptions',
       populate: {
         path: 'product',
         populate: { path: 'category' }
       }
-    }),
+    }, {
+      path: 'addresses',
+    }]),
       User.countDocuments()
     ]);
     return { users, total };
@@ -101,30 +103,7 @@ export class UserRepository {
     if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
 
     const [users, total] = await Promise.all([
-      User.find(query).skip(skip).limit(limit).populate({
-        path: 'cart',
-      populate: [{
-        path: 'products.product',
-        populate: { path: 'category' }
-      },
-      {
-        path: 'owner',
-      }
-    ]
-    }).populate({
-      path: 'subscriptions',
-      populate: {
-        path: 'product',
-        populate: { path: 'category' }
-      }
-    }),
-      User.countDocuments(query)
-    ]);
-    return { users, total };
-  }
-
-  async update(id: string, userData: Partial<IUser>): Promise<IUser | null> {
-    return await User.findOneAndUpdate({ id }, userData, { new: true }).populate({
+      User.find(query).skip(skip).limit(limit).populate([{
       path: 'cart',
       populate: [{
         path: 'products.product',
@@ -132,15 +111,41 @@ export class UserRepository {
       },
       {
         path: 'owner',
-      }
-    ]
-    }).populate({
+      }],
+    }, {
       path: 'subscriptions',
       populate: {
         path: 'product',
         populate: { path: 'category' }
       }
-    });
+    }, {
+      path: 'addresses',
+      model: 'Address'
+    }]),
+      User.countDocuments(query)
+    ]);
+    return { users, total };
+  }
+
+  async update(id: string, userData: Partial<IUser>): Promise<IUser | null> {
+    return await User.findOneAndUpdate({ id }, userData, { new: true }).populate([{
+      path: 'cart',
+      populate: [{
+        path: 'products.product',
+        populate: { path: 'category' }
+      },
+      {
+        path: 'owner',
+      }],
+    }, {
+      path: 'subscriptions',
+      populate: {
+        path: 'product',
+        populate: { path: 'category' }
+      }
+    }, {
+      path: 'addresses'
+    }]);
   }
 
   async delete(id: string): Promise<boolean> {

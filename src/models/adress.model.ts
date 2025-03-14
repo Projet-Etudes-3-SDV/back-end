@@ -1,6 +1,6 @@
-import mongoose, { Schema, type Document } from "mongoose"
-import { v4 as uuidv4 } from "uuid"
-import { IUser } from "./user.model"
+import mongoose, { Schema, type Document } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
+import { IUser } from "./user.model";
 
 export enum AdressType {
   BILLING = "billing",

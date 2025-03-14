@@ -808,4 +808,296 @@ Not connected
   - 2025-03-14T10:56:47.152Z 
   - GET /api-docs/swagger-ui-init.jsNot connected 
   - 2025-03-14T10:56:47.291Z 
-  - GET /api-docs/favicon-32x32.png
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:00:35.382Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:06:55.238Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T11:06:55.596Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T11:06:55.604Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T11:06:55.606Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T11:06:55.605Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T11:06:56.469Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:06:56.484Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:17:12.245Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T11:17:12.650Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T11:17:12.657Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T11:17:12.657Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T11:17:12.655Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T11:17:13.572Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:17:37.163Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:19:08.115Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:20:02.083Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:21:47.141Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:24:42.982Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:34:00.045Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:35:10.163Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:37:34.243Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:46:51.043Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:47:23.177Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:49:38.504Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:50:11.154Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:51:54.144Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:53:04.116Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T11:54:40.669Z 
+  - GET /api/productsNot connected 
+  - 2025-03-14T11:54:40.711Z 
+  - GET /api/categoriesNot connected 
+  - 2025-03-14T11:54:53.620Z 
+  - GET /api/products/be6b2299-7d98-40b1-97a0-0dde9f269169Not connected 
+  - 2025-03-14T11:59:51.035Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:05:31.152Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:06:10.066Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:06:52.034Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:07:32.168Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:08:14.163Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:09:29.152Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:10:07.164Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:10:37.054Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T12:10:37.121Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T12:10:37.155Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T12:10:37.218Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T12:10:37.282Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T12:10:37.860Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:10:48.037Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:11:26.106Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:13:21.201Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:14:03.257Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T12:14:03.286Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T12:14:03.294Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T12:14:03.321Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T12:14:03.349Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T12:14:03.488Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:14:15.073Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:14:34.274Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:14:39.460Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:15:13.218Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:15:22.493Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:15:30.015Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:16:21.145Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:16:47.386Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:16:51.824Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:16:59.135Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:17:30.370Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:18:11.252Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:18:35.265Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:18:43.556Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:18:45.054Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:19:13.479Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:19:52.063Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:20:22.466Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:20:26.344Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:20:49.932Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:21:36.426Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:22:07.121Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:23:17.116Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:23:47.491Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:23:53.263Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:24:44.325Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:25:34.207Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:25:37.110Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:26:02.087Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:26:51.091Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:27:53.215Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:28:14.221Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:28:20.018Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:28:23.901Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:29:22.223Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:29:31.241Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:29:46.356Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:30:05.178Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:30:46.022Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:31:48.050Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:32:44.246Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:32:54.116Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:33:26.180Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:35:46.054Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:36:07.335Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:36:44.106Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:38:05.156Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:38:59.110Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:39:31.199Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:40:03.243Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:40:58.025Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:41:05.268Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:41:43.421Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:41:47.175Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:42:26.200Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:43:02.158Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:43:42.789Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:44:53.225Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:46:12.257Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:46:13.065Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:46:17.701Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:46:47.053Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:47:14.951Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:47:28.279Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:47:31.132Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:48:01.165Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:48:44.068Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:50:04.244Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:50:43.090Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:52:33.354Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:53:00.396Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:53:02.183Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:53:30.275Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:53:56.751Z 
+  - POST /api/addressesNot connected 
+  - 2025-03-14T12:54:03.066Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T12:54:08.252Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:55:40.414Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:56:17.174Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T12:57:01.593Z 
+  - GET /api/addresses/e9dd9ddc-6ba6-4bbd-a559-fa5d2b7f2d36Not connected 
+  - 2025-03-14T12:58:01.111Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:00:14.253Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:01:50.128Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:04:54.233Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:10:28.338Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:10:58.139Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:11:35.455Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:12:05.430Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:14:00.148Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:14:26.495Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:21:36.613Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:22:46.325Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:23:24.708Z 
+  - POST /api/users/register

@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate } from "class-validator";
+import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate, Matches } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
@@ -20,6 +20,7 @@ export class UserToCreate {
 
   @IsString()
   @Expose()
+  @Matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, { message: 'Password must be longer than 7 characters, contain at least one digit and one special character' })
   password!: string;
 
   @IsString()
@@ -203,6 +204,7 @@ export class UserPresenter {
   subscriptions!: SubscriptionPresenter;
 
   @Expose()
+  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => AddressPresenter)
   addresses?: AddressPresenter;
@@ -250,6 +252,11 @@ export class AdminUserPresenter {
   @Expose()
   @Type(() => SubscriptionPresenter)
   subscriptions?: SubscriptionPresenter;
+
+  @Expose()
+  @ValidateNested({ each: true })
+  @Type(() => AddressPresenter)
+  addresses?: AddressPresenter;
 
   @Expose()
   password!: string;
