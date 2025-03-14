@@ -7,6 +7,7 @@ import categoryRoutes from './routes/category.routes';
 import cartRoutes from './routes/cart.routes';
 import subscriptionRoutes from './routes/subscription.routes';
 import addressRoutes from './routes/address.routes';
+import couponRoutes from './routes/coupon.routes';
 import { errorHandler } from './middlewares/errorHandler.middleware';
 import logger from './middlewares/logger.middleware';
 import swaggerJsdoc from 'swagger-jsdoc';
@@ -47,6 +48,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/addresses', addressRoutes);
+app.use('/api/coupons', couponRoutes);
 // app.use('/api/payments', paymentRoutes);
 
 app.use(errorHandler)

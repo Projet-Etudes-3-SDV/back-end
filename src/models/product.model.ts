@@ -1,6 +1,7 @@
 import mongoose, { Schema, type Document } from "mongoose"
 import { v4 as uuidv4 } from "uuid"
 import { ICategory } from "./category.model";
+import { ICoupon } from "./coupon.model";
 
 // Product model
 export interface IProduct extends Document {
@@ -12,6 +13,7 @@ export interface IProduct extends Document {
   yearlyPrice: number;
   available: boolean;
   addedDate: Date;
+  coupons: ICoupon["_id"][];
 }
 
 const ProductSchema: Schema = new Schema(
@@ -24,6 +26,7 @@ const ProductSchema: Schema = new Schema(
     yearlyPrice: { type: Number, required: true },
     available: { type: Boolean, default: true },
     addedDate: { type: Date, default: Date.now },
+    coupons: { type: Schema.Types.ObjectId, ref: "Coupon", required: true },
   },
   { versionKey: false, timestamps: true }
 );

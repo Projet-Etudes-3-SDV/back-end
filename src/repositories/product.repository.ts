@@ -20,6 +20,11 @@ export class ProductRepository {
     if (filters.yearlyPrice) query.yearlyPrice = filters.yearlyPrice;
     if (filters.category) query.category = filters.category;
     if (filters.id) query.id = filters.id;
+    if (filters._id) query._id = filters._id;
+    
+    if (!query) {
+      return null;
+    }
 
     return await Product.findOne(query).populate("category");
   }
