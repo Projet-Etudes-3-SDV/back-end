@@ -11,6 +11,7 @@ Voir l'ADR pour plus d'informations: https://docs.google.com/document/d/1vzXj49D
 - **Gestion des erreurs centralisée**
 - **Logging des requêtes**
 - **Configuration modulaire**
+- **Documentation Swagger**
 
 ## Installation
 
@@ -51,6 +52,9 @@ npm run build
 npm start
 ```
 
+### Accéder à la documentation
+Une fois l'API lancé se rendre sur la page suivante: http://localhost:3000/api-docs
+
 ## Structure du projet
 ```
 /src
@@ -73,13 +77,6 @@ npm start
 | PUT     | /users/:id      | Mettre à jour un utilisateur      |
 | DELETE  | /users/:id      | Supprimer un utilisateur         |
 
-## Contribuer
-Les contributions sont les bienvenues !
-1. **Fork** le projet
-2. **Créer une branche** (`feature/ma-nouvelle-feature`)
-3. **Commit** (`git commit -m 'Ajout d'une nouvelle feature'`)
-4. **Push** (`git push origin feature/ma-nouvelle-feature`)
-5. **Faire une Pull Request**
 
 ## Licence
 Ce projet est sous licence MIT.
