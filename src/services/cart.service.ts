@@ -136,4 +136,18 @@ export class CartService {
 
     return updatedCart;
   }
+
+  async getCart(userId: string): Promise<ICart> {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    const cart = await this.cartRepository.findByUserId(user._id);
+    if (!cart) {
+      throw new AppError("Cart not found", 404);
+    }
+
+    return cart;
+  }
 }

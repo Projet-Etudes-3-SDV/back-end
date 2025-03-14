@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { CartController } from "../controllers/cart.controller";
+import { checkJWT } from "../middlewares/auth.middleware";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 const router = Router();
 const cartController = new CartController();
@@ -97,5 +99,21 @@ router.delete("/delete", (req, res, next) => cartController.deleteItemFromCart(r
  *         description: Invalid input
  */
 router.delete("/reset", (req, res, next) => cartController.resetCart(req, res, next));
+
+/**
+ * @swagger
+ * /api/cart:
+ *   get:
+ *     summary: Get the cart of the user
+ *     tags: [Cart]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User's cart
+ *       401:
+ *         description: Unauthorized
+ */
+router.get("/me", checkJWT, (req, res, next) => cartController.getCart(req as EncodedRequest, res, next));
 
 export default router;

@@ -4,6 +4,7 @@ import { AppError } from "../utils/AppError";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto } from "../types/dtos/cartDtos";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 export class CartController {
   private cartService: CartService;
@@ -86,6 +87,16 @@ export class CartController {
 
       const updatedUser = await this.cartService.updateCart(userId, cart);
       res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getCart(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.decoded.user.id;
+      const cart = await this.cartService.getCart(userId);
+      res.status(200).json(cart);
     } catch (error) {
       next(error);
     }
