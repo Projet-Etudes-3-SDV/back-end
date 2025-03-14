@@ -644,4 +644,88 @@ Not connected
   - 2025-03-14T10:20:27.426Z 
   - GET /api/cart/meNot connected 
   - 2025-03-14T10:26:41.619Z 
-  - GET /api/cart/me
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:28:35.863Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:31:08.303Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:31:15.690Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:31:39.020Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:32:45.461Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:34:16.893Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:35:58.812Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:38:11.474Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:39:01.874Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:39:02.254Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:39:02.257Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:39:02.284Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:39:02.346Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:39:03.960Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:39:05.251Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:39:32.548Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:40:08.696Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:40:10.422Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:40:50.463Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:41:17.976Z 
+  - GET /api/cart/meNot connected 
+  - 2025-03-14T10:41:35.218Z 
+  - GET /api/cart/validateNot connected 
+  - 2025-03-14T10:42:08.438Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:42:08.779Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:42:08.851Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:42:08.852Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:42:08.853Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:42:45.457Z 
+  - GET /api/cart/validateNot connected 
+  - 2025-03-14T10:42:57.625Z 
+  - GET /api/cart/validateNot connected 
+  - 2025-03-14T10:43:08.011Z 
+  - POST /api/cart/validateNot connected 
+  - 2025-03-14T10:43:16.298Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:45:23.020Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:45:54.558Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:47:26.673Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T10:47:32.383Z 
+  - POST /api/cart/validateNot connected 
+  - 2025-03-14T10:47:37.966Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:47:48.143Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:47:54.390Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:48:00.552Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T10:48:02.366Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:50:35.021Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T10:50:46.659Z 
+  - POST /api/cart/validateNot connected 
+  - 2025-03-14T10:50:50.357Z 
+  - GET /api/users

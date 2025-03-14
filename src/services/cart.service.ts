@@ -7,16 +7,19 @@ import { SubscriptionPlan } from "../models/subscription.model";
 import { isInstance } from "class-validator";
 import { IUser } from "../models/user.model";
 import { IProduct } from "../models/product.model";
+import { SubscriptionService } from "./subscription.service";
 
 export class CartService {
   private userRepository: UserRepository;
   private productRepository: ProductRepository;
   private cartRepository: CartRepository;
+  private subscriptionService: SubscriptionService;
 
   constructor() {
     this.userRepository = new UserRepository();
     this.productRepository = new ProductRepository();
     this.cartRepository = new CartRepository();
+    this.subscriptionService = new SubscriptionService();
   }
 
   async addItemToCart(userId: string, productId: string, plan: string): Promise<ICart> {
@@ -177,11 +180,8 @@ export class CartService {
       if (!product) {
         throw new AppError("Product not found", 404);
       }
-      
-      if (item.plan !== SubscriptionPlan.MONTHLY && item.plan !== SubscriptionPlan.YEARLY && item.plan !== SubscriptionPlan.FREE_TRIAL) {
-        throw new AppError("No plans where selected", 400);
-      }
-      await this.subscribeUserToProduct(user, product, item.plan);
+
+      await this.subscriptionService.addSubscription({ user: user.id, product: product.id, plan: item.plan });
     }
 
     // Clear the cart after validation
@@ -193,10 +193,5 @@ export class CartService {
     }
 
     return updatedCart;
-  }
-
-  private async subscribeUserToProduct(user: IUser, product: IProduct, plan: string): Promise<void> {
-    user.subscriptions.push({ product: product._id, plan: plan });
-    await this.userRepository.update(user.id, user);
   }
 }

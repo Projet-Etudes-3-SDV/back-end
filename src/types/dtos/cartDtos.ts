@@ -58,8 +58,8 @@ export class CartItemPresenter {
   products!: Products[];
 
   @Expose()
-  @IsUUID()
-  owner!: string;
+  @Type(() => UserCartPresenter)
+  owner!: UserCartPresenter;
 }
 
 export class UserCartPresenter {

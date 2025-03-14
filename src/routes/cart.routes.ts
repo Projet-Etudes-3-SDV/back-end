@@ -137,6 +137,6 @@ router.get("/me", checkJWT, (req, res, next) => cartController.getCart(req as En
  *       400:
  *         description: Invalid input
  */
-router.post("/validate", (req, res, next) => cartController.validateCart(req, res, next));
+router.post("/validate", checkJWT, (req, res, next) => cartController.validateCart(req as EncodedRequest, res, next));
 
 export default router;

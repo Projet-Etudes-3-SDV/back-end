@@ -12,10 +12,14 @@ export class UserRepository {
   async findById(id: string): Promise<IUser | null> {
     return await User.findOne({ id }).populate({
       path: 'cart',
-      populate: {
+      populate: [{
         path: 'products.product',
         populate: { path: 'category' }
+      },
+      {
+        path: 'owner',
       }
+    ]
     }).populate({
       path: 'subscriptions',
       populate: {
@@ -43,10 +47,14 @@ export class UserRepository {
     
     return await User.findOne(query).populate({
       path: 'cart',
-      populate: {
+      populate: [{
         path: 'products.product',
         populate: { path: 'category' }
+      },
+      {
+        path: 'owner',
       }
+    ]
     }).populate({
       path: 'subscriptions',
       populate: {
@@ -61,10 +69,14 @@ export class UserRepository {
     const [users, total] = await Promise.all([
       User.find().skip(skip).limit(limit).populate({
         path: 'cart',
-        populate: {
-          path: 'products.product',
-          populate: { path: 'category' }
-        }
+      populate: [{
+        path: 'products.product',
+        populate: { path: 'category' }
+      },
+      {
+        path: 'owner',
+      }
+    ]
           }).populate({
       path: 'subscriptions',
       populate: {
@@ -91,10 +103,14 @@ export class UserRepository {
     const [users, total] = await Promise.all([
       User.find(query).skip(skip).limit(limit).populate({
         path: 'cart',
-        populate: {
-          path: 'products.product',
-          populate: { path: 'category' }
-        }
+      populate: [{
+        path: 'products.product',
+        populate: { path: 'category' }
+      },
+      {
+        path: 'owner',
+      }
+    ]
     }).populate({
       path: 'subscriptions',
       populate: {
@@ -110,10 +126,14 @@ export class UserRepository {
   async update(id: string, userData: Partial<IUser>): Promise<IUser | null> {
     return await User.findOneAndUpdate({ id }, userData, { new: true }).populate({
       path: 'cart',
-      populate: {
+      populate: [{
         path: 'products.product',
         populate: { path: 'category' }
+      },
+      {
+        path: 'owner',
       }
+    ]
     }).populate({
       path: 'subscriptions',
       populate: {

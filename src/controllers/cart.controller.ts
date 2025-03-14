@@ -31,7 +31,8 @@ export class CartController {
           owner: cart.owner.id
   
         };
-      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
 
       res.status(200).json(cartPresenter);
     } catch (error) {
@@ -53,11 +54,10 @@ export class CartController {
       const { userId, productId } = deleteItemFromCartDto;
       const updatedUserCart = await this.cartService.deleteItemFromCart(userId, productId);
       const sanitizedUser = {
-          ...updatedUserCart.toObject(),
-          owner: updatedUserCart.owner.id
-  
+          ...updatedUserCart.toObject(),  
         };
-      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
 
       res.status(200).json(cartPresenter);
     } catch (error) {
@@ -79,11 +79,11 @@ export class CartController {
       const { userId } = resetCartDto;
       const updatedUserCart = await this.cartService.resetCart(userId);
       const sanitizedUser = {
-          ...updatedUserCart.toObject(),
-          owner: updatedUserCart.owner.id
+          ...updatedUserCart.toObject()
   
         };
-      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
 
       res.status(200).json(cartPresenter);
     } catch (error) {
@@ -108,11 +108,11 @@ export class CartController {
 
       const updatedUserCart = await this.cartService.updateCart(userId, cart);
       const sanitizedUser = {
-          ...updatedUserCart.toObject(),
-          owner: updatedUserCart.owner.id
+          ...updatedUserCart.toObject() 
   
         };
-      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
 
       res.status(200).json(cartPresenter);
     } catch (error) {
@@ -125,11 +125,9 @@ export class CartController {
       const userId = req.decoded.user.id;
       const updatedUserCart = await this.cartService.getCart(userId);
       const sanitizedUser = {
-          ...updatedUserCart.toObject(),
-          owner: updatedUserCart.owner.id
-  
+          ...updatedUserCart.toObject()  
         };
-      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
 
       res.status(200).json(cartPresenter);
     } catch (error) {
@@ -137,9 +135,9 @@ export class CartController {
     }
   }
 
-  async validateCart(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async validateCart(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { userId } = req.body;
+      const userId = req.decoded.user.id;
       const cart = await this.cartService.validateCart(userId);
       res.status(200).json(cart);
     } catch (error) {

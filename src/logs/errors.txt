@@ -846,4 +846,25 @@ Not connected - 10.111.9.92
     - Maximum call stack size exceeded
     - 
 
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-14T10:31:08.594Z 
+    - GET /api/cart/me 
+    - 500 
+    - Maximum call stack size exceeded
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T10:42:40.042Z 
+    - GET /api/cart/validate 
+    - 500 
+    - Expected ':' after property name in JSON at position 11 (line 3 column 1)
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T10:50:35.304Z 
+    - POST /api/cart/add 
+    - 400 
+    - User is already subbed to this product
+    - undefined
+
     
