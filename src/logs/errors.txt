@@ -867,4 +867,11 @@ Not connected - 10.111.9.92
     - User is already subbed to this product
     - undefined
 
+    69d638e4-ba4d-4ee3-88e8-7f75eea8f592 - 127.0.0.1 
+    - 2025-03-14T10:52:49.739Z 
+    - POST /api/cart/validate 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
     

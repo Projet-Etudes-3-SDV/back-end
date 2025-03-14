@@ -120,22 +120,16 @@ router.get("/me", checkJWT, (req, res, next) => cartController.getCart(req as En
  * @swagger
  * /api/cart/validate:
  *   post:
- *     summary: Validate the cart and subscribe user to selected products
+ *     summary: Buys the items in the cart
+ *     description: This endpoint simulates the purchase of the items in the cart
  *     tags: [Cart]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Cart validated and user subscribed
- *       400:
- *         description: Invalid input
+ *         description: Buy successful
+ *       401:
+ *         description: Unauthorized
  */
 router.post("/validate", checkJWT, (req, res, next) => cartController.validateCart(req as EncodedRequest, res, next));
 

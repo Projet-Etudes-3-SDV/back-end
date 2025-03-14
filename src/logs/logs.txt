@@ -728,4 +728,84 @@ Not connected
   - 2025-03-14T10:50:46.659Z 
   - POST /api/cart/validateNot connected 
   - 2025-03-14T10:50:50.357Z 
-  - GET /api/users
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:51:59.944Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:52:00.109Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:52:00.177Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:52:00.179Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:52:00.183Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:52:10.641Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:52:10.830Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:52:11.054Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:52:11.055Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:52:11.056Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:52:36.240Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:52:46.460Z 
+  - POST /api/cart/addNot connected 
+  - 2025-03-14T10:52:49.314Z 
+  - POST /api/cart/validateNot connected 
+  - 2025-03-14T10:52:53.989Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:54:06.642Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:54:06.692Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:54:06.702Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:54:06.729Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:54:06.756Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:54:07.441Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:54:35.321Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:54:48.034Z 
+  - GET /api/usersNot connected 
+  - 2025-03-14T10:54:57.563Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:54:57.611Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:54:57.613Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:54:57.642Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:54:57.671Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:54:57.788Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:55:38.639Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:55:38.690Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:55:38.713Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:55:38.743Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:55:38.780Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:55:38.925Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T10:56:47.043Z 
+  - GET /api-docs/Not connected 
+  - 2025-03-14T10:56:47.071Z 
+  - GET /api-docs/swagger-ui.cssNot connected 
+  - 2025-03-14T10:56:47.082Z 
+  - GET /api-docs/swagger-ui-bundle.jsNot connected 
+  - 2025-03-14T10:56:47.120Z 
+  - GET /api-docs/swagger-ui-standalone-preset.jsNot connected 
+  - 2025-03-14T10:56:47.152Z 
+  - GET /api-docs/swagger-ui-init.jsNot connected 
+  - 2025-03-14T10:56:47.291Z 
+  - GET /api-docs/favicon-32x32.png
