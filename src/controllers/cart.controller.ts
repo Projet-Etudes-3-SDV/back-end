@@ -3,7 +3,7 @@ import { CartService } from "../services/cart.service";
 import { AppError } from "../utils/AppError";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
-import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto } from "../types/dtos/cartDtos";
+import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto, CartPresenter } from "../types/dtos/cartDtos";
 import { EncodedRequest } from "../utils/EncodedRequest";
 
 export class CartController {
@@ -26,7 +26,8 @@ export class CartController {
       }
       const { userId, productId } = addItemToCartDto;
       const updatedUser = await this.cartService.addItemToCart(userId, productId);
-      res.status(200).json(updatedUser);
+      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
     }
@@ -45,7 +46,8 @@ export class CartController {
       }
       const { userId, productId } = deleteItemFromCartDto;
       const updatedUser = await this.cartService.deleteItemFromCart(userId, productId);
-      res.status(200).json(updatedUser);
+      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
     }
@@ -64,7 +66,8 @@ export class CartController {
       }
       const { userId } = resetCartDto;
       const updatedUser = await this.cartService.resetCart(userId);
-      res.status(200).json(updatedUser);
+      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
     }
@@ -86,7 +89,8 @@ export class CartController {
       }
 
       const updatedUser = await this.cartService.updateCart(userId, cart);
-      res.status(200).json(updatedUser);
+      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
     }
@@ -96,7 +100,8 @@ export class CartController {
     try {
       const userId = req.decoded.user.id;
       const cart = await this.cartService.getCart(userId);
-      res.status(200).json(cart);
+      const cartPresenter = plainToClass(CartPresenter, cart);
+      res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
     }

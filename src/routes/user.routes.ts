@@ -256,13 +256,14 @@ router.delete("/:id", (req, res, next) => userController.deleteUser(req, res, ne
  */
 router.patch("/:id", (req, res, next) => userController.patchUser(req, res, next));
 
-
 /**
  * @swagger
  * /api/users/me:
  *   get:
  *     summary: Get the current user
  *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User details

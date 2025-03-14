@@ -32,8 +32,22 @@ const options = {
       version: "1.0.0",
       description: "Documentation de l'API pour le projet Cyna",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: [path.join(__dirname, "routes/*.ts")], // Résolution correcte du chemin
+  apis: [path.join(__dirname, "routes/*.ts")],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

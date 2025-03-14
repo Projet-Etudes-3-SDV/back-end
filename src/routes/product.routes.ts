@@ -18,6 +18,8 @@ const productController = new ProductController();
  *   post:
  *     summary: Create a new product
  *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:

@@ -44,7 +44,16 @@ export class CartItemPresenter {
   @Expose()
   @Type(() => Products)
   products!: Products;
+}
+
+export class CartPresenter {
+  @Expose()
+  id!: string;
 
   @Expose()
-  quantity!: number;
+  @Type(() => Products)
+  products!: Products[];
+
+  @Expose()
+  owner!: string;
 }
