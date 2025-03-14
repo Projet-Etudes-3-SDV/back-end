@@ -26,7 +26,7 @@ export class UserService {
     
     user.generateAuthToken();
 
-    sendEmail(user.email, "Account validation", `Click here to validate your account: http://localhost:3000/account-validation/${user.authToken}`);
+    sendEmail(user.email, "Account validation", `Click here to validate your account: http://localhost:8100/account-validation/${user.authToken}`);
 
     return await user.save();
   }
@@ -121,7 +121,7 @@ export class UserService {
     }
 
     user.generatePasswordToken();
-    sendEmail(user.email, "Password reset", `Click here to reset your password: http://localhost:3000/reset-password/${user.resetPasswordToken}`);
+    sendEmail(user.email, "Password reset", `Click here to reset your password: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
 
     await user.save();
   }

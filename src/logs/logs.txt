@@ -1100,4 +1100,22 @@ Not connected
   - 2025-03-14T13:22:46.325Z 
   - GET /api-docs/favicon-32x32.pngNot connected 
   - 2025-03-14T13:23:24.708Z 
-  - POST /api/users/register
+  - POST /api/users/registerNot connected 
+  - 2025-03-14T13:23:50.350Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:24:58.432Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:25:27.433Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-14T13:25:50.273Z 
+  - POST /api/users/loginNot connected 
+  - 2025-03-14T13:25:53.523Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:26:16.489Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:26:58.405Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:27:53.418Z 
+  - GET /api-docs/favicon-32x32.pngNot connected 
+  - 2025-03-14T13:28:13.597Z 
+  - GET /api-docs/favicon-32x32.png
