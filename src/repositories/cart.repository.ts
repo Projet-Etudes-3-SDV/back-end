@@ -7,15 +7,15 @@ export class CartRepository {
   }
 
   async findById(id: string): Promise<ICart | null> {
-    return await Cart.findOne({ id }).populate("products.product");
+    return await Cart.findOne({ id }).populate({path: "products.product", populate: { path: "category" }}).populate("owner");
   }
 
   async findByUserId(userId: string): Promise<ICart | null> {
-    return await Cart.findOne({ owner: userId }).populate("products.product");
+    return await Cart.findOne({ owner: userId }).populate({path: "products.product", populate: { path: "category" }}).populate("owner");
   }
 
   async update(id: string, cartData: Partial<ICart>): Promise<ICart | null> {
-    return await Cart.findOneAndUpdate({ id }, cartData, { new: true }).populate("products.product");
+    return await Cart.findOneAndUpdate({ id }, cartData, { new: true }).populate({path: "products.product", populate: { path: "category" }}).populate("owner");
   }
 
   async delete(id: string): Promise<boolean> {

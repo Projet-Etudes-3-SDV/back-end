@@ -1,7 +1,6 @@
 import { Expose, Type } from "class-transformer";
 import { IsNotEmpty, IsString, IsUUID, ValidateNested } from "class-validator";
 import { ProductPresenter } from "./productDtos";
-import { SubscriptionPlan } from "../../models/subscription.model";
 
 export class AddItemToCartDto {
   @IsUUID()
@@ -57,17 +56,21 @@ export class CartItemPresenter {
   @ValidateNested({ each: true })
   @Type(() => Products)
   products!: Products[];
+
+  @Expose()
+  @IsUUID()
+  owner!: string;
 }
 
-export class CartPresenter {
+export class UserCartPresenter {
   @Expose()
   id!: string;
 
   @Expose()
-  @ValidateNested({ each: true })
-  @Type(() => Products)
-  products!: Products[];
+  @IsString()
+  lastName!: string;
 
   @Expose()
-  owner!: string;
+  @IsString()
+  firstName!: string;
 }

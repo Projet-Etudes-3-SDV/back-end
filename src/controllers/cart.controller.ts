@@ -3,7 +3,7 @@ import { CartService } from "../services/cart.service";
 import { AppError } from "../utils/AppError";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
-import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto, CartPresenter } from "../types/dtos/cartDtos";
+import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto, CartItemPresenter } from "../types/dtos/cartDtos";
 import { EncodedRequest } from "../utils/EncodedRequest";
 
 export class CartController {
@@ -26,7 +26,14 @@ export class CartController {
       }
       const { userId, productId, plan } = addItemToCartDto;
       const cart = await this.cartService.addItemToCart(userId, productId, plan);
-      res.status(200).json(cart);
+      const sanitizedUser = {
+          ...cart.toObject(),
+          owner: cart.owner.id
+  
+        };
+      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+
+      res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
     }
@@ -44,8 +51,14 @@ export class CartController {
         throw new AppError("Validation failed", 400, errors);
       }
       const { userId, productId } = deleteItemFromCartDto;
-      const updatedUser = await this.cartService.deleteItemFromCart(userId, productId);
-      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      const updatedUserCart = await this.cartService.deleteItemFromCart(userId, productId);
+      const sanitizedUser = {
+          ...updatedUserCart.toObject(),
+          owner: updatedUserCart.owner.id
+  
+        };
+      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+
       res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
@@ -64,8 +77,14 @@ export class CartController {
         throw new AppError("Validation failed", 400, errors);
       }
       const { userId } = resetCartDto;
-      const updatedUser = await this.cartService.resetCart(userId);
-      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      const updatedUserCart = await this.cartService.resetCart(userId);
+      const sanitizedUser = {
+          ...updatedUserCart.toObject(),
+          owner: updatedUserCart.owner.id
+  
+        };
+      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+
       res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
@@ -87,8 +106,14 @@ export class CartController {
         throw new AppError("Validation failed", 400, errors);
       }
 
-      const updatedUser = await this.cartService.updateCart(userId, cart);
-      const cartPresenter = plainToClass(CartPresenter, updatedUser);
+      const updatedUserCart = await this.cartService.updateCart(userId, cart);
+      const sanitizedUser = {
+          ...updatedUserCart.toObject(),
+          owner: updatedUserCart.owner.id
+  
+        };
+      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+
       res.status(200).json(cartPresenter);
     } catch (error) {
       next(error);
@@ -98,9 +123,25 @@ export class CartController {
   async getCart(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const userId = req.decoded.user.id;
-      const cart = await this.cartService.getCart(userId);
-      const cartPresenter = plainToClass(CartPresenter, cart);
+      const updatedUserCart = await this.cartService.getCart(userId);
+      const sanitizedUser = {
+          ...updatedUserCart.toObject(),
+          owner: updatedUserCart.owner.id
+  
+        };
+      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser);
+
       res.status(200).json(cartPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async validateCart(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { userId } = req.body;
+      const cart = await this.cartService.validateCart(userId);
+      res.status(200).json(cart);
     } catch (error) {
       next(error);
     }

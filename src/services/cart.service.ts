@@ -5,6 +5,8 @@ import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
 import { SubscriptionPlan } from "../models/subscription.model";
 import { isInstance } from "class-validator";
+import { IUser } from "../models/user.model";
+import { IProduct } from "../models/product.model";
 
 export class CartService {
   private userRepository: UserRepository;
@@ -106,7 +108,7 @@ export class CartService {
       throw new AppError("User not found", 404);
     }
 
-    const cart = await this.cartRepository.findByUserId(userId);
+    const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new AppError("ICart not found", 404);
     }
@@ -156,5 +158,45 @@ export class CartService {
     }
 
     return cart;
+  }
+
+  async validateCart(userId: string): Promise<ICart> {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    const cart = await this.cartRepository.findByUserId(user._id);
+    if (!cart) {
+      throw new AppError("Cart not found", 404);
+    }
+
+    // Logic to subscribe user to products in the cart
+    for (const item of cart.products) {
+      const product = await this.productRepository.findById(item.product.id)
+      if (!product) {
+        throw new AppError("Product not found", 404);
+      }
+      
+      if (item.plan !== SubscriptionPlan.MONTHLY && item.plan !== SubscriptionPlan.YEARLY && item.plan !== SubscriptionPlan.FREE_TRIAL) {
+        throw new AppError("No plans where selected", 400);
+      }
+      await this.subscribeUserToProduct(user, product, item.plan);
+    }
+
+    // Clear the cart after validation
+    cart.products = [];
+    const updatedCart = await this.cartRepository.update(cart.id, cart);
+
+    if (!updatedCart) {
+      throw new AppError("Could not update cart", 500);
+    }
+
+    return updatedCart;
+  }
+
+  private async subscribeUserToProduct(user: IUser, product: IProduct, plan: string): Promise<void> {
+    user.subscriptions.push({ product: product._id, plan: plan });
+    await this.userRepository.update(user.id, user);
   }
 }

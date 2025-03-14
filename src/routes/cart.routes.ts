@@ -116,4 +116,27 @@ router.delete("/reset", (req, res, next) => cartController.resetCart(req, res, n
  */
 router.get("/me", checkJWT, (req, res, next) => cartController.getCart(req as EncodedRequest, res, next));
 
+/**
+ * @swagger
+ * /api/cart/validate:
+ *   post:
+ *     summary: Validate the cart and subscribe user to selected products
+ *     tags: [Cart]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Cart validated and user subscribed
+ *       400:
+ *         description: Invalid input
+ */
+router.post("/validate", (req, res, next) => cartController.validateCart(req, res, next));
+
 export default router;
