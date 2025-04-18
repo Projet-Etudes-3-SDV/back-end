@@ -91,6 +91,27 @@ export class UserService {
     return updatedUser;
   }
 
+  async updateUserPaymentSessionId(id: string, sessionId: string): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) {
+      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+    }
+    user.paymentSessionId = sessionId;
+    const updatedUser = await this.userRepository.update(id, user);
+    if (!updatedUser) {
+      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+    }
+    return updatedUser;
+  }
+
+  async getUserByPaymentSessionId(sessionId: string): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ paymentSessionId: sessionId });
+    if (!user) {
+      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+    }
+    return user;
+  }
+
   async deleteUser(_id: string): Promise<void> {
     const user = await this.userRepository.findById(_id);
     if (!user) {

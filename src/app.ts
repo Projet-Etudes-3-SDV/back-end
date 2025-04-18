@@ -13,6 +13,10 @@ import logger from './middlewares/logger.middleware';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
+import { EncodedRequest } from './utils/EncodedRequest';
+import { checkRole } from './middlewares/auth.middleware';
+import paymentRoutes from './routes/payment.route';
+import landingRoutes from './routes/landing.routes';
 
 dotenv.config();
 
@@ -21,8 +25,15 @@ app.use(cors({
   origin: '*'
 }));
 app.use(express.json());
-app.use(logger);
-
+app.use(checkRole);
+app.use(logger as express.RequestHandler);
+app.use((req, res, next) => {
+  if (req.originalUrl === '/api/payment/webhook') {
+    next(); // ne pas parser ici
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 const options = {
   definition: {
@@ -63,8 +74,9 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/addresses', addressRoutes);
 app.use('/api/coupons', couponRoutes);
-// app.use('/api/payments', paymentRoutes);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/landings', landingRoutes);
 
-app.use(errorHandler)
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => errorHandler(err, req as EncodedRequest, res, next));
 
 export default app;

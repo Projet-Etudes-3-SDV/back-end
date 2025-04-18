@@ -1,6 +1,5 @@
 import { FilterQuery } from "mongoose";
 import Subscription, { type ISubscription } from "../models/subscription.model";
-import { SearchProductCriteria } from "../types/dtos/productDtos";
 import { SearchSubscriptionCriteria } from "../types/dtos/subscriptionDtos";
 
 export class SubscriptionRepository {

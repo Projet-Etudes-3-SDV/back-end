@@ -14,6 +14,11 @@ export interface IProduct extends Document {
   available: boolean;
   addedDate: Date;
   coupons: ICoupon["_id"][];
+
+  // stripe
+  stripeProductId?: string;
+  stripePriceId?: string;
+  stripePriceIdYearly?: string;
 }
 
 const ProductSchema: Schema = new Schema(
@@ -27,6 +32,9 @@ const ProductSchema: Schema = new Schema(
     available: { type: Boolean, default: true },
     addedDate: { type: Date, default: Date.now },
     coupons: { type: Schema.Types.ObjectId, ref: "Coupon", required: true },
+    stripeProductId: { type: String, default: null },
+    stripePriceId: { type: String, default: null },
+    stripePriceIdYearly: { type: String, default: null },
   },
   { versionKey: false, timestamps: true }
 );

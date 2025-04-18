@@ -1,12 +1,9 @@
 import { UserRepository } from "../repositories/user.repository";
-import { ICart } from "../models/cart.model";
+import { CartStatus, ICart } from "../models/cart.model";
 import { AppError } from "../utils/AppError";
 import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
 import { SubscriptionPlan } from "../models/subscription.model";
-import { isInstance } from "class-validator";
-import { IUser } from "../models/user.model";
-import { IProduct } from "../models/product.model";
 import { SubscriptionService } from "./subscription.service";
 
 export class CartService {
@@ -42,12 +39,21 @@ export class CartService {
       user.cart = cart._id;
     }
 
+    if (cart.status !== CartStatus.READY) {
+      throw new AppError("You cannot add items while paying", 400, [], "CART_BUSY");
+    }
+    
     const existingItem = cart.products.find((item) => item.product.id === productId);
     if (existingItem) {
       // existingItem.quantity++;
       throw new AppError("User is already subbed to this product", 400);
     } else {
       cart.products.push({ product: product._id, quantity: 1, plan: plan });
+    }
+
+    const existingSubscription = user.subscriptions.find((sub) => sub.product.id === productId && sub.status === "active");
+    if (existingSubscription) {
+      throw new AppError("User is already subbed to this product", 400, [], "ALREADY_SUBSCRIBED");
     }
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);
@@ -75,6 +81,10 @@ export class CartService {
     if (!cart) {
       cart = await this.cartRepository.create({ owner: user._id });
       user.cart = cart._id;
+    }
+
+    if (cart.status !== CartStatus.READY) {
+      throw new AppError("You cannot update the cart while paying", 400, [], "CART_BUSY");
     }
 
     for (let i = 0; i < newCart.products.length; i++) {
@@ -105,6 +115,26 @@ export class CartService {
     return updatedCart;
   }
 
+  async updateCartStatus(userId: string, status: CartStatus): Promise<ICart> {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+    
+    const cart = await this.cartRepository.findByUserId(user._id);
+    if (!cart) {
+      throw new AppError("Cart not found", 404);
+    }
+    cart.status = status;
+    const updatedCart = await this.cartRepository.update(cart.id, cart);
+
+    if (!updatedCart) {
+      throw new AppError("Could not update cart", 500);
+    }
+
+    return updatedCart;
+  }
+
   async deleteItemFromCart(userId: string, productId: string): Promise<ICart> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
@@ -114,6 +144,10 @@ export class CartService {
     const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new AppError("ICart not found", 404);
+    }
+
+    if (cart.status !== CartStatus.READY) {
+      throw new AppError("You cannot delete items from the cart while paying", 400, [], "CART_BUSY");
     }
 
     cart.products = cart.products.filter((cartItem) => cartItem.product.id !== productId);
@@ -136,6 +170,10 @@ export class CartService {
     const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new AppError("ICart not found", 404);
+    }
+
+    if (cart.status !== CartStatus.READY) {
+      throw new AppError("You cannot delete items from the cart while paying", 400, [], "CART_BUSY");
     }
 
     cart.products = [];

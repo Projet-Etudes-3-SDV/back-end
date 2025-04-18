@@ -1,6 +1,7 @@
 import { Expose, Type } from "class-transformer";
 import { IsNotEmpty, IsString, IsUUID, ValidateNested } from "class-validator";
 import { ProductPresenter } from "./productDtos";
+import { SubscriptionPlan } from "../../models/subscription.model";
 
 export class AddItemToCartDto {
   @IsUUID()
@@ -16,7 +17,7 @@ export class AddItemToCartDto {
   @Expose()
   @IsNotEmpty()
   @IsString()
-  plan!: string;
+  plan!: SubscriptionPlan;
 }
 
 export class DeleteItemFromCartDto {
@@ -45,7 +46,7 @@ export class Products {
 
   @Expose()
   @IsString()
-  plan!: string;
+  plan!: SubscriptionPlan;
 }
 
 export class CartItemPresenter {

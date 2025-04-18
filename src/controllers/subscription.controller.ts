@@ -70,7 +70,7 @@ export class SubscriptionController {
       }
       const subscription = await this.subscriptionService.patchSubscription(subscriptionId as string, subscriptionDto);
       const subscriptionPresenter = plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true });
-      res.status(200).json(subscription);
+      res.status(200).json(subscriptionPresenter);
     }
     catch (error) { 
       next(error);
@@ -79,11 +79,13 @@ export class SubscriptionController {
 
   async cancelSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { userId } = req.body;
-      if (!userId) {
-        throw new AppError("Validation failed", 400, [{ field: "userId", constraints: ["userId should not be empty"] }]);
+      const subscriptionId = req.params.subscriptionId;
+
+      if (!subscriptionId) {
+        throw new AppError("Validation failed", 400, [{ field: "subscriptionId", constraints: ["subscriptionId should not be empty"] }]);
       }
-      const user = await this.subscriptionService.cancelSubscription(userId);
+
+      const user = await this.subscriptionService.cancelSubscription(subscriptionId);
       const subscriptionPresenter = plainToClass(SubscriptionPresenter, user, { excludeExtraneousValues: true });
       if (user) {
         res.status(200).json(subscriptionPresenter);

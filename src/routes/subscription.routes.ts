@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { SubscriptionController } from "../controllers/subscription.controller";
-import * as Auth from "../middlewares/auth.middleware";
 
 const router = Router();
 const subscriptionController = new SubscriptionController();
@@ -88,7 +87,7 @@ router.patch("/:id", (req, res, next) => subscriptionController.patchSubscriptio
  *       400:
  *         description: Invalid input
  */
-router.post("/cancel", (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
+router.post("/cancel/:subscriptionId", (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
 
 /**
  * @swagger

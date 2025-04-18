@@ -41,6 +41,7 @@ export class UserRepository {
       if (filters.authToken) query.authToken = filters.authToken;
       if (filters.isValidated) query.isValidated = filters.isValidated;
       if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
+      if (filters.paymentSessionId) query.paymentSessionId = filters.paymentSessionId;
     } else {
       return null;
     }

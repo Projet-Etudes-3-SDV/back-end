@@ -909,4 +909,263 @@ Not connected - 10.111.9.92
     - Validation failed
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-03-14T15:12:01.301Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-14T15:12:05.254Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-28T09:11:15.993Z 
+    - POST /api/payment/checkout 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-28T09:11:26.197Z 
+    - POST /api/users/login 
+    - 401 
+    - Invalid email or password
+    - INVALID_CREDENTIALS
+
+    b97cff7c-6a68-4315-9ea7-19faba396ac6 - 127.0.0.1 
+    - 2025-03-28T09:24:12.116Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    047616dc-b043-4713-a3f5-c21b50854089 - 127.0.0.1 
+    - 2025-03-28T09:24:51.295Z 
+    - POST /api/cart/add 
+    - 400 
+    - Validation failed
+    - undefined
+
+    047616dc-b043-4713-a3f5-c21b50854089 - 127.0.0.1 
+    - 2025-03-28T09:26:29.109Z 
+    - POST /api/cart/add 
+    - 400 
+    - Validation failed
+    - undefined
+
+    047616dc-b043-4713-a3f5-c21b50854089 - 127.0.0.1 
+    - 2025-03-28T09:26:34.844Z 
+    - POST /api/cart/add 
+    - 400 
+    - Validation failed
+    - undefined
+
+    047616dc-b043-4713-a3f5-c21b50854089 - 127.0.0.1 
+    - 2025-03-28T09:26:45.799Z 
+    - POST /api/cart/add 
+    - 500 
+    - Cannot read properties of null (reading 'id')
+    - 
+
+    047616dc-b043-4713-a3f5-c21b50854089 - 127.0.0.1 
+    - 2025-03-28T09:27:55.442Z 
+    - POST /api/cart/add 
+    - 500 
+    - Cannot read properties of null (reading 'id')
+    - 
+
+    047616dc-b043-4713-a3f5-c21b50854089 - 127.0.0.1 
+    - 2025-03-28T09:29:30.074Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T09:31:20.640Z 
+    - POST /api/cart/add 
+    - 500 
+    - Cannot read properties of null (reading 'id')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T09:32:07.738Z 
+    - POST /api/cart/add 
+    - 500 
+    - Cannot read properties of null (reading 'id')
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-03-28T10:31:38.519Z 
+    - GET /api/users/me 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-28T10:31:49.198Z 
+    - POST /api/payment/checkout 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T10:42:01.752Z 
+    - POST /api/cart/validate 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-28T10:56:59.974Z 
+    - POST /api/payment/webhook 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-03-28T12:21:21.671Z 
+    - POST /api/cart/validate 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:21:47.268Z 
+    - POST /api/cart/validate 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:22:06.507Z 
+    - POST /api/cart/validate 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:22:19.542Z 
+    - POST /api/cart/validate 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:22:37.131Z 
+    - POST /api/cart/validate 
+    - 400 
+    - User already subscribed to this product
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:28:48.544Z 
+    - POST /api/subscriptions/cancel 
+    - 400 
+    - Validation failed
+    - undefined
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:29:02.649Z 
+    - POST /api/subscriptions/cancel 
+    - 500 
+    - Cannot read properties of undefined (reading 'subscriptionId')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:29:19.225Z 
+    - POST /api/subscriptions/cancel 
+    - 500 
+    - Cannot read properties of undefined (reading 'subscriptionId')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:30:11.180Z 
+    - POST /api/subscriptions/cancel 
+    - 500 
+    - Cannot read properties of undefined (reading 'subscriptionId')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:30:41.606Z 
+    - POST /api/subscriptions/cancel/cc24a393-844b-477c-9bcb-06ab452c4d2d 
+    - 500 
+    - Cannot read properties of undefined (reading 'constructor')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:30:58.788Z 
+    - POST /api/subscriptions/cancel/cc24a393-844b-477c-9bcb-06ab452c4d2d 
+    - 500 
+    - Cannot read properties of undefined (reading 'constructor')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:31:17.033Z 
+    - POST /api/subscriptions/cancel/cc24a393-844b-477c-9bcb-06ab452c4d2d 
+    - 500 
+    - Cannot read properties of undefined (reading 'constructor')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:33:16.098Z 
+    - POST /api/subscriptions/cancel/cc24a393-844b-477c-9bcb-06ab452c4d2d 
+    - 500 
+    - Cannot read properties of undefined (reading 'constructor')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:34:05.664Z 
+    - POST /api/subscriptions/cancel/cc24a393-844b-477c-9bcb-06ab452c4d2d 
+    - 500 
+    - Cannot read properties of undefined (reading 'constructor')
+    - 
+
+    8ce48895-40e6-4091-bdc6-3895bd4de350 - 127.0.0.1 
+    - 2025-03-28T12:35:34.788Z 
+    - POST /api/subscriptions/cancel/cc24a393-844b-477c-9bcb-06ab452c4d2d 
+    - 500 
+    - Cannot read properties of undefined (reading 'constructor')
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-04-18T08:49:26.491Z 
+    - POST /api/landings 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-04-18T08:53:10.751Z 
+    - POST /api/landings 
+    - 500 
+    - Cast to ObjectId failed for value "d0a7e9b3-55a0-4ba0-bad3-658129d65f1e" (type string) at path "_id" for model "Product"
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-04-18T09:24:02.371Z 
+    - POST /api/landings 
+    - 500 
+    - Cast to ObjectId failed for value "d0a7e9b3-55a0-4ba0-bad3-658129d65f1e" (type string) at path "_id" for model "Product"
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-04-18T09:24:10.696Z 
+    - POST /api/landings 
+    - 500 
+    - Cast to ObjectId failed for value "d0a7e9b3-55a0-4ba0-bad3-658129d65f1e" (type string) at path "_id" for model "Product"
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-04-18T09:26:20.905Z 
+    - POST /api/landings 
+    - 500 
+    - Cast to ObjectId failed for value "d0a7e9b3-55a0-4ba0-bad3-658129d65f1e" (type string) at path "_id" for model "Product"
+    - 
+
     

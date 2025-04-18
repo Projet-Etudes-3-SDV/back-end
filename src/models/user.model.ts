@@ -34,6 +34,7 @@ export interface IUser extends Document {
   updateSubscriptionEndDate(newEndDate: Date): void;
   subscriptions: ISubscription["_id"][];
   addresses: IAddress["_id"][];
+  paymentSessionId?: string;
 }
 
 const UserSchema: Schema = new Schema(
@@ -53,6 +54,7 @@ const UserSchema: Schema = new Schema(
     isValidated: { type: Boolean, default: false },
     subscriptions: [{ type: Schema.Types.ObjectId, ref: "Subscription", default: [] }],
     addresses: [{ type: Schema.Types.ObjectId, ref: "Address", default: [] }],
+    paymentSessionId: { type: String, default: null },
   },
   { versionKey: false, timestamps: true }
 );

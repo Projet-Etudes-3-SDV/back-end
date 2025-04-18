@@ -1,7 +1,6 @@
 import { IsString, IsDate, IsEnum, IsBoolean, IsOptional } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import { SubscriptionPlan, SubscriptionStatus } from "../../models/subscription.model";
-import { UserPresenter } from "./userDtos";
 import { ProductPresenter } from "./productDtos";
 
 export class SubscriptionToCreate {
@@ -48,6 +47,12 @@ export class SubscriptionDto {
   autoRenew!: boolean;
 }
 
+export class CancelSubscription {
+  @IsString()
+  @Expose()
+  subscriptionId!: string;
+}
+
 export class SearchSubscriptionCriteria {
   @IsString()
   @Expose()
@@ -79,6 +84,10 @@ export class SearchSubscriptionCriteria {
 }
 
 export class SubscriptionPresenter {
+  @IsString()
+  @Expose()
+  id!: string;
+
   @IsString()
   @Expose()
   plan!: SubscriptionPlan;

@@ -8,6 +8,12 @@ export interface ICart extends Document {
   id: string;
   products: { product: IProduct["_id"], quantity: number, plan: SubscriptionPlan }[];
   owner: IUser["_id"];
+  status: CartStatus;
+}
+
+export enum CartStatus {
+  READY = "ready",
+  PENDING = "pending",
 }
 
 const CartItemSchema: Schema = new Schema({
@@ -17,7 +23,8 @@ const CartItemSchema: Schema = new Schema({
     quantity: { type: Number, required: true },
     plan: { type: String, enum: SubscriptionPlan, required: true }
   }],
-  owner: { type: Schema.Types.ObjectId, ref: "User", required: true }
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  status: { type: String, enum: CartStatus, default: "ready" },
 }, 
 { versionKey: false, timestamps: true });
 

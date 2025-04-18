@@ -1,10 +1,9 @@
 import { UserRepository } from "../repositories/user.repository";
-import { ISubscription, SubscriptionPlan, SubscriptionStatus } from "../models/subscription.model";
+import { ISubscription, SubscriptionStatus } from "../models/subscription.model";
 import { SubscriptionRepository } from "../repositories/subscription.repository";
 import { AppError } from "../utils/AppError";
 import { ProductRepository } from "../repositories/product.repository";
 import { SearchSubscriptionCriteria, SubscriptionToCreate, SubscriptionToModify } from "../types/dtos/subscriptionDtos";
-import { FilterQuery } from "mongoose";
 
 export class SubscriptionService {
   private userRepository: UserRepository;
