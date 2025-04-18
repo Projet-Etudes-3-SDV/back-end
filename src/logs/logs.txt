@@ -1808,3 +1808,15 @@ Not connected
 Not connected 
   - 2025-04-18T09:28:39.112Z 
   - GET /api/users
+Not connected 
+  - 2025-04-18T09:58:05.244Z 
+  - GET /api/landings
+Not connected 
+  - 2025-04-18T09:59:46.197Z 
+  - GET /api/landings
+Not connected 
+  - 2025-04-18T10:00:19.627Z 
+  - GET /api/landings
+Not connected 
+  - 2025-04-18T10:00:44.513Z 
+  - GET /api/landings

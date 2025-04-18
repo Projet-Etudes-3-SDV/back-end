@@ -110,11 +110,53 @@ export class LandingPresenter {
 
   @Expose()
   @ValidateNested()
-  @Type(() => CarouselSectionDTO)
-  carouselSection?: CarouselSectionDTO;
+  @Type(() => CarouselSectionPresenter)
+  carouselSection?: CarouselSectionPresenter;
 
   @Expose()
   @ValidateNested()
   @Type(() => CategorySectionDTO)
   categorySection?: CategorySectionDTO;
+}
+
+class CarouselSectionPresenter {
+  @Expose()
+  title!: string;
+
+  @Expose()
+  description?: string;
+
+  @Expose()
+  @ValidateNested({ each: true })
+  @Type(() => ProductsPresenter)
+  products!: ProductsPresenter[];
+
+  @Expose()
+  order!: number;
+}
+
+class ProductsPresenter {
+  @Expose()
+  @Type(() => ProductPresenter)
+  product!: ProductPresenter;
+
+  @Expose()
+  order!: number;
+}
+
+class ProductPresenter {
+  @Expose()
+  id!: string;
+
+  @Expose()
+  name!: string;
+
+  @Expose()
+  monthlyPrice!: number;
+
+  @Expose()
+  yearlyPrice!: number;
+
+  @Expose()
+  description!: string;
 }
