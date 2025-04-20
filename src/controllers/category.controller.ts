@@ -55,9 +55,9 @@ export class CategoryController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const result = await this.categoryService.searchCategories(searchCriteria);
-      const categoryPresenters = plainToInstance(CategoryPresenter, result.categories, { excludeExtraneousValues: true });
-      res.status(200).json(categoryPresenters);
+      const { categories, total, pages } = await this.categoryService.searchCategories(searchCriteria);
+      const categoryPresenters = plainToInstance(CategoryPresenter, categories, { excludeExtraneousValues: true });
+      res.status(200).json({data: categoryPresenters, total, pages});
     } catch (error) {
       next(error);
     }

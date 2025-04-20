@@ -53,9 +53,9 @@ export class ProductController {
             }));
             throw new AppError("Validation failed", 400, errors);
         }
-        const result = await this.productService.getProducts(searchCriteria);
-        const productPresenters = plainToInstance(ProductPresenter, result.products, { excludeExtraneousValues: true });
-        res.status(200).json(productPresenters);
+        const { products, total, pages } = await this.productService.getProducts(searchCriteria);
+        const productPresenters = plainToInstance(ProductPresenter, products, { excludeExtraneousValues: true });
+        res.status(200).json({ data: productPresenters, total, pages });
         } catch (error) {
         next(error);
         }

@@ -67,9 +67,9 @@ export class UserController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const result = await this.userService.getUsers(searchCriteria);
-      const userPresenters = plainToInstance(UserPresenter, result.users, { excludeExtraneousValues: true });
-      res.status(200).json(userPresenters);
+      const { users, total, pages } = await this.userService.getUsers(searchCriteria);
+      const userPresenters = plainToInstance(UserPresenter, users, { excludeExtraneousValues: true });
+      res.status(200).json({ data: userPresenters, total, pages });
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { CouponService } from "../services/coupon.service";
-import { plainToClass } from "class-transformer";
+import { plainToClass, plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { CouponToCreate, CouponToModify, CouponPresenter } from "../types/dtos/couponDtos";
 import { AppError } from "../utils/AppError";
@@ -15,7 +15,7 @@ export class CouponController {
   async getCoupons(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const coupons = await this.couponService.getCoupons();
-      const couponPresenters = plainToClass(CouponPresenter, coupons, { excludeExtraneousValues: true });
+      const couponPresenters = plainToInstance(CouponPresenter, coupons, { excludeExtraneousValues: true });
       res.status(200).json(couponPresenters);
     } catch (error) {
       next(error);
