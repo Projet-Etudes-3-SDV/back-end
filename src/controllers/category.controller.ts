@@ -57,7 +57,7 @@ export class CategoryController {
       }
       const { categories, total, pages } = await this.categoryService.searchCategories(searchCriteria);
       const categoryPresenters = plainToInstance(CategoryPresenter, categories, { excludeExtraneousValues: true });
-      res.status(200).json({data: categoryPresenters, total, pages});
+      res.status(200).json({result: categoryPresenters, total, pages});
     } catch (error) {
       next(error);
     }

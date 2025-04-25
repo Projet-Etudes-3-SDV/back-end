@@ -1829,3 +1829,24 @@ Not connected
 Not connected 
   - 2025-04-20T12:10:27.628Z 
   - GET /api/users
+Not connected 
+  - 2025-04-25T11:52:00.903Z 
+  - GET /api-docs
+Not connected 
+  - 2025-04-25T11:52:01.029Z 
+  - GET /api-docs/
+Not connected 
+  - 2025-04-25T11:52:01.235Z 
+  - GET /api-docs/swagger-ui.css
+Not connected 
+  - 2025-04-25T11:52:01.248Z 
+  - GET /api-docs/swagger-ui-init.js
+Not connected 
+  - 2025-04-25T11:52:01.250Z 
+  - GET /api-docs/swagger-ui-standalone-preset.js
+Not connected 
+  - 2025-04-25T11:52:01.251Z 
+  - GET /api-docs/swagger-ui-bundle.js
+Not connected 
+  - 2025-04-25T11:52:01.866Z 
+  - GET /api-docs/favicon-32x32.png

@@ -53,7 +53,7 @@ export class LandingController {
       const { landings, total } = await this.landingService.getAllLandings(page, limit);
       const landingPresenters = plainToInstance(LandingPresenter, landings, { excludeExtraneousValues: true });
 
-      res.status(200).json({ data: landingPresenters, total, page, limit });
+      res.status(200).json({ result: landingPresenters, total, page, limit });
     } catch (error) {
       next(error);
     }

@@ -55,7 +55,7 @@ export class ProductController {
         }
         const { products, total, pages } = await this.productService.getProducts(searchCriteria);
         const productPresenters = plainToInstance(ProductPresenter, products, { excludeExtraneousValues: true });
-        res.status(200).json({ data: productPresenters, total, pages });
+        res.status(200).json({ result: productPresenters, total, pages });
         } catch (error) {
         next(error);
         }
