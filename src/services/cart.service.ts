@@ -46,14 +46,14 @@ export class CartService {
     const existingItem = cart.products.find((item) => item.product.id === productId);
     if (existingItem) {
       // existingItem.quantity++;
-      throw new AppError("User is already subbed to this product", 400);
+      throw new AppError("User already has this item in his cart", 400, [], "CART_ITEM_EXISTS");
     } else {
       cart.products.push({ product: product._id, quantity: 1, plan: plan });
     }
 
     const existingSubscription = user.subscriptions.find((sub) => sub.product.id === productId && sub.status === "active");
     if (existingSubscription) {
-      throw new AppError("User is already subbed to this product", 400, [], "ALREADY_SUBSCRIBED");
+      throw new AppError("User is already subscribed to this product", 400, [], "ALREADY_SUBSCRIBED");
     }
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);
