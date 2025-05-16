@@ -14,11 +14,6 @@ export interface IProduct extends Document {
   available: boolean;
   addedDate: Date;
   coupons: ICoupon["_id"][];
-
-  // stripe
-  stripeProductId?: string;
-  stripePriceId?: string;
-  stripePriceIdYearly?: string;
 }
 
 const ProductSchema: Schema = new Schema(

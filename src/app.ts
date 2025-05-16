@@ -17,6 +17,7 @@ import { EncodedRequest } from './utils/EncodedRequest';
 import { checkRole } from './middlewares/auth.middleware';
 import paymentRoutes from './routes/payment.route';
 import landingRoutes from './routes/landing.routes';
+import orderRoutes from './routes/order.routes';
 
 dotenv.config();
 
@@ -76,6 +77,7 @@ app.use('/api/addresses', addressRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/landings', landingRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => errorHandler(err, req as EncodedRequest, res, next));
 

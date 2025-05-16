@@ -224,8 +224,9 @@ export class CartService {
 
     // Clear the cart after validation
     cart.products = [];
+    cart.status = CartStatus.READY;
     const updatedCart = await this.cartRepository.update(cart.id, cart);
-
+    console.log("Cart validated and cleared for user:", updatedCart);
     if (!updatedCart) {
       throw new AppError("Could not update cart", 500);
     }
