@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ProductController } from "../controllers/product.controller";
 import { EncodedRequest } from "../utils/EncodedRequest";
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
 
 const router = Router();
 const productController = new ProductController();
@@ -37,7 +38,7 @@ const productController = new ProductController();
  *       400:
  *         description: Invalid input
  */
-router.post("/", (req, res, next) => productController.createProduct(req, res, next));
+router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => productController.createProduct(req, res, next));
 
 /**
  * @swagger
@@ -58,7 +59,7 @@ router.post("/", (req, res, next) => productController.createProduct(req, res, n
  *       400:
  *         description: Invalid input
  */
-router.get("/:id", (req, res, next) => productController.getProduct(req as unknown as EncodedRequest, res, next));
+router.get("/:id", (req, res, next) => productController.getProduct(req, res, next));
 
 /**
  * @swagger
@@ -72,7 +73,7 @@ router.get("/:id", (req, res, next) => productController.getProduct(req as unkno
  *       400:
  *         description: Invalid input
  */
-router.get("/", (req, res, next) => productController.getProducts(req as EncodedRequest, res, next));
+router.get("/", (req, res, next) => productController.getProducts(req, res, next));
 
 /**
  * @swagger
@@ -104,7 +105,7 @@ router.get("/", (req, res, next) => productController.getProducts(req as Encoded
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", (req, res, next) => productController.updateProduct(req as unknown as EncodedRequest, res, next));
+router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => productController.updateProduct(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -125,6 +126,6 @@ router.put("/:id", (req, res, next) => productController.updateProduct(req as un
  *       400:
  *         description: Invalid input
  */
-router.delete("/:id", (req, res, next) => productController.deleteProduct(req as unknown as EncodedRequest, res, next));
+router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => productController.deleteProduct(req as EncodedRequest, res, next));
 
 export default router;

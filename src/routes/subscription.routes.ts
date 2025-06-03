@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { SubscriptionController } from "../controllers/subscription.controller";
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 const router = Router();
 const subscriptionController = new SubscriptionController();
@@ -34,7 +36,7 @@ const subscriptionController = new SubscriptionController();
  *       400:
  *         description: Invalid input
  */
-router.post("/", (req, res, next) => subscriptionController.addSubscription(req, res, next));
+router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.addSubscription(req, res, next));
 
 /**
  * @swagger
@@ -64,7 +66,7 @@ router.post("/", (req, res, next) => subscriptionController.addSubscription(req,
  *       400:
  *         description: Invalid input
  */
-router.patch("/:id", (req, res, next) => subscriptionController.patchSubscription(req, res, next));
+router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.patchSubscription(req, res, next));
 
 /**
  * @swagger
@@ -87,7 +89,7 @@ router.patch("/:id", (req, res, next) => subscriptionController.patchSubscriptio
  *       400:
  *         description: Invalid input
  */
-router.post("/cancel/:subscriptionId", (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
+router.post("/cancel/:subscriptionId", checkJWT, (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
 
 /**
  * @swagger
@@ -108,7 +110,7 @@ router.post("/cancel/:subscriptionId", (req, res, next) => subscriptionControlle
  *       400:
  *         description: Invalid input
  */
-router.delete("/:id", (req, res, next) => subscriptionController.deleteSubscription(req, res, next));
+router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.deleteSubscription(req, res, next));
 
 /**
  * @swagger
@@ -135,6 +137,6 @@ router.delete("/:id", (req, res, next) => subscriptionController.deleteSubscript
  *       400:
  *         description: Invalid input
  */
-router.get("/", (req, res, next) => subscriptionController.getSubscriptionBy(req, res, next));
+router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.getSubscriptionBy(req, res, next));
 
 export default router;

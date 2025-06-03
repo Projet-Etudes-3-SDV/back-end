@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { EncodedRequest } from "../utils/EncodedRequest";
-import * as Auth from "../middlewares/auth.middleware"
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
 
 const router = Router();
 const userController = new UserController();
@@ -61,7 +61,7 @@ router.post("/register", (req, res, next) => userController.createUser(req, res,
  *       400:
  *         description: Invalid input
  */
-router.post("/login", (req, res, next) => userController.login(req as EncodedRequest, res, next));
+router.post("/login", (req, res, next) => userController.login(req, res, next));
 
 /**
  * @swagger
@@ -84,7 +84,7 @@ router.post("/login", (req, res, next) => userController.login(req as EncodedReq
  *       400:
  *         description: Invalid input
  */
-router.post("/refresh", (req, res, next) => userController.refresh(req, res, next));
+router.post("/refresh", checkJWT, (req, res, next) => userController.refresh(req, res, next));
 
 /**
  * @swagger
@@ -107,7 +107,7 @@ router.post("/refresh", (req, res, next) => userController.refresh(req, res, nex
  *       400:
  *         description: Invalid input
  */
-router.post("/forgot-password", (req, res, next) => userController.forgotPassword(req, res, next));
+router.post("/forgot-password", checkJWT, (req, res, next) => userController.forgotPassword(req, res, next));
 
 /**
  * @swagger
@@ -130,7 +130,7 @@ router.post("/forgot-password", (req, res, next) => userController.forgotPasswor
  *       400:
  *         description: Invalid input
  */
-router.post("/validate", (req, res, next) => userController.validateUser(req, res, next));
+router.post("/validate", checkJWT, (req, res, next) => userController.validateUser(req, res, next));
 
 /**
  * @swagger
@@ -155,7 +155,7 @@ router.post("/validate", (req, res, next) => userController.validateUser(req, re
  *       400:
  *         description: Invalid input
  */
-router.post("/reset-password", (req, res, next) => userController.resetPassword(req, res, next));
+router.post("/reset-password", checkJWT, (req, res, next) => userController.resetPassword(req, res, next));
 
 /**
  * @swagger
@@ -169,7 +169,7 @@ router.post("/reset-password", (req, res, next) => userController.resetPassword(
  *       400:
  *         description: Invalid input
  */
-router.get("/", (req, res, next) => userController.getUsers(req as EncodedRequest, res, next));
+router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.getUsers(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -201,7 +201,7 @@ router.get("/", (req, res, next) => userController.getUsers(req as EncodedReques
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", (req, res, next) => userController.updateUser(req, res, next));
+router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.updateUser(req, res, next));
 
 /**
  * @swagger
@@ -222,7 +222,7 @@ router.put("/:id", (req, res, next) => userController.updateUser(req, res, next)
  *       400:
  *         description: Invalid input
  */
-router.delete("/:id", (req, res, next) => userController.deleteUser(req, res, next));
+router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.deleteUser(req, res, next));
 
 /**
  * @swagger
@@ -254,7 +254,39 @@ router.delete("/:id", (req, res, next) => userController.deleteUser(req, res, ne
  *       400:
  *         description: Invalid input
  */
-router.patch("/:id", (req, res, next) => userController.patchUser(req, res, next));
+router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.patchUser(req, res, next));
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   patch:
+ *     summary: Patch a user by ID
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User patched
+ *       400:
+ *         description: Invalid input
+ */
+router.patch("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.patchAccount(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -270,6 +302,6 @@ router.patch("/:id", (req, res, next) => userController.patchUser(req, res, next
  *       400:
  *         description: Invalid input
  */
-router.get("/me", Auth.checkJWT, (req, res, next) => userController.getMe(req as unknown as EncodedRequest, res, next));
+router.get("/me", checkJWT, (req, res, next) => userController.getMe(req as unknown as EncodedRequest, res, next));
 
 export default router;

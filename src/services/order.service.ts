@@ -26,6 +26,11 @@ export class OrderService {
     return await this.orderRepository.findAll(page, limit);
   }
 
+  async getOrdersByUser(userId: number, page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
+    return await this.orderRepository.findManyBy({ user: userId }, page, limit);
+  }
+
+
   async updateOrder(id: string, orderData: OrderToModify): Promise<IOrder> {
     const order = await this.orderRepository.update(id, orderData);
     if (!order) {

@@ -9,24 +9,16 @@ dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY!;
 const SECRET_KEY_REFRESH = process.env.SECRET_KEY_REFRESH!;
 
-export const checkRole = (req: Request, res: Response, next: NextFunction): void => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return next();
+export const checkRole = (req: EncodedRequest, res: Response, next: NextFunction): void => {
+  const decodedUser = req.decoded as DecodedUser;
+  if (!decodedUser || !decodedUser.user.role) {
+    return next(new AppError('User role not found', 403));
   }
 
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return next();
-    }
-
-    if (!decoded || typeof decoded === 'string') {
-      return next();
-    }
-    
-    (req as EncodedRequest).decoded = decoded as DecodedUser;
-    next();
-  });
+  if (decodedUser.user.role !== 'admin') {
+    return next(new AppError('Forbidden', 403));
+  }
+  next();
 };
 
 export const checkJWT = (req: Request, res: Response, next: NextFunction): void => {

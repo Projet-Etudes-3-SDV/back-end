@@ -36,7 +36,7 @@ const cartController = new CartController();
  *       400:
  *         description: Invalid input
  */
-router.post("/add", (req, res, next) => cartController.addItemToCart(req, res, next));
+router.post("/add", checkJWT, (req, res, next) => cartController.addItemToCart(req, res, next));
 
 /**
  * @swagger
@@ -61,7 +61,7 @@ router.post("/add", (req, res, next) => cartController.addItemToCart(req, res, n
  *       400:
  *         description: Invalid input
  */
-router.put("/update", (req, res, next) => cartController.updateCart(req, res, next));
+router.put("/update", checkJWT, (req, res, next) => cartController.updateCart(req, res, next));
 
 /**
  * @swagger
@@ -84,7 +84,7 @@ router.put("/update", (req, res, next) => cartController.updateCart(req, res, ne
  *       400:
  *         description: Invalid input
  */
-router.delete("/delete", (req, res, next) => cartController.deleteItemFromCart(req, res, next));
+router.delete("/delete", checkJWT, (req, res, next) => cartController.deleteItemFromCart(req, res, next));
 
 /**
  * @swagger
@@ -98,7 +98,7 @@ router.delete("/delete", (req, res, next) => cartController.deleteItemFromCart(r
  *       400:
  *         description: Invalid input
  */
-router.delete("/reset", (req, res, next) => cartController.resetCart(req, res, next));
+router.delete("/reset", checkJWT, (req, res, next) => cartController.resetCart(req, res, next));
 
 /**
  * @swagger

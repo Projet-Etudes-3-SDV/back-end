@@ -32,7 +32,7 @@ export class ProductController {
         }
     }
 
-    async getProduct(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    async getProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
         const product = await this.productService.getProduct(req.params.id);
         const productPresenter = plainToClass(ProductPresenter, product, { excludeExtraneousValues: true });
@@ -42,7 +42,7 @@ export class ProductController {
         }
     }
 
-    async getProducts(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    async getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
         const searchCriteria = plainToClass(SearchProductCriteria, req.query);
         const dtoErrors = await validate(searchCriteria);

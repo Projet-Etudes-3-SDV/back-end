@@ -3,6 +3,7 @@ import { OrderService } from "../services/order.service";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { OrderToCreate, OrderToModify, OrderPresenter } from "../types/dtos/orderDtos";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 export class OrderController {
   private orderService: OrderService;
@@ -42,7 +43,25 @@ export class OrderController {
       const page = parseInt(req.query.page as string) || 1;
       const limit = parseInt(req.query.limit as string) || 10;
       const { orders, total } = await this.orderService.getOrders(page, limit);
-      console.log(orders);
+
+      const orderPresenters = orders.map(order =>
+        plainToClass(OrderPresenter, order, { excludeExtraneousValues: true })
+      );
+      res.status(200).json({ orders: orderPresenters, total });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getOrdersByUser(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
+      const userId = req.decoded.user._id;
+
+      const { orders, total } = await this.orderService.getOrdersByUser(userId, page, limit);
+
       const orderPresenters = orders.map(order =>
         plainToClass(OrderPresenter, order, { excludeExtraneousValues: true })
       );

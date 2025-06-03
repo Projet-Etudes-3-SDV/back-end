@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { CouponController } from "../controllers/coupon.controller";
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 const router = Router();
 const couponController = new CouponController();
@@ -23,7 +25,7 @@ const couponController = new CouponController();
  *       400:
  *         description: Invalid input
  */
-router.get("/", (req, res, next) => couponController.getCoupons(req, res, next));
+router.get("/", checkJWT, (req, res, next) => couponController.getCoupons(req, res, next));
 
 /**
  * @swagger
@@ -55,7 +57,7 @@ router.get("/", (req, res, next) => couponController.getCoupons(req, res, next))
  *       400:
  *         description: Invalid input
  */
-router.post("/", (req, res, next) => couponController.createCoupon(req, res, next));
+router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.createCoupon(req, res, next));
 
 /**
  * @swagger
@@ -94,7 +96,7 @@ router.post("/", (req, res, next) => couponController.createCoupon(req, res, nex
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", (req, res, next) => couponController.updateCoupon(req, res, next));
+router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.updateCoupon(req, res, next));
 
 /**
  * @swagger
@@ -115,6 +117,6 @@ router.put("/:id", (req, res, next) => couponController.updateCoupon(req, res, n
  *       400:
  *         description: Invalid input
  */
-router.delete("/:id", (req, res, next) => couponController.deleteCoupon(req, res, next));
+router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.deleteCoupon(req, res, next));
 
 export default router;

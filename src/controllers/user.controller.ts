@@ -122,6 +122,25 @@ export class UserController {
     }
   }
 
+  async patchAccount(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userData = plainToClass(UserToModify, req.body);
+      const dtoErrors = await validate(userData);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+      const user = await this.userService.patchUser(req.decoded.user.id, req.body);
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      res.status(200).json(userPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { email, password } = req.body;

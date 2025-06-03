@@ -35,6 +35,23 @@ export class OrderRepository {
     return { orders, total };
   }
 
+  async findManyBy(filters: Partial<IOrder>, page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
+    const query: FilterQuery<IOrder> = {};
+    if (filters) {
+      if (filters.id) query.id = filters.id;
+      if (filters.user) query.user = filters.user;
+      if (filters.status) query.status = filters.status;
+      if (filters.sessionId) query.sessionId = filters.sessionId;
+    }
+
+    const skip = (page - 1) * limit;
+    const [orders, total] = await Promise.all([
+      Order.find(query).skip(skip).limit(limit).populate("user").populate("products.product"),
+      Order.countDocuments(query),
+    ]);
+    return { orders, total };
+  }
+
   async update(id: string, orderData: Partial<IOrder>): Promise<IOrder | null> {
     return await Order.findOneAndUpdate({ id }, orderData, { new: true }).populate("user").populate("products.product");
   }

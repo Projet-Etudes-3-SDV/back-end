@@ -14,7 +14,6 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import { EncodedRequest } from './utils/EncodedRequest';
-import { checkRole } from './middlewares/auth.middleware';
 import paymentRoutes from './routes/payment.route';
 import landingRoutes from './routes/landing.routes';
 import orderRoutes from './routes/order.routes';
@@ -26,7 +25,6 @@ app.use(cors({
   origin: '*'
 }));
 app.use(express.json());
-app.use(checkRole);
 app.use(logger as express.RequestHandler);
 app.use((req, res, next) => {
   if (req.originalUrl === '/api/payment/webhook') {

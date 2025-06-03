@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { AddressController } from "../controllers/address.controller";
-
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
+import { Request, Response, NextFunction } from "express";
+import { EncodedRequest } from "../utils/EncodedRequest";
 const router = Router();
 const addressController = new AddressController();
 
@@ -36,7 +38,14 @@ const addressController = new AddressController();
  *       400:
  *         description: Invalid input
  */
-router.post("/", (req, res, next) => addressController.createAddress(req, res, next));
+
+
+router.post(
+  "/",
+  checkJWT,
+  (req: Request, res: Response, next: NextFunction) => checkRole(req as EncodedRequest, res, next),
+  (req: Request, res: Response, next: NextFunction) => addressController.createAddress(req, res, next)
+);
 
 /**
  * @swagger

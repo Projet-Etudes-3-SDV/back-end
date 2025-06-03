@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { CategoryController } from "../controllers/category.controller";
 import { EncodedRequest } from "../utils/EncodedRequest";
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
 
 const router = Router();
 const categoryController = new CategoryController();
@@ -33,7 +34,7 @@ const categoryController = new CategoryController();
  *       400:
  *         description: Invalid input
  */
-router.post("/", categoryController.createCategory.bind(categoryController));
+router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => categoryController.createCategory(req, res, next));
 
 /**
  * @swagger
@@ -54,7 +55,7 @@ router.post("/", categoryController.createCategory.bind(categoryController));
  *       400:
  *         description: Invalid input
  */
-router.get("/:id", categoryController.getCategory.bind(categoryController));
+router.get("/:id", (req, res, next) => categoryController.getCategory(req, res, next));
 
 /**
  * @swagger
@@ -68,7 +69,7 @@ router.get("/:id", categoryController.getCategory.bind(categoryController));
  *       400:
  *         description: Invalid input
  */
-router.get("/", categoryController.getCategories.bind(categoryController));
+router.get("/", (req, res, next) => categoryController.getCategories(req, res, next));
 
 /**
  * @swagger
@@ -98,7 +99,7 @@ router.get("/", categoryController.getCategories.bind(categoryController));
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", (req, res, next) => categoryController.updateCategory(req as unknown as EncodedRequest, res, next));
+router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => categoryController.updateCategory(req as unknown as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -119,6 +120,6 @@ router.put("/:id", (req, res, next) => categoryController.updateCategory(req as 
  *       400:
  *         description: Invalid input
  */
-router.delete("/:id", categoryController.deleteCategory.bind(categoryController));
+router.delete("/:id", checkJWT, (req, res , next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => categoryController.deleteCategory(req, res, next));
 
 export default router;

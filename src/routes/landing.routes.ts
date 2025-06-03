@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { LandingController } from "../controllers/landing.controller";
+import { checkJWT, checkRole } from "../middlewares/auth.middleware";
+import { EncodedRequest } from "../utils/EncodedRequest";
 
 const router = Router();
 const landingController = new LandingController();
@@ -29,7 +31,7 @@ const landingController = new LandingController();
  *       400:
  *         description: Validation failed
  */
-router.post("/", (req, res, next) => landingController.createLanding(req, res, next));
+router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => landingController.createLanding(req, res, next));
 
 /**
  * @swagger
@@ -73,7 +75,7 @@ router.get("/:id", (req, res, next) => landingController.getLandingById(req, res
  *       200:
  *         description: List of landings
  */
-router.get("/", (req, res, next) => landingController.getAllLandings(req, res, next));
+router.get("/", checkJWT, (req, res, next) => landingController.getAllLandings(req, res, next));
 
 /**
  * @swagger
@@ -102,7 +104,7 @@ router.get("/", (req, res, next) => landingController.getAllLandings(req, res, n
  *       400:
  *         description: Validation failed
  */
-router.put("/:id", (req, res, next) => landingController.updateLanding(req, res, next));
+router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => landingController.updateLanding(req, res, next));
 
 /**
  * @swagger
@@ -123,6 +125,6 @@ router.put("/:id", (req, res, next) => landingController.updateLanding(req, res,
  *       404:
  *         description: Landing not found
  */
-router.delete("/:id", (req, res, next) => landingController.deleteLanding(req, res, next));
+router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => landingController.deleteLanding(req, res, next));
 
 export default router;
