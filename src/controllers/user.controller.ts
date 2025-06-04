@@ -1,11 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO } from "../types/dtos/userDtos";
+import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO, AdminUserToModify } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { JWTService } from "../services/jwt.service";
+import { AddressToCreate } from "../types/dtos/addressDtos";
 
 export class UserController {
   private userService: UserService;
@@ -105,7 +106,7 @@ export class UserController {
 
   async patchUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const userData = plainToClass(UserToModify, req.body);
+      const userData = plainToClass(AdminUserToModify, req.body);
       const dtoErrors = await validate(userData);
       if (dtoErrors.length > 0) {
         const errors = dtoErrors.map(error => ({
@@ -159,8 +160,8 @@ export class UserController {
 
       const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
 
-      const accessToken = this.jwtService.generateAccessToken(userPresenter)
-      const refreshToken = this.jwtService.generateRefreshToken(userPresenter)
+      const accessToken = this.jwtService.generateAccessToken(user)
+      const refreshToken = this.jwtService.generateRefreshToken(user)
 
       res.status(200).json({ userPresenter, accessToken, refreshToken });
     } catch (error) {
@@ -171,11 +172,13 @@ export class UserController {
   async refresh(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { refreshToken } = req.body;
+      if (!refreshToken) {
+        throw new AppError("Refresh token is required", 400);
+      }
       const decoded = await this.jwtService.verifyJWTSecret(refreshToken);
-      const user = plainToClass(UserPresenter, decoded.user, { excludeExtraneousValues: true });
 
-      const accessToken = this.jwtService.generateAccessToken(user)
-      const newRefreshToken = this.jwtService.generateRefreshToken(user)
+      const accessToken = this.jwtService.generateAccessToken(decoded.user)
+      const newRefreshToken = this.jwtService.generateRefreshToken(decoded.user)
 
       res.status(200).json({ accessToken, refreshToken: newRefreshToken });
     } catch (error) {
@@ -193,7 +196,7 @@ export class UserController {
     }
   }
 
-  async validateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async validateUserMail(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const validateUserDTO = plainToClass(ValidateUserDTO, req.body, { excludeExtraneousValues: true });
 
@@ -221,6 +224,39 @@ export class UserController {
       const { token, newPassword } = req.body;
       await this.userService.resetPassword(token, newPassword);
       res.status(200).json({ message: "Password reset" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async addAddress(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const addressData = plainToClass(AddressToCreate, req.body);
+      const dtoErrors = await validate(addressData);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+      const user = await this.userService.addAddress(req.decoded.user.id, addressData);
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      res.status(200).json(userPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteAddress(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { index } = req.params;
+
+      const addressIndexNumber = parseInt(index, 10);
+
+      const user = await this.userService.deleteAddress(req.decoded.user.id, addressIndexNumber);
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      res.status(200).json(userPresenter);
     } catch (error) {
       next(error);
     }

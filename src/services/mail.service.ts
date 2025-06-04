@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from "dotenv";
+import { AppError } from '../utils/AppError';
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
@@ -21,6 +22,7 @@ export const sendEmail = (to: string, subject: string, text: string): void => {
   transporter.sendMail(mailOptions, (error: Error | null, info: { response: string; }) => {
     if (error) {
       console.log(error);
+      throw new AppError('Failed to send email', 500);
     } else {
       console.log('Email sent: ' + info.response);
     }

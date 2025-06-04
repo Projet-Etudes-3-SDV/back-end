@@ -130,7 +130,7 @@ router.post("/forgot-password", checkJWT, (req, res, next) => userController.for
  *       400:
  *         description: Invalid input
  */
-router.post("/validate", checkJWT, (req, res, next) => userController.validateUser(req, res, next));
+router.post("/validate", (req, res, next) => userController.validateUserMail(req, res, next));
 
 /**
  * @swagger
@@ -156,6 +156,52 @@ router.post("/validate", checkJWT, (req, res, next) => userController.validateUs
  *         description: Invalid input
  */
 router.post("/reset-password", checkJWT, (req, res, next) => userController.resetPassword(req, res, next));
+
+/**
+ * @swagger
+ * /api/users/add-address:
+ *   post:
+ *     summary: Add an address to the user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               address:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Address added
+ *       400:
+ *         description: Invalid input
+ */
+router.post("/add-address", checkJWT, (req, res, next) => userController.addAddress(req as EncodedRequest, res, next));
+
+/**
+ * @swagger
+ * /api/users/remove-address:
+ *   post:
+ *     summary: Remove an address from the user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               addressId:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Address removed
+ *       400:
+ *         description: Invalid input
+ */
+router.delete("/remove-address/:index", checkJWT, (req, res, next) => userController.deleteAddress(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -254,7 +300,7 @@ router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequ
  *       400:
  *         description: Invalid input
  */
-router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.patchUser(req, res, next));
+router.patch("/admin/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.patchUser(req, res, next));
 
 /**
  * @swagger
@@ -286,7 +332,7 @@ router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedReque
  *       400:
  *         description: Invalid input
  */
-router.patch("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.patchAccount(req as EncodedRequest, res, next));
+router.patch("/", checkJWT, (req, res, next) => userController.patchAccount(req as EncodedRequest, res, next));
 
 /**
  * @swagger

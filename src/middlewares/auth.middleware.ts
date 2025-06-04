@@ -11,6 +11,7 @@ const SECRET_KEY_REFRESH = process.env.SECRET_KEY_REFRESH!;
 
 export const checkRole = (req: EncodedRequest, res: Response, next: NextFunction): void => {
   const decodedUser = req.decoded as DecodedUser;
+  console.log('Decoded User:', decodedUser);
   if (!decodedUser || !decodedUser.user.role) {
     return next(new AppError('User role not found', 403));
   }

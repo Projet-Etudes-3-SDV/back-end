@@ -1,9 +1,10 @@
-import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate, Matches } from "class-validator";
+import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate, Matches, IsEnum } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
 import { SubscriptionPresenter } from "./subscriptionDtos";
 import { AddressPresenter } from "./addressDtos";
+import { UserRole } from "../../models/user.model";
 
 export class UserToCreate {
   @IsString()
@@ -79,6 +80,33 @@ export class UserToModify {
   @IsString()
   @IsOptional()
   @Expose()
+  phone?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  subscriptionsAutoRenew?: boolean;
+}
+
+export class AdminUserToModify {
+  @IsString()
+  @IsOptional()
+  @Expose()
+  lastName?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  firstName?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  email?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
   password?: string;
 
   @IsString()
@@ -110,6 +138,11 @@ export class UserToModify {
   @IsOptional()
   @Expose()
   subscriptionsAutoRenew?: boolean;
+
+  @IsEnum(UserRole)
+  @Expose()
+  @IsOptional()
+  role?: UserRole;
 }
 
 export class SearchUserCriteria {

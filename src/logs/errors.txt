@@ -1546,4 +1546,130 @@ Not connected - 10.111.9.92
     - Order validation failed: userId: Path `userId` is required.
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:29:46.973Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:31:53.223Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:33:47.810Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:35:14.438Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:36:36.236Z 
+    - POST /api/users/login 
+    - 401 
+    - You have to validate your account
+    - ACCOUNT_NOT_VALIDATED
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T07:39:47.752Z 
+    - GET /api/users 
+    - 403 
+    - User role not found
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T07:41:17.656Z 
+    - GET /api/users 
+    - 403 
+    - User role not found
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:49:52.374Z 
+    - POST /api/users/refresh 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-04T07:50:23.020Z 
+    - POST /api/users/refresh 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T07:55:36.839Z 
+    - POST /api/users/refresh 
+    - 500 
+    - jwt must be provided
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T07:57:27.274Z 
+    - POST /api/users/refresh 
+    - 500 
+    - jwt must be provided
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T07:57:50.403Z 
+    - POST /api/users/refresh 
+    - 400 
+    - Refresh token is required
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T08:01:04.704Z 
+    - GET /api/users 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T08:01:08.715Z 
+    - PUT /api/users/:id 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T08:01:11.083Z 
+    - DELETE /api/users/:id 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T08:01:44.144Z 
+    - POST /api/products 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T08:06:05.325Z 
+    - PATCH /api/users/ 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-04T08:34:17.572Z 
+    - DELETE /api/users/remove-address 
+    - 403 
+    - Forbidden
+    - undefined
+
     

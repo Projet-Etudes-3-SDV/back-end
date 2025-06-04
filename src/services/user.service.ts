@@ -4,6 +4,7 @@ import { AppError } from "../utils/AppError";
 import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO } from "../types/dtos/userDtos";
 import { sendEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
+import { IAddress } from "../models/adress.model";
 
 export class UserService {
   private userRepository: UserRepository;
@@ -26,7 +27,7 @@ export class UserService {
     
     user.generateAuthToken();
 
-    sendEmail(user.email, "Account validation", `Click here to validate your account: http://localhost:8100/account-validation/${user.authToken}`);
+    sendEmail(user.email, "Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
 
     return await user.save();
   }
@@ -42,6 +43,9 @@ export class UserService {
     }
 
     if (!user.isValidated) {
+      user.generateAuthToken();
+      await user.save();
+      sendEmail(user.email, "Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
       throw new AppError("You have to validate your account", 401, [], "ACCOUNT_NOT_VALIDATED");
     }
 
@@ -147,6 +151,18 @@ export class UserService {
     await user.save();
   }
 
+  async renewEmailConfirmation(id: string): Promise<void> {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) {
+      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+    }
+
+    user.generateAuthToken();
+    sendEmail(user.email, "Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
+
+    await user.save();
+  }
+
   async resetPassword(token: string, newPassword: string): Promise<void> {
     const user = await this.userRepository.findOneBy({ resetPasswordToken: token });
     if (!user) {
@@ -157,5 +173,46 @@ export class UserService {
     user.resetPasswordToken = undefined;
 
     await user.save();
+  }
+
+  async addAddress(id: string, address: IAddress): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+    }
+
+    if (!user.addresses) {
+      user.addresses = [];
+    }
+
+    user.addresses.push(address);
+    const updatedUser = await this.userRepository.update(id, { addresses: user.addresses });
+    if (!updatedUser) {
+      throw new AppError("Failed to update user addresses", 500, [], "FAILED_TO_UPDATE_ADDRESSES");
+    }
+
+    return updatedUser;
+  }
+
+  async deleteAddress(id: string, addressIndex: number): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+    }
+
+    if (!user.addresses || user.addresses.length === 0) {
+      throw new AppError("No addresses found for user", 404, [], "NO_ADDRESSES_FOUND");
+    }
+
+    user.addresses = user.addresses.filter((_, index) => index !== addressIndex);
+
+    const updatedUser = await this.userRepository.update(id, { addresses: user.addresses });
+    if (!updatedUser) {
+      throw new AppError("Failed to update user addresses", 500, [], "FAILED_TO_UPDATE_ADDRESSES");
+    }
+
+    return updatedUser;
   }
 }

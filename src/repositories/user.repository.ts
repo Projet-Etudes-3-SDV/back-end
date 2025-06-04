@@ -24,8 +24,6 @@ export class UserRepository {
         path: 'product',
         populate: { path: 'category' }
       }
-    }, {
-      path: 'addresses'
     }]);
   }
 
@@ -61,8 +59,6 @@ export class UserRepository {
         path: 'product',
         populate: { path: 'category' }
       }
-    }, {
-      path: 'addresses'
     }]);
   }
 
@@ -84,8 +80,6 @@ export class UserRepository {
         path: 'product',
         populate: { path: 'category' }
       }
-    }, {
-      path: 'addresses',
     }]),
       User.countDocuments()
     ]);
@@ -119,9 +113,6 @@ export class UserRepository {
         path: 'product',
         populate: { path: 'category' }
       }
-    }, {
-      path: 'addresses',
-      model: 'Address'
     }]),
       User.countDocuments(query)
     ]);
@@ -144,8 +135,6 @@ export class UserRepository {
         path: 'product',
         populate: { path: 'category' }
       }
-    }, {
-      path: 'addresses'
     }]);
   }
 
