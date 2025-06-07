@@ -146,19 +146,7 @@ export class UserService {
     }
 
     user.generatePasswordToken();
-    sendEmail(user.email, "Password reset", `Click here to reset your password: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
-
-    await user.save();
-  }
-
-  async renewEmailConfirmation(id: string): Promise<void> {
-    const user = await this.userRepository.findOneBy({ id });
-    if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
-    }
-
-    user.generateAuthToken();
-    sendEmail(user.email, "Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
+    sendEmail(user.email, "Cyna: Réinitialisation du mot de passe", `Cliquez ici pour réinitialiser votre mot de passe: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
 
     await user.save();
   }

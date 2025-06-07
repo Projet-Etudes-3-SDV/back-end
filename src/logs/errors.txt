@@ -1672,4 +1672,32 @@ Not connected - 10.111.9.92
     - Forbidden
     - undefined
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-06T13:59:27.057Z 
+    - GET /api/users 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-06T14:07:23.077Z 
+    - GET /api/users 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-06T14:08:18.623Z 
+    - GET /api/users 
+    - 403 
+    - Forbidden
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-06T14:08:40.467Z 
+    - GET /api/users 
+    - 403 
+    - Forbidden
+    - undefined
+
     

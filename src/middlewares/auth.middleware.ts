@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/AppError';
 import { DecodedUser, EncodedRequest } from '../utils/EncodedRequest';
+import { UserRole } from '../models/user.model';
 
 dotenv.config();
 
@@ -11,12 +12,12 @@ const SECRET_KEY_REFRESH = process.env.SECRET_KEY_REFRESH!;
 
 export const checkRole = (req: EncodedRequest, res: Response, next: NextFunction): void => {
   const decodedUser = req.decoded as DecodedUser;
-  console.log('Decoded User:', decodedUser);
+
   if (!decodedUser || !decodedUser.user.role) {
     return next(new AppError('User role not found', 403));
   }
 
-  if (decodedUser.user.role !== 'admin') {
+  if (decodedUser.user.role !== UserRole.ADMIN) {
     return next(new AppError('Forbidden', 403));
   }
   next();
@@ -37,6 +38,10 @@ export const checkJWT = (req: Request, res: Response, next: NextFunction): void 
       return next(new AppError('Invalid token', 401));
     }
     (req as EncodedRequest).decoded = decoded as DecodedUser;
+
+    if (decoded.user.isValidated === false) {
+      return next(new AppError('User is not validated', 403));
+    }
     next();
   });
 };

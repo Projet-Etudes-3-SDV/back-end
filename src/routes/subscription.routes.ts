@@ -70,10 +70,17 @@ router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedReque
 
 /**
  * @swagger
- * /api/subscriptions/cancel:
+ * /api/subscriptions/cancel/:subscriptionId:
  *   post:
  *     summary: Cancel a subscription
  *     tags: [Subscription]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Subscription ID
  *     requestBody:
  *       required: true
  *       content:
