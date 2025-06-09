@@ -13,8 +13,9 @@ export class CartController {
     this.cartService = new CartService();
   }
 
-  async addItemToCart(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async addItemToCart(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
+      console.log(req)
       const addItemToCartDto = plainToClass(AddItemToCartDto, req.body);
       const dtoErrors = await validate(addItemToCartDto);
       if (dtoErrors.length > 0) {
@@ -24,7 +25,8 @@ export class CartController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const { userId, productId, plan } = addItemToCartDto;
+      const { productId, plan } = addItemToCartDto;
+      const userId = req.decoded.user.id
       const cart = await this.cartService.addItemToCart(userId, productId, plan);
       const sanitizedUser = {
           ...cart.toObject(),

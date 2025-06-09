@@ -51,6 +51,10 @@ export class CartService {
       cart.products.push({ product: product._id, quantity: 1, plan: plan });
     }
 
+    if (cart.products.find((product) => product.plan !== plan)) {
+      throw new AppError("Vous ne pouvez pas posséder plusieurs types d'abonnements différents dans votre panier", 400, [], "DIFFERENT_PLANS");
+    }
+
     const existingSubscription = user.subscriptions.find((sub) => sub.product.id === productId && sub.status === "active");
     if (existingSubscription) {
       throw new AppError("User is already subscribed to this product", 400, [], "ALREADY_SUBSCRIBED");
@@ -202,6 +206,7 @@ export class CartService {
   }
 
   async validateCart(userId: string): Promise<ICart> {
+    console.log("Validating cart for user:", userId);
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new AppError("User not found", 404);

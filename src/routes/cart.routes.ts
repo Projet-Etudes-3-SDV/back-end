@@ -36,7 +36,7 @@ const cartController = new CartController();
  *       400:
  *         description: Invalid input
  */
-router.post("/add", checkJWT, (req, res, next) => cartController.addItemToCart(req, res, next));
+router.post("/add", checkJWT, (req, res, next) => cartController.addItemToCart(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -115,22 +115,5 @@ router.delete("/reset", checkJWT, (req, res, next) => cartController.resetCart(r
  *         description: Unauthorized
  */
 router.get("/me", checkJWT, (req, res, next) => cartController.getCart(req as EncodedRequest, res, next));
-
-/**
- * @swagger
- * /api/cart/validate:
- *   post:
- *     summary: Buys the items in the cart
- *     description: This endpoint simulates the purchase of the items in the cart
- *     tags: [Cart]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Buy successful
- *       401:
- *         description: Unauthorized
- */
-router.post("/validate", checkJWT, (req, res, next) => cartController.validateCart(req as EncodedRequest, res, next));
 
 export default router;

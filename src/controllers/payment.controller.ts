@@ -6,65 +6,88 @@ import { UserService } from '../services/user.service';
 import { CartStatus } from '../models/cart.model';
 import { OrderService } from '../services/order.service';
 import { OrderStatus } from '../models/order.model';
+import { ProductService } from '../services/product.service';
+import { AppError } from '../utils/AppError';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2025-02-24.acacia',
 });
 
-const userService = new UserService();
-const cartService = new CartService();
-const orderService = new OrderService();
+const userService = new UserService()
+const cartService = new CartService()
+const orderService = new OrderService()
+const productService = new ProductService()
 
 export const createCheckoutSession = async (req: EncodedRequest, res: Response, next: NextFunction) => {
   try {
     const cart = await cartService.getCart(req.decoded.user.id);
-    let total = 0;
+    let total = 0
+    const lineItems = []
+    let isMonthly = false
+    let isYearly = false
+
     for (const product of cart.products) {
-      total += product.product.monthlyPrice * product.quantity;
+      const productData = await productService.getProduct(product.product.id);
+      let stripePriceId = '';
+
+      if (!productData || !productData.stripePriceId) {
+        throw new Error(`Stripe price not found for product ${product.product.name}`);
+      }
+
+      if (product.plan === 'monthly' && productData.stripePriceId) {
+        isMonthly = true
+        stripePriceId = productData.stripePriceId;
+        total += productData.monthlyPrice;
+      } else if (product.plan === 'yearly' && productData.stripePriceIdYearly) {
+        isYearly = true
+        stripePriceId = productData.stripePriceIdYearly;
+        total += productData.yearlyPrice;
+      } else {
+        throw new Error(`Price plan mismatch for product ${product.product.name}`);
+      }
+
+      if (isMonthly && isYearly) {
+        throw new AppError('Cannot mix monthly and yearly plans in a single checkout session', 400, [], 'DIFFERENT_PLANS');
+      }
+
+      lineItems.push({
+        price: stripePriceId,
+        quantity: product.quantity,
+      });
     }
 
     const session = await stripe.checkout.sessions.create({
-      success_url: `https://example.com/success`,
+      success_url: `https://example.com/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://example.com/failure`,
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: 'Panier utilisateur',
-            },
-            unit_amount: total * 100, // Prix en centime
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      payment_method_types: ['card']
+      line_items: lineItems,
+      mode: 'subscription',
+      payment_method_types: ['card'],
+      customer_email: req.decoded.user.email,
+      allow_promotion_codes: true,
     });
 
-    // get id, save to user, return url
     const sessionId = session.id;
 
-    // save session.id to the user in your database
-    const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId)
-    await cartService.updateCartStatus(req.decoded.user.id, CartStatus.PENDING)
-    await orderService.createOrder(
-      {
-        user: updatedUser._id,
-        total: total,
-        status: OrderStatus.PENDING,
-        sessionId: sessionId,
-        products: cart.products.map(product => ({
-          product: product.product._id,
-          plan: product.plan,
-        })),
-      }
-    )
-    res.json({ url: session.url })
+    const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
+    await cartService.updateCartStatus(req.decoded.user.id, CartStatus.PENDING);
+    await orderService.createOrder({
+      user: updatedUser._id,
+      total: total,
+      status: OrderStatus.PENDING,
+      sessionId: sessionId,
+      products: cart.products.map(product => ({
+        product: product.product._id,
+        plan: product.plan,
+      })),
+    });
+
+    res.json({ url: session.url });
+
   } catch (e) {
     next(e);
   }
-}
+};
+
 
 export const stripeWebhook = async (req: EncodedRequest, res: Response, next: NextFunction) => {
   try {

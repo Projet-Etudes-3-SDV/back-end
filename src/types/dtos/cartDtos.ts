@@ -5,11 +5,6 @@ import { SubscriptionPlan } from "../../models/subscription.model";
 
 export class AddItemToCartDto {
   @IsUUID()
-  @IsNotEmpty({message: "Vous devez être connecté pour ajouter un produit à votre panier"})
-  @Expose()
-  userId!: string;
-
-  @IsUUID()
   @IsNotEmpty({message: "Vous devez être renseigner un produit"})
   @Expose()
   productId!: string;
