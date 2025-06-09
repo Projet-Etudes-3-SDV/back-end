@@ -107,7 +107,7 @@ router.post("/refresh", checkJWT, (req, res, next) => userController.refresh(req
  *       400:
  *         description: Invalid input
  */
-router.post("/forgot-password", checkJWT, (req, res, next) => userController.forgotPassword(req, res, next));
+router.post("/forgot-password", (req, res, next) => userController.forgotPassword(req, res, next));
 
 /**
  * @swagger
@@ -155,7 +155,7 @@ router.post("/validate", (req, res, next) => userController.validateUserMail(req
  *       400:
  *         description: Invalid input
  */
-router.post("/reset-password", checkJWT, (req, res, next) => userController.resetPassword(req, res, next));
+router.post("/reset-password", (req, res, next) => userController.resetPassword(req, res, next));
 
 /**
  * @swagger

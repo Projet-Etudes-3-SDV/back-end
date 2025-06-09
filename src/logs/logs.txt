@@ -2447,3 +2447,6 @@ Not connected
 Not connected 
   - 2025-06-07T14:55:40.579Z 
   - GET /api/users
+Not connected 
+  - 2025-06-08T19:21:28.832Z 
+  - POST /api/payment/checkout
