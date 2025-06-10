@@ -180,10 +180,12 @@ export class UserController {
 
       const user = await this.userService.validateLogin(email, authCode);
 
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+
       const accessToken = this.jwtService.generateAccessToken(user);
       const refreshToken = this.jwtService.generateRefreshToken(user);
 
-      res.status(200).json({ user: user, accessToken, refreshToken });
+      res.status(200).json({ UserPresenter: userPresenter, accessToken, refreshToken });
     } catch (error) {
       next(error);
     }
