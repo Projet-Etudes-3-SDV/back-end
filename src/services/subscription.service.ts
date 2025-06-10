@@ -1,9 +1,15 @@
 import { UserRepository } from "../repositories/user.repository";
 import { ISubscription, SubscriptionStatus } from "../models/subscription.model";
 import { SubscriptionRepository } from "../repositories/subscription.repository";
-import { AppError } from "../utils/AppError";
 import { ProductRepository } from "../repositories/product.repository";
 import { SearchSubscriptionCriteria, SubscriptionToCreate, SubscriptionToModify } from "../types/dtos/subscriptionDtos";
+import {
+  SubscriptionAlreadyExists,
+  SubscriptionNotFound,
+  SubscriptionDeleteFailed
+} from "../types/errors/subscription.errors";
+import { UserNotFound } from "../types/errors/user.errors";
+import { ProductNotFound } from "../types/errors/product.errors";
 
 export class SubscriptionService {
   private userRepository: UserRepository;
@@ -27,16 +33,16 @@ export class SubscriptionService {
   async addSubscription(subscriptionData: SubscriptionToCreate): Promise<ISubscription> {
     const user = await this.userRepository.findOneBy({ id: subscriptionData.user });
     if (!user) {
-      throw new AppError("User not found", 404);
+      throw new UserNotFound();
     }
 
     const product = await this.productRepository.findOneBy({ id: subscriptionData.product });
     if (!product) {
-      throw new AppError("Product not found", 404);
+      throw new ProductNotFound();
     }
 
     if (user.subscriptions.find(sub => sub.product.id === product.id)) {
-      throw new AppError("User already subscribed to this product", 400);
+      throw new SubscriptionAlreadyExists();
     }
 
     const newSub = await this.subscriptionRepository.create({ user: user._id, product: product._id, plan: subscriptionData.plan })
@@ -51,7 +57,7 @@ export class SubscriptionService {
   async cancelSubscription(subscriptionId: string): Promise<ISubscription | null> {
     const subscription = await this.subscriptionRepository.findById(subscriptionId);
      if (!subscription) {
-      throw new AppError("Subscription not found", 404);
+      throw new SubscriptionNotFound();
     }
 
     subscription.status = SubscriptionStatus.CANCELLED;
@@ -61,9 +67,9 @@ export class SubscriptionService {
   }
 
   async patchSubscription(subscriptionId: string, subscriptionData: SubscriptionToModify){
-    const subscription = this.subscriptionRepository.findById(subscriptionId);
+    const subscription = await this.subscriptionRepository.findById(subscriptionId);
     if (!subscription) {
-      throw new AppError("Subscription not found", 404);
+      throw new SubscriptionNotFound();
     }
 
     return await this.subscriptionRepository.update(subscriptionId, subscriptionData)
@@ -72,18 +78,18 @@ export class SubscriptionService {
   async deleteSubscription(subscriptionId: string) {
     const subscription = await this.subscriptionRepository.findById(subscriptionId);
      if (!subscription) {
-      throw new AppError("Subscription not found", 404);
+      throw new SubscriptionNotFound();
     }
 
     const user = await this.userRepository.findOneBy({ id: subscription.user.id });
     if (!user) {
-      throw new AppError("User not found", 404);
+      throw new UserNotFound();
     }
 
     const result = await this.subscriptionRepository.delete(subscriptionId);
 
     if (!result) {
-      throw new AppError("Subscription deletion failed", 500); 
+      throw new SubscriptionDeleteFailed();
     }
 
     user.subscriptions = user.subscriptions.filter((sub) => sub.id !== subscriptionId);

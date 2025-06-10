@@ -1,5 +1,5 @@
 import type { ICategory } from "../models/category.model";
-import { AppError } from "../utils/AppError";
+import { CategoryAlreadyExists, CategoryNotFound, CategoryUpdateFailed, CategoryDeleteFailed } from "../types/errors/category.errors";
 import { CategoryToCreate, CategoryToModify, SearchCategoryCriteria } from "../types/dtos/categoryDtos";
 import { CategoryRepository } from "../repositories/category.repository";
 
@@ -13,7 +13,7 @@ export class CategoryService {
   async createCategory(data: CategoryToCreate): Promise<ICategory> {
     const existingCategory = await this.categoryRepository.findOneBy({ name: data.name });
     if (existingCategory) {
-      throw new AppError("Category already exists", 400);
+      throw new CategoryAlreadyExists();
     }
 
     return await this.categoryRepository.create(data);
@@ -22,7 +22,7 @@ export class CategoryService {
   async getCategoryById(id: string): Promise<ICategory> {
     const category = await this.categoryRepository.findOneBy({ id });
     if (!category) {
-      throw new AppError("Category not found", 404);
+      throw new CategoryNotFound();
     }
     return category;
   }
@@ -30,12 +30,12 @@ export class CategoryService {
   async updateCategory(id: string, data: CategoryToModify): Promise<ICategory> {
     const category = await this.categoryRepository.findOneBy({ id });
     if (!category) {
-      throw new AppError("Category not found", 404);
+      throw new CategoryNotFound();
     }
 
     const updatedCategory = await this.categoryRepository.update(category._id, data);
     if (!updatedCategory) {
-      throw new AppError("Failed to update category", 500);
+      throw new CategoryUpdateFailed();
     }
     return updatedCategory;
   }
@@ -43,11 +43,11 @@ export class CategoryService {
   async deleteCategory(id: string): Promise<void> {
     const category = await this.categoryRepository.findOneBy({ id });
     if (!category) {
-      throw new AppError("Category not found", 404);
+      throw new CategoryNotFound();
     }
     const result = await this.categoryRepository.delete(id);
     if (!result) {
-      throw new AppError("Failed to delete category", 500);
+      throw new CategoryDeleteFailed();
     }
   }
 

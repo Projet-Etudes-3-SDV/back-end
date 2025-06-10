@@ -1,8 +1,9 @@
 import { CouponRepository } from "../repositories/coupon.repository";
 import type { ICoupon } from "../models/coupon.model";
-import { AppError } from "../utils/AppError";
 import { CouponToCreate, CouponToModify } from "../types/dtos/couponDtos";
 import { ProductRepository } from "../repositories/product.repository";
+import { CouponNotFound, CouponUpdateFailed, CouponDeleteFailed } from "../types/errors/coupon.errors";
+import { ProductNotFound } from "../types/errors/product.errors";
 
 export class CouponService {
   private couponRepository: CouponRepository;
@@ -23,14 +24,13 @@ export class CouponService {
       const product = await this.productRepository.findOneBy({ id: productId });
 
       if (!product) {
-        throw new AppError("Product not found", 404);
+        throw new ProductNotFound();
       }
 
       productList.push(product._id);
     }
 
     couponData.products = productList;
-    
 
     return await this.couponRepository.create(couponData);
   }
@@ -38,12 +38,12 @@ export class CouponService {
   async updateCoupon(id: string, couponData: CouponToModify): Promise<ICoupon> {
     const coupon = await this.couponRepository.findById(id);
     if (!coupon) {
-      throw new AppError("Coupon not found", 404);
+      throw new CouponNotFound();
     }
 
     const updatedCoupon = await this.couponRepository.update(id, couponData);
     if (!updatedCoupon) {
-      throw new AppError("Failed to update coupon", 500);
+      throw new CouponUpdateFailed();
     }
     return updatedCoupon;
   }
@@ -51,16 +51,15 @@ export class CouponService {
   async deleteCoupon(id: string): Promise<void> {
     const coupon = await this.couponRepository.findById(id);
     if (!coupon) {
-      throw new AppError("Coupon not found", 404);
+      throw new CouponNotFound();
     }
-
 
     for (const productToModify in coupon.products) {
       console.log('Product to modify', productToModify)
       const product = await this.productRepository.findOneBy({ _id: productToModify });
 
       if (!product) {
-        throw new AppError("Product not found", 404);
+        throw new ProductNotFound();
       }
 
       product.coupons.filter(oldCoupon => oldCoupon.id !== coupon.id)
@@ -70,7 +69,7 @@ export class CouponService {
 
     const result = await this.couponRepository.delete(id);
     if (!result) {
-      throw new AppError("Failed to delete coupon", 500);
+      throw new CouponDeleteFailed();
     }
   }
 }
