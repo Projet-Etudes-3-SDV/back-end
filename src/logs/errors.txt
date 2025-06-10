@@ -1868,4 +1868,25 @@ Not connected - 10.111.9.92
     - Invalid authentication code
     - INVALID_AUTH_CODE
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-10T08:51:55.339Z 
+    - POST /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-10T08:52:07.840Z 
+    - POST /api/products 
+    - 500 
+    - Product validation failed: coupons: Path `coupons` is required.
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-10T08:53:05.407Z 
+    - POST /api/products 
+    - 500 
+    - Product validation failed: coupons: Cast to ObjectId failed for value "[]" (type Array) at path "coupons" because of "BSONTypeError"
+    - 
+
     

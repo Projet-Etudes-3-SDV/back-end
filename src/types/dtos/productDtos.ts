@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID } from "class-validator";
+import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID, ValidateNested, ArrayNotEmpty } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CategoryPresenter } from "./categoryDtos";
@@ -28,6 +28,27 @@ export class ProductToCreate {
   @IsOptional()
   @Expose()
   available?: boolean;
+
+  @Expose()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => FeaturesPresenter)
+  features!: Array<FeaturesPresenter>;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripeProductId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceIdYearly?: string;
 }
 
 export class ProductToModify {
@@ -60,6 +81,27 @@ export class ProductToModify {
   @IsOptional()
   @Expose()
   available?: boolean;
+
+  @Expose()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => FeaturesPresenter)
+  features!: Array<FeaturesPresenter>;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripeProductId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceIdYearly?: string;
 }
 
 export class SearchProductCriteria {
@@ -107,6 +149,12 @@ export class SearchProductCriteria {
   @Type(() => Number)
   @Expose()
   limit: number = 10;
+
+  @Expose()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => FeaturesPresenter)
+  features!: Array<FeaturesPresenter>;
 }
 
 export class ProductToReplace extends ProductToCreate {}
@@ -133,4 +181,17 @@ export class ProductPresenter {
 
   @Expose()
   available!: boolean;
+
+  @Expose()
+  @ValidateNested({ each: true })
+  @Type(() => FeaturesPresenter)
+  features!: Array<FeaturesPresenter>;
+}
+
+export class FeaturesPresenter {
+  @Expose()
+  title!: string;
+
+  @Expose()
+  description!: string;
 }

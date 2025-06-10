@@ -5,11 +5,11 @@ import { ProductToCreate, SearchProductCriteria } from "../types/dtos/productDto
 export class ProductRepository {
   async create(userData: ProductToCreate): Promise<IProduct> {
     const product = new Product(userData);
-    return await product.save();
+    return (await (await (await product.save()).populate("category")).populate("coupons")).populate("features");
   }
 
   async findById(id: string): Promise<IProduct | null> {
-    return await Product.findOne({ id }).populate("category");
+    return await Product.findOne({ id }).populate("category").populate("coupons").populate("features");
   }
 
   async findOneBy(filters: FilterQuery<SearchProductCriteria>): Promise<IProduct | null> {
@@ -32,7 +32,7 @@ export class ProductRepository {
   async findAll(page: number, limit: number): Promise<{ products: IProduct[]; total: number }> {
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([
-      Product.find().populate("category").skip(skip).limit(limit),
+      Product.find().populate("category").populate("coupons").populate("features").skip(skip).limit(limit),
       Product.countDocuments()
     ]);
     return { products, total };
@@ -50,14 +50,14 @@ export class ProductRepository {
     if (filters.id) query.id = filters.id;
     
     const [products, total] = await Promise.all([
-      Product.find(query).populate("category").skip(skip).limit(limit),
+      Product.find(query).populate("category").populate("coupons").populate("features").skip(skip).limit(limit),
       Product.countDocuments(query)
     ]);
     return { products, total };
   }
 
   async update(id: string, userData: Partial<IProduct>): Promise<IProduct | null> {
-    return await Product.findOneAndUpdate({ id }, userData, { new: true }).populate("category");
+    return await Product.findOneAndUpdate({ id }, userData, { new: true }).populate("category").populate("coupons").populate("features");
   }
 
   async delete(id: string): Promise<boolean> {

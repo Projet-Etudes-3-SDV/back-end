@@ -2579,3 +2579,42 @@ Not connected
 Not connected 
   - 2025-06-10T07:24:45.926Z 
   - POST /api/users/validate-login
+Not connected 
+  - 2025-06-10T08:51:55.323Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T08:52:07.775Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T08:53:05.300Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T08:53:35.907Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T08:54:57.710Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T08:57:58.853Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-10T08:58:05.323Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-10T09:00:07.684Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T09:00:56.414Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-10T09:03:27.092Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-10T09:04:44.404Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-10T09:05:06.826Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-10T09:05:48.790Z 
+  - GET /api/products

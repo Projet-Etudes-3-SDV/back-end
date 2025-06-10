@@ -17,9 +17,10 @@ export interface IProduct extends Document {
   stripeProductId?: string;
   stripePriceId?: string;
   stripePriceIdYearly?: string;
-  caracteristics?: {
-    [key: string]: string | number | boolean;
-  };
+  features: Array<{
+    title: string;
+    description: string;
+  }>
 }
 
 const ProductSchema: Schema = new Schema(
@@ -27,19 +28,19 @@ const ProductSchema: Schema = new Schema(
     id: { type: String, default: uuidv4, unique: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
-    caracteristics: {
-      type: Map,
-      of: new Schema({
-        value: { type: Schema.Types.Mixed, required: true },
-      }),
-      default: {},
-    },
+    features: [
+      {
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        _id: { type: Schema.Types.ObjectId, select: false }
+      },
+    ],
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
     monthlyPrice: { type: Number, required: true },
     yearlyPrice: { type: Number, required: true },
     available: { type: Boolean, default: true },
     addedDate: { type: Date, default: Date.now },
-    coupons: { type: Schema.Types.ObjectId, ref: "Coupon", required: true },
+    coupons: { type: Schema.Types.ObjectId, ref: "Coupon", required: false },
     stripeProductId: { type: String, default: null },
     stripePriceId: { type: String, default: null },
     stripePriceIdYearly: { type: String, default: null },
