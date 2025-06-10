@@ -35,6 +35,9 @@ export interface IUser extends Document {
   subscriptions: ISubscription["_id"][];
   addresses: IAddress[];
   paymentSessionId?: string;
+  authCode?: string;
+  authCodeExpires?: Date;
+  generateAuthCode(): string;
 }
 
 const UserSchema: Schema = new Schema(
@@ -55,6 +58,8 @@ const UserSchema: Schema = new Schema(
     subscriptions: [{ type: Schema.Types.ObjectId, ref: "Subscription", default: [] }],
     addresses: [{ type: Schema.Types.Mixed, default: [] }],
     paymentSessionId: { type: String, default: null },
+    authCode: { type: String, default: null },
+    authCodeExpires: { type: Date, default: null },
   },
   { versionKey: false, timestamps: true }
 );
@@ -98,6 +103,14 @@ UserSchema.methods.updateSubscriptionEndDate = function (newEndDate: Date) {
   this.subscription.status = "active";
   this.save();
 };
+
+
+UserSchema.methods.generateAuthCode = function (): string {
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  this.authCode = code;
+  this.authCodeExpires = new Date(Date.now() + 10 * 60 * 1000);
+  return code;
+}
 
 export default mongoose.model<IUser>("User", UserSchema);
 

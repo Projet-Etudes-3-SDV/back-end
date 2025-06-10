@@ -45,9 +45,39 @@ export class UserService {
     if (!user.isValidated) {
       user.generateAuthToken();
       await user.save();
-      sendEmail(user.email, "Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
+      sendEmail(user.email, "Cyna: Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
       throw new AppError("You have to validate your account", 401, [], "ACCOUNT_NOT_VALIDATED");
     }
+
+    await user.generateAuthCode();
+    await user.save();
+    sendEmail(user.email, "Cyna: Code de connexion", "Une connexion a été effectuée sur votre compte. Si ce n'est pas vous, veuillez changer votre mot de passe. Si c'est vous, voici votre code de connexion : " + user.authCode);
+
+    return user;
+  }
+
+  async validateLogin(email:string, authCode: string): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) {
+      throw new AppError("Invalid email", 401, [], "INVALID_CREDENTIALS");
+    }
+
+    if (!user.isValidated) {
+      throw new AppError("You have to validate your account", 401, [], "ACCOUNT_NOT_VALIDATED");
+    }
+
+    if (!user.authCode) {
+      throw new AppError("Authentication code not set", 401, [], "AUTH_CODE_NOT_SET");
+    }
+    if (!user.authCodeExpires || user.authCodeExpires < new Date()) {
+      throw new AppError("Authentication code has expired", 401, [], "AUTH_CODE_EXPIRED");
+    }
+    if (user.authCode !== authCode) {
+      throw new AppError("Invalid authentication code", 401, [], "INVALID_AUTH_CODE");
+    }
+
+    user.authCode = undefined;
+    user.authCodeExpires = undefined;
 
     return user;
   }

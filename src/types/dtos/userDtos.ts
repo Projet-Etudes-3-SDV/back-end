@@ -207,6 +207,16 @@ export class UserLogin {
   password!: string;
 }
 
+export class ValidateLogin{
+  @IsString()
+  @Expose()
+  email!: string;
+
+  @IsString()
+  @Expose()
+  authCode!: string;
+}
+
 export class UserToReplace extends UserToCreate {}
 
 export class UserPresenter {

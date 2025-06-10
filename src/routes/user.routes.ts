@@ -65,6 +65,31 @@ router.post("/login", (req, res, next) => userController.login(req, res, next));
 
 /**
  * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: User login
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User logged in
+ *       400:
+ *         description: Invalid input
+ */
+router.post("/validate-login", (req, res, next) => userController.validateLogin(req, res, next));
+
+/**
+ * @swagger
  * /api/users/refresh:
  *   post:
  *     summary: Refresh user token

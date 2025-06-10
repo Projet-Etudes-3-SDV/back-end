@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO, AdminUserToModify } from "../types/dtos/userDtos";
+import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO, AdminUserToModify, ValidateLogin } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
@@ -156,14 +156,34 @@ export class UserController {
         throw new AppError("Validation failed", 400, errors);
       }
 
-      const user = await this.userService.loginUser(email, password);
+      await this.userService.loginUser(email, password);
 
-      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      res.status(200).json("Veuillez valider votre connexion à l'aide du code envoyé par mail");
+    } catch (error) {
+      next(error);
+    }
+  }
 
-      const accessToken = this.jwtService.generateAccessToken(user)
-      const refreshToken = this.jwtService.generateRefreshToken(user)
+  async validateLogin(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { email, authCode } = req.body;
 
-      res.status(200).json({ userPresenter, accessToken, refreshToken });
+      const userData = plainToClass(ValidateLogin, req.body);
+      const dtoErrors = await validate(userData);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+
+      const user = await this.userService.validateLogin(email, authCode);
+
+      const accessToken = this.jwtService.generateAccessToken(user);
+      const refreshToken = this.jwtService.generateRefreshToken(user);
+
+      res.status(200).json({ user: user, accessToken, refreshToken });
     } catch (error) {
       next(error);
     }
