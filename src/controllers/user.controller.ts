@@ -185,7 +185,7 @@ export class UserController {
       const accessToken = this.jwtService.generateAccessToken(user);
       const refreshToken = this.jwtService.generateRefreshToken(user);
 
-      res.status(200).json({ UserPresenter: userPresenter, accessToken, refreshToken });
+      res.status(200).json({ userPresenter: userPresenter, accessToken, refreshToken });
     } catch (error) {
       next(error);
     }
