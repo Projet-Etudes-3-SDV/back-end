@@ -9,14 +9,12 @@ export interface IProduct extends Document {
   name: string;
   description: string;
   category: ICategory["_id"];
-  monthlyPrice: number;
-  yearlyPrice: number;
   available: boolean;
   addedDate: Date;
   coupons: ICoupon["_id"][];
-  stripeProductId?: string;
-  stripePriceId?: string;
-  stripePriceIdYearly?: string;
+  stripeProductId: string;
+  stripePriceId: string;
+  stripePriceIdYearly: string;
   features: Array<{
     title: string;
     description: string;
@@ -36,14 +34,12 @@ const ProductSchema: Schema = new Schema(
       },
     ],
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
-    monthlyPrice: { type: Number, required: true },
-    yearlyPrice: { type: Number, required: true },
     available: { type: Boolean, default: true },
     addedDate: { type: Date, default: Date.now },
     coupons: { type: Schema.Types.ObjectId, ref: "Coupon", required: false },
-    stripeProductId: { type: String, default: null },
-    stripePriceId: { type: String, default: null },
-    stripePriceIdYearly: { type: String, default: null },
+    stripeProductId: { type: String, required: true },
+    stripePriceId: { type: String, required: true },
+    stripePriceIdYearly: { type: String, required: true },
   },
   { versionKey: false, timestamps: true }
 );

@@ -2,6 +2,8 @@ import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID, ValidateNe
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CategoryPresenter } from "./categoryDtos";
+import { ICategory } from "../../models/category.model";
+import { IProduct } from "../../models/product.model";
 
 export class ProductToCreate {
   @IsString()
@@ -159,6 +161,37 @@ export class SearchProductCriteria {
 
 export class ProductToReplace extends ProductToCreate {}
 
+export class ProductPriced {
+  id: string;
+  name: string;
+  description: string;
+  category: ICategory;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  available: boolean;
+  features: Array<{ title: string; description: string }>;
+  stripePriceId: string
+  stripePriceIdYearly: string
+  stripeProductId: string
+
+  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number) {
+    this.id = product.id;
+    this.name = product.name;
+    this.description = product.description;
+    this.category = product.category;
+    this.monthlyPrice = monthlyPrice;
+    this.yearlyPrice = yearlyPrice;
+    this.available = product.available;
+    this.features = product.features?.map(f => ({
+      title: f.title,
+      description: f.description
+    })) || [];
+    this.stripePriceId = product.stripePriceId
+    this.stripePriceIdYearly = product.stripePriceIdYearly
+    this.stripeProductId = product.stripeProductId
+  }
+}
+
 export class ProductPresenter {
   @Expose()
   id!: string;
@@ -194,4 +227,76 @@ export class FeaturesPresenter {
 
   @Expose()
   description!: string;
+}
+
+export class StripePriceRecurringData {
+  @Expose()
+  aggregate_usage!: string | null;
+
+  @Expose()
+  interval!: string;
+
+  @Expose()
+  interval_count!: number;
+
+  @Expose()
+  meter!: string | null;
+
+  @Expose()
+  trial_period_days!: number | null;
+
+  @Expose()
+  usage_type!: string;
+}
+
+export class StripePriceData {
+  @Expose()
+  id!: string;
+
+  @Expose()
+  object!: string;
+
+  @Expose()
+  active!: boolean;
+
+  @Expose()
+  billing_scheme!: string;
+
+  @Expose()
+  created!: number;
+
+  @Expose()
+  currency!: string;
+
+  @Expose()
+  livemode!: boolean;
+
+  @Expose()
+  lookup_key!: string | null;
+
+
+  @Expose()
+  nickname!: string | null;
+
+  @Expose()
+  product!: string;
+
+  @Expose()
+  @Type(() => StripePriceRecurringData)
+  recurring!: StripePriceRecurringData;
+
+  @Expose()
+  tax_behavior!: string;
+
+  @Expose()
+  tiers_mode!: string | null;
+
+  @Expose()
+  type!: string;
+
+  @Expose()
+  unit_amount!: number;
+
+  @Expose()
+  unit_amount_decimal!: string;
 }
