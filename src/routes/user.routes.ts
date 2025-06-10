@@ -57,7 +57,7 @@ router.post("/register", (req, res, next) => userController.createUser(req, res,
  *                 type: string
  *     responses:
  *       200:
- *         description: User logged in
+ *         description: Pleas validate your login with the code sent to your email
  *       400:
  *         description: Invalid input
  */
@@ -65,9 +65,9 @@ router.post("/login", (req, res, next) => userController.login(req, res, next));
 
 /**
  * @swagger
- * /api/users/login:
+ * /api/users/validate-login:
  *   post:
- *     summary: User login
+ *     summary: Validate User login
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -78,7 +78,7 @@ router.post("/login", (req, res, next) => userController.login(req, res, next));
  *             properties:
  *               username:
  *                 type: string
- *               password:
+ *               authCode:
  *                 type: string
  *     responses:
  *       200:
