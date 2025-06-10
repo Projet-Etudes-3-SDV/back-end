@@ -1,10 +1,10 @@
 import { UserRepository } from "../repositories/user.repository";
 import type { IUser } from "../models/user.model";
-import { AppError } from "../utils/AppError";
 import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO } from "../types/dtos/userDtos";
 import { sendEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
 import { IAddress } from "../models/adress.model";
+import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
 
 export class UserService {
   private userRepository: UserRepository;
@@ -18,7 +18,7 @@ export class UserService {
   async createUser(userData: UserToCreate): Promise<IUser> {
     const existingUser = await this.userRepository.findOneBy({ email: userData.email });
     if (existingUser) {
-      throw new AppError("Email already in use", 400, [], "EMAIL_ALREADY_IN_USE");
+      throw new UserAlreadyExists()
     }
 
     const user = await this.userRepository.create(userData);
@@ -35,18 +35,18 @@ export class UserService {
   async loginUser(email: string, password: string): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user) {
-      throw new AppError("Invalid email or password", 401, [], "INVALID_CREDENTIALS");
+      throw new InvalidUserCredential()
     }
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) {
-      throw new AppError("Invalid email or password", 401, [], "INVALID_CREDENTIALS");
+      throw new InvalidUserCredential
     }
 
     if (!user.isValidated) {
       user.generateAuthToken();
       await user.save();
       sendEmail(user.email, "Cyna: Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
-      throw new AppError("You have to validate your account", 401, [], "ACCOUNT_NOT_VALIDATED");
+      throw new UserNotValidated()
     }
 
     await user.generateAuthCode();
@@ -59,21 +59,21 @@ export class UserService {
   async validateLogin(email:string, authCode: string): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user) {
-      throw new AppError("Invalid email", 401, [], "INVALID_CREDENTIALS");
+      throw new InvalidUserCredential();
     }
 
     if (!user.isValidated) {
-      throw new AppError("You have to validate your account", 401, [], "ACCOUNT_NOT_VALIDATED");
+      throw new UserNotValidated();
     }
 
     if (!user.authCode) {
-      throw new AppError("Authentication code not set", 401, [], "AUTH_CODE_NOT_SET");
+      throw new UserAuthCodeNotSet();
     }
     if (!user.authCodeExpires || user.authCodeExpires < new Date()) {
-      throw new AppError("Authentication code has expired", 401, [], "AUTH_CODE_EXPIRED");
+      throw new UserAuthCodeExpired()
     }
     if (user.authCode !== authCode) {
-      throw new AppError("Invalid authentication code", 401, [], "INVALID_AUTH_CODE");
+      throw new UserAuthCodeInvalid()
     }
 
     user.authCode = undefined;
@@ -85,11 +85,11 @@ export class UserService {
   async validateUser(authToken: ValidateUserDTO): Promise<IUser> {
     const user = await this.userRepository.findOneBy(authToken);
     if (!user) {
-      throw new AppError("User not found", 404, [], "INVALID_TOKEN");
+      throw new UserValidationTokenInvalid()
     }
 
     if (user.isValidated) {
-      throw new AppError("User already validated", 400, [], "ACCOUNT_ALREADY_VALIDATED");
+      throw new UserAlreadyValidated()
     }
 
     user.isValidated = true;
@@ -101,7 +101,7 @@ export class UserService {
     console.log('id', id);
     const user = await this.userRepository.findById(id);
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound()
     }
     return user;
   }
@@ -116,11 +116,11 @@ export class UserService {
   async updateUser(id: string, userData: UserToModify): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     const updatedUser = await this.userRepository.update(id, userData);
     if (!updatedUser) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound()
     }
     return updatedUser;
   }
@@ -128,12 +128,12 @@ export class UserService {
   async updateUserPaymentSessionId(id: string, sessionId: string): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     user.paymentSessionId = sessionId;
     const updatedUser = await this.userRepository.update(id, user);
     if (!updatedUser) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     return updatedUser;
   }
@@ -141,7 +141,7 @@ export class UserService {
   async getUserByPaymentSessionId(sessionId: string): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ paymentSessionId: sessionId });
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     return user;
   }
@@ -149,22 +149,22 @@ export class UserService {
   async deleteUser(_id: string): Promise<void> {
     const user = await this.userRepository.findById(_id);
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     const result = await this.userRepository.delete(_id);
     if (!result) {
-      throw new AppError("Failed to delete user", 500, [], "FAILED_TO_DELETE_USER");
+      throw new UserDeletionFailed();
     }
   }
 
   async patchUser(id: string, userData: Partial<IUser>): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     const updatedUser = await this.userRepository.update(id, userData);
     if (!updatedUser) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
     return updatedUser;
   }
@@ -172,7 +172,7 @@ export class UserService {
   async forgotPassword(email: string): Promise<void> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
 
     user.generatePasswordToken();
@@ -184,7 +184,7 @@ export class UserService {
   async resetPassword(token: string, newPassword: string): Promise<void> {
     const user = await this.userRepository.findOneBy({ resetPasswordToken: token });
     if (!user) {
-      throw new AppError("Invalid token", 400, [], "INVALID_TOKEN");
+      throw new UserPasswordResetTokenInvalid();
     }
 
     user.password = newPassword;
@@ -197,7 +197,7 @@ export class UserService {
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
 
     if (!user.addresses) {
@@ -207,7 +207,7 @@ export class UserService {
     user.addresses.push(address);
     const updatedUser = await this.userRepository.update(id, { addresses: user.addresses });
     if (!updatedUser) {
-      throw new AppError("Failed to update user addresses", 500, [], "FAILED_TO_UPDATE_ADDRESSES");
+      throw new UserFailedToUpdate();
     }
 
     return updatedUser;
@@ -217,18 +217,18 @@ export class UserService {
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
-      throw new AppError("User not found", 404, [], "NO_USER_FOUND");
+      throw new UserNotFound();
     }
 
     if (!user.addresses || user.addresses.length === 0) {
-      throw new AppError("No addresses found for user", 404, [], "NO_ADDRESSES_FOUND");
+      throw new UserAdressNotFound();
     }
 
     user.addresses = user.addresses.filter((_, index) => index !== addressIndex);
 
     const updatedUser = await this.userRepository.update(id, { addresses: user.addresses });
     if (!updatedUser) {
-      throw new AppError("Failed to update user addresses", 500, [], "FAILED_TO_UPDATE_ADDRESSES");
+      throw new UserFailedToUpdate();
     }
 
     return updatedUser;

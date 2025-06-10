@@ -158,7 +158,7 @@ export class UserController {
 
       await this.userService.loginUser(email, password);
 
-      res.status(200).json("Veuillez valider votre connexion à l'aide du code envoyé par mail");
+      res.status(200).json({ message: "Veuillez valider votre connexion à l'aide du code envoyé par mail", code: "VERIFY_CODE", statusCode: 200 });
     } catch (error) {
       next(error);
     }
