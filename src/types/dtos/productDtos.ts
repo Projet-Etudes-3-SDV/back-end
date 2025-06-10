@@ -86,7 +86,7 @@ export class ProductToModify {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => FeaturesPresenter)
-  features!: Array<FeaturesPresenter>;
+  features?: Array<FeaturesPresenter>;
 
   @IsString()
   @IsOptional()

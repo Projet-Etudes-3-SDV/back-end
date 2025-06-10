@@ -2618,3 +2618,18 @@ Not connected
 Not connected 
   - 2025-06-10T09:05:48.790Z 
   - GET /api/products
+Not connected 
+  - 2025-06-10T12:06:12.053Z 
+  - PUT /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1e
+Not connected 
+  - 2025-06-10T12:07:37.299Z 
+  - PUT /api/products/2e66c3bb-69aa-4460-a013-3c1d8ed90dbf
+Not connected 
+  - 2025-06-10T12:08:49.135Z 
+  - PUT /api/products/be6b2299-7d98-40b1-97a0-0dde9f269169
+Not connected 
+  - 2025-06-10T12:10:33.465Z 
+  - PUT /api/products/d1f330e3-41d0-4e98-a1d3-373b43507046
+Not connected 
+  - 2025-06-10T12:11:32.337Z 
+  - PUT /api/products/08175d66-45d3-49f7-b7a8-ab30277eb371

@@ -51,7 +51,7 @@ export class UserService {
 
     await user.generateAuthCode();
     await user.save();
-    sendEmail(user.email, "Cyna: Code de connexion", "Une connexion a été effectuée sur votre compte. Si ce n'est pas vous, veuillez changer votre mot de passe. Si c'est vous, voici votre code de connexion : " + user.authCode);
+    sendEmail(user.email, "Cyna: Code de connexion", "Une connexion a été effectuée sur votre compte. Si ce n'est pas vous, veuillez changer votre mot de passe. Si c'est vous, voici votre code de connexion valable 10 minutes : " + user.authCode);
 
     return user;
   }
