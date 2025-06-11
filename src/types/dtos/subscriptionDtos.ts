@@ -17,6 +17,7 @@ export interface IUserSubscription {
   coupon?: ISubscriptionCoupon;
   cancelAtPeriodEnd: boolean;
   productId: string;
+  createdAt: Date;
 }
 
 export class SubscriptionToCreate {

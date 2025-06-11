@@ -1,12 +1,23 @@
 import { Expose } from 'class-transformer';
 import { IsString, IsNumber, IsDate, IsOptional, IsArray } from 'class-validator';
+import Stripe from 'stripe';
 
 export interface ISubscriptionCoupon {
     name: string;
-    reduction: number; // Pourcentage ou montant fixe
-    reductionType: 'percentage' | 'fixed'; // Type de réduction
+    reduction: number;
+    reductionType: 'percentage' | 'fixed';
     startDate: Date;
-    endDate?: Date; // Optionnel pour les coupons permanents
+    endDate?: Date;
+}
+
+export interface IAdminSubscriptionCoupon extends ISubscriptionCoupon {
+    code: string;
+    promotionCodeId: string;
+    couponId: string;
+    duration: Stripe.Coupon.Duration;
+    durationInMonths?: number | undefined | null;
+    isActive: boolean;
+    timesReedeemed: number;
 }
 
 export class CouponToCreate {

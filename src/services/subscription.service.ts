@@ -19,7 +19,7 @@ export class SubscriptionService {
     try {
       const customerSubscriptions = await this.stripe.subscriptions.list({
         customer: stripeCustomerId,
-        status: 'all',
+        status: 'all'
       });
 
       const allSubscriptions = await Promise.all(
@@ -67,6 +67,7 @@ export class SubscriptionService {
             coupon: coupon,
             cancelAtPeriodEnd: subscription.cancel_at_period_end,
             productId: products.map(p => p.productId).join(','), // Joindre les IDs des produits
+            createdAt: new Date(subscription.created * 1000),
           };
 
           return userSubscription;
@@ -161,6 +162,7 @@ export class SubscriptionService {
             coupon: coupon,
             cancelAtPeriodEnd: subscription.cancel_at_period_end,
             productId: product.id,
+            createdAt: new Date(subscription.created * 1000),
           };
 
           return userSubscription;
@@ -169,6 +171,9 @@ export class SubscriptionService {
 
       const subscriptions = userSubscriptions.filter((sub): sub is IUserSubscription => sub !== undefined);
 
+      subscriptions.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
       return subscriptions
     } catch (error) {
       console.error('Erreur lors de la récupération des abonnements:', error);
@@ -206,6 +211,7 @@ export class SubscriptionService {
         coupon: coupon,
         cancelAtPeriodEnd: subscription.cancel_at_period_end,
         productId: product.id,
+        createdAt: new Date(subscription.created * 1000),
       };
 
       return userSubscription;

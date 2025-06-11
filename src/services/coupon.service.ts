@@ -4,6 +4,7 @@ import { ProductRepository } from "../repositories/product.repository";
 // import { ProductNotFound } from "../types/errors/product.errors";
 
 import Stripe from "stripe";
+import { IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../types/dtos/couponDtos";
 
 export class CouponService {
   private productRepository: ProductRepository;
@@ -15,11 +16,41 @@ export class CouponService {
       apiVersion: '2025-02-24.acacia',
     });  }
 
-  async getCoupons(): Promise<Stripe.Coupon[]> {
-    const stripeCoupons = await this.stripe.coupons.list();
-    console.log('Stripe Coupons:', stripeCoupons);
-    const coupons: Stripe.Coupon[] = stripeCoupons.data.map(coupon => (coupon));
+  async getCoupons(): Promise<ISubscriptionCoupon[]> {
+    const stripeCoupons = await this.stripe.promotionCodes.list();
+    const coupons: ISubscriptionCoupon[] = stripeCoupons.data.map((promotionCode: Stripe.PromotionCode) => {
+      let reduction: number;
+      let reductionType: 'percentage' | 'fixed';
+      const discount = promotionCode.coupon;
+      if (discount.percent_off) {
+        reduction = discount.percent_off;
+        reductionType = 'percentage';
+      } else if (discount.amount_off) {
+        reduction = discount.amount_off;
+        reductionType = 'fixed';
+      } else {
+        reduction = 0;
+        reductionType = 'fixed';
+      }
+      
+      const subscriptionCoupon: IAdminSubscriptionCoupon = {
+        name: discount.name || 'Réduction',
+        code: promotionCode.code,
+        promotionCodeId: promotionCode.id,
+        couponId: discount.id,        
+        reduction,
+        reductionType,
+        startDate: new Date(promotionCode.created * 1000),
+        endDate: promotionCode.expires_at ? new Date(promotionCode.expires_at * 1000) : undefined,
+        isActive: promotionCode.active,
+        timesReedeemed: promotionCode.times_redeemed || 0,
+        duration: discount.duration,
+        durationInMonths: discount.duration === 'repeating' ? discount.duration_in_months : undefined,
+      };
+      return subscriptionCoupon;
+    });
 
+  
     return coupons;
   }
 
