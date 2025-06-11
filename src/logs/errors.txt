@@ -2365,4 +2365,39 @@ Not connected - 10.111.9.92
     - Cannot read properties of undefined (reading 'id')
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-11T19:10:27.179Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T19:11:29.186Z 
+    - GET /api/products 
+    - 500 
+    - Ensure you have properly quoted values while searching. Try updating your query to `active:"true"` at line 1 and column 8.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T19:11:55.098Z 
+    - GET /api/products 
+    - 500 
+    - Field `amount` is an unsupported search field for resource `prices`. See http://stripe.com/docs/search#query-fields-for-prices for a list of supported fields.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T19:15:50.298Z 
+    - GET /api/products 
+    - 500 
+    - Field `foundMonth.unit_amount` is an unsupported search field for resource `prices`. See http://stripe.com/docs/search#query-fields-for-prices for a list of supported fields.
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T19:37:03.655Z 
+    - POST /api/products 
+    - 500 
+    - Product validation failed: stripePriceIdYearly: Path `stripePriceIdYearly` is required.
+    - 
+
     

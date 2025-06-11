@@ -61,6 +61,16 @@ export class ProductController {
         }
     }
 
+    async getTopProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const topProducts = await this.productService.getTopProducts();
+            const productPresenters = plainToInstance(ProductPresenter, topProducts, { excludeExtraneousValues: true });
+            res.status(200).json(productPresenters)
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async updateProduct(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
         try {
         const productData = plainToClass(ProductToModify, req.body);
