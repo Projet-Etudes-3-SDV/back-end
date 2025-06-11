@@ -1896,4 +1896,459 @@ Not connected - 10.111.9.92
     - Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
     - 
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T05:37:21.046Z 
+    - POST /api/payment/checkout 
+    - 500 
+    - Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:36.638Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:45.738Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:45.757Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:45.832Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:45.964Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:46.066Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:46.457Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:46.525Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:46.586Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:46.686Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:03:46.851Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:04:32.618Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:22.815Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.274Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.284Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.341Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.440Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.562Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.729Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.748Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.828Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:23.956Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:05:33.259Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:24.708Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:24.738Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:24.944Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.122Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.174Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.336Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.547Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.574Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.768Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:25.780Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:07:53.694Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:47.535Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:47.768Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:47.967Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:47.968Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:48.025Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:48.278Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:48.362Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:48.505Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:48.586Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:11:48.686Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:12:38.962Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:15.619Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:15.622Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:15.690Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:15.765Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:15.934Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:16.346Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:16.351Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:16.551Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:16.578Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:16.718Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:13:34.781Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T07:41:56.583Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T07:58:44.133Z 
+    - POST /api/payment/checkout 
+    - 500 
+    - Subscriptions require at least one recurring price or plan to be passed to `line_items`. See https://stripe.com/docs/payments/checkout/set-up-a-subscription#create-checkout-session. If you didn't intend to create a subscription, use payment `mode` instead. Learn more at https://stripe.com/docs/payments/accept-a-payment?platform=web&ui=checkout.
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T08:11:35.220Z 
+    - POST /api/payment/checkout 
+    - 500 
+    - You may only specify one of these parameters: customer, customer_email.
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T08:49:40.429Z 
+    - GET /api/users/me 
+    - 500 
+    - This property cannot be expanded (items).
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T08:52:43.781Z 
+    - GET /api/users/me 
+    - 500 
+    - Cannot read properties of undefined (reading 'map')
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T09:03:40.440Z 
+    - GET /api/users/me 
+    - 500 
+    - Cannot read properties of undefined (reading 'discount')
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T09:04:00.513Z 
+    - GET /api/users/me 
+    - 500 
+    - Cannot read properties of undefined (reading 'coupon')
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-11T10:57:25.590Z 
+    - POST /api/payment/webhook 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
     

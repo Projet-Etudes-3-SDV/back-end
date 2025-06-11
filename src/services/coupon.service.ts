@@ -1,75 +1,71 @@
-import { CouponRepository } from "../repositories/coupon.repository";
-import type { ICoupon } from "../models/coupon.model";
-import { CouponToCreate, CouponToModify } from "../types/dtos/couponDtos";
+// import { CouponToCreate, CouponToModify } from "../types/dtos/couponDtos";
 import { ProductRepository } from "../repositories/product.repository";
-import { CouponNotFound, CouponUpdateFailed, CouponDeleteFailed } from "../types/errors/coupon.errors";
-import { ProductNotFound } from "../types/errors/product.errors";
+// import { CouponNotFound, CouponUpdateFailed, CouponDeleteFailed } from "../types/errors/coupon.errors";
+// import { ProductNotFound } from "../types/errors/product.errors";
+
+import Stripe from "stripe";
 
 export class CouponService {
-  private couponRepository: CouponRepository;
   private productRepository: ProductRepository;
+  private stripe: Stripe;
 
   constructor() {
-    this.couponRepository = new CouponRepository();
     this.productRepository = new ProductRepository();
+    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+      apiVersion: '2025-02-24.acacia',
+    });  }
+
+  async getCoupons(): Promise<Stripe.Coupon[]> {
+    const stripeCoupons = await this.stripe.coupons.list();
+    console.log('Stripe Coupons:', stripeCoupons);
+    const coupons: Stripe.Coupon[] = stripeCoupons.data.map(coupon => (coupon));
+
+    return coupons;
   }
 
-  async getCoupons(): Promise<ICoupon[]> {
-    return await this.couponRepository.findAll();
+  async createCoupon(): Promise<Stripe.Coupon> {
+    return (await this.stripe.coupons.create({
+      duration: "once",
+      name: "First",
+      percent_off: 10
+    })) as Stripe.Coupon
   }
 
-  async createCoupon(couponData: CouponToCreate): Promise<ICoupon> {
-    const productList: string[] = [];
-    for (const productId in couponData.products) {
-      const product = await this.productRepository.findOneBy({ id: productId });
+  // async updateCoupon(id: string, couponData: CouponToModify): Promise<ICoupon> {
+  //   const coupon = await this.couponRepository.findById(id);
+  //   if (!coupon) {
+  //     throw new CouponNotFound();
+  //   }
 
-      if (!product) {
-        throw new ProductNotFound();
-      }
+  //   const updatedCoupon = await this.couponRepository.update(id, couponData);
+  //   if (!updatedCoupon) {
+  //     throw new CouponUpdateFailed();
+  //   }
+  //   return updatedCoupon;
+  // }
 
-      productList.push(product._id);
-    }
+  // async deleteCoupon(id: string): Promise<void> {
+  //   const coupon = await this.couponRepository.findById(id);
+  //   if (!coupon) {
+  //     throw new CouponNotFound();
+  //   }
 
-    couponData.products = productList;
+  //   for (const productToModify in coupon.products) {
+  //     console.log('Product to modify', productToModify)
+  //     const product = await this.productRepository.findOneBy({ _id: productToModify });
 
-    return await this.couponRepository.create(couponData);
-  }
+  //     if (!product) {
+  //       throw new ProductNotFound();
+  //     }
 
-  async updateCoupon(id: string, couponData: CouponToModify): Promise<ICoupon> {
-    const coupon = await this.couponRepository.findById(id);
-    if (!coupon) {
-      throw new CouponNotFound();
-    }
+  //     product.coupons.filter(oldCoupon => oldCoupon.id !== coupon.id)
 
-    const updatedCoupon = await this.couponRepository.update(id, couponData);
-    if (!updatedCoupon) {
-      throw new CouponUpdateFailed();
-    }
-    return updatedCoupon;
-  }
+  //     await product.save();
+  //   }
 
-  async deleteCoupon(id: string): Promise<void> {
-    const coupon = await this.couponRepository.findById(id);
-    if (!coupon) {
-      throw new CouponNotFound();
-    }
-
-    for (const productToModify in coupon.products) {
-      console.log('Product to modify', productToModify)
-      const product = await this.productRepository.findOneBy({ _id: productToModify });
-
-      if (!product) {
-        throw new ProductNotFound();
-      }
-
-      product.coupons.filter(oldCoupon => oldCoupon.id !== coupon.id)
-
-      await product.save();
-    }
-
-    const result = await this.couponRepository.delete(id);
-    if (!result) {
-      throw new CouponDeleteFailed();
-    }
-  }
+  //   const result = await this.couponRepository.delete(id);
+  //   if (!result) {
+  //     throw new CouponDeleteFailed();
+  //   }
+  // }
 }

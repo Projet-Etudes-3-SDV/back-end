@@ -1,18 +1,22 @@
 import { UserRepository } from "../repositories/user.repository";
-import type { IUser } from "../models/user.model";
-import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO } from "../types/dtos/userDtos";
+import { UserWithSubscriptions, type IUser } from "../models/user.model";
+import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO, AdminSearchUserCriteria } from "../types/dtos/userDtos";
 import { sendEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
 import { IAddress } from "../models/adress.model";
 import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
+import { SubscriptionService } from "./subscription.service";
+import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 
 export class UserService {
   private userRepository: UserRepository;
   private cartRepository: CartRepository;
+  private subscriptionService: SubscriptionService;
 
   constructor() {
     this.userRepository = new UserRepository();
     this.cartRepository = new CartRepository();
+    this.subscriptionService = new SubscriptionService();
   }
 
   async createUser(userData: UserToCreate): Promise<IUser> {
@@ -97,20 +101,43 @@ export class UserService {
     return await user.save();
   }
 
-  async getUser(id: string): Promise<IUser> {
-    console.log('id', id);
+  async getUser(id: string): Promise<UserWithSubscriptions> {
     const user = await this.userRepository.findById(id);
     if (!user) {
       throw new UserNotFound()
     }
+    if (user.stripeCustomerId) {
+      const userWithSubscriptions: UserWithSubscriptions = new UserWithSubscriptions(user, await this.subscriptionService.getUserSubscription(user.stripeCustomerId));
+      return userWithSubscriptions;
+    }
+
     return user;
   }
 
-  async getUsers(searchCriteria: SearchUserCriteria): Promise<{ users: IUser[]; total: number; pages: number }> {
+  async getUsers(searchCriteria: SearchUserCriteria): Promise<{ users: UserWithSubscriptions[]; total: number; pages: number }> {
     const { page = 1, limit = 10, ...filters } = searchCriteria;
     const { users, total } = await this.userRepository.findBy(filters, page, limit);
     const pages = Math.ceil(total / limit);
-    return { users, total, pages };
+
+    const usersWithSubscriptions = await Promise.all(users.map(async (user) => {
+      let subscriptions: IUserSubscription[] = [];
+
+      if (user.stripeCustomerId) {
+        try {
+          subscriptions = await this.subscriptionService.getUserSubscription(user.stripeCustomerId);
+        } catch (error) {
+          console.error(`Erreur lors de la récupération des abonnements pour l'utilisateur ${user.id}:`, error);
+          subscriptions = [];
+        }
+      }
+
+      // Fusionner correctement les données utilisateur avec les abonnements
+      const userWithSubscriptions: UserWithSubscriptions = new UserWithSubscriptions(user, subscriptions);
+
+      return userWithSubscriptions;
+    }));
+
+    return { users: usersWithSubscriptions, total, pages };
   }
 
   async updateUser(id: string, userData: UserToModify): Promise<IUser> {
@@ -140,6 +167,22 @@ export class UserService {
 
   async getUserByPaymentSessionId(sessionId: string): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ paymentSessionId: sessionId });
+    if (!user) {
+      throw new UserNotFound();
+    }
+    return user;
+  }
+
+  async getUserByStripeCustomerId(stripeCustomerId: string): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ stripeCustomerId });
+    if (!user) {
+      throw new UserNotFound();
+    }
+    return user;
+  }
+
+  async getUserBy(userData: AdminSearchUserCriteria): Promise<IUser> {
+    const user = await this.userRepository.findOneBy(userData);
     if (!user) {
       throw new UserNotFound();
     }
@@ -233,4 +276,5 @@ export class UserService {
 
     return updatedUser;
   }
+    
 }

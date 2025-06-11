@@ -15,61 +15,6 @@ const subscriptionController = new SubscriptionController();
 
 /**
  * @swagger
- * /api/subscriptions:
- *   post:
- *     summary: Create a new subscription
- *     tags: [Subscription]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *               planId:
- *                 type: string
- *     responses:
- *       201:
- *         description: Subscription created
- *       400:
- *         description: Invalid input
- */
-router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.addSubscription(req, res, next));
-
-/**
- * @swagger
- * /api/subscriptions/{id}:
- *   patch:
- *     summary: Update a subscription by ID
- *     tags: [Subscription]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Subscription ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               planId:
- *                 type: string
- *     responses:
- *       200:
- *         description: Subscription updated
- *       400:
- *         description: Invalid input
- */
-router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.patchSubscription(req, res, next));
-
-/**
- * @swagger
  * /api/subscriptions/cancel/:subscriptionId:
  *   post:
  *     summary: Cancel a subscription
@@ -98,32 +43,12 @@ router.patch("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedReque
  */
 router.post("/cancel/:subscriptionId", checkJWT, (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
 
-/**
- * @swagger
- * /api/subscriptions/{id}:
- *   delete:
- *     summary: Delete a subscription by ID
- *     tags: [Subscription]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Subscription ID
- *     responses:
- *       200:
- *         description: Subscription deleted
- *       400:
- *         description: Invalid input
- */
-router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.deleteSubscription(req, res, next));
 
 /**
  * @swagger
  * /api/subscriptions:
  *   get:
- *     summary: Get subscriptions with filters
+ *     summary: Get subscriptions
  *     tags: [Subscription]
  *     parameters:
  *       - in: query
@@ -144,6 +69,60 @@ router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequ
  *       400:
  *         description: Invalid input
  */
-router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.getSubscriptionBy(req, res, next));
+router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.getSubscriptions(req, res, next));
+
+/**
+ * @swagger
+ * /api/subscriptions:
+ *   get:
+ *     summary: Get subscriptions by ID
+ *     tags: [Subscription]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: User ID
+ *       - in: query
+ *         name: planId
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Plan ID
+ *     responses:
+ *       200:
+ *         description: List of subscriptions
+ *       400:
+ *         description: Invalid input
+ */
+router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.getSubscriptionById(req, res, next));
+
+/**
+ * @swagger
+ * /api/subscriptions:
+ *   get:
+ *     summary: Get subscriptions of a user
+ *     tags: [Subscription]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: User ID
+ *       - in: query
+ *         name: planId
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Plan ID
+ *     responses:
+ *       200:
+ *         description: List of subscriptions
+ *       400:
+ *         description: Invalid input
+ */
+router.get("/me", checkJWT, (req, res, next) => subscriptionController.getUserSubscriptions(req as EncodedRequest, res, next));
 
 export default router;

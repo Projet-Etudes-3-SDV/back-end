@@ -1,6 +1,13 @@
-import { Expose, Type } from 'class-transformer';
-import { IsString, IsNumber, IsDate, IsOptional, IsArray, ValidateNested } from 'class-validator';
-import { ProductPresenter } from './productDtos';
+import { Expose } from 'class-transformer';
+import { IsString, IsNumber, IsDate, IsOptional, IsArray } from 'class-validator';
+
+export interface ISubscriptionCoupon {
+    name: string;
+    reduction: number; // Pourcentage ou montant fixe
+    reductionType: 'percentage' | 'fixed'; // Type de réduction
+    startDate: Date;
+    endDate?: Date; // Optionnel pour les coupons permanents
+}
 
 export class CouponToCreate {
     @IsNumber()
@@ -37,22 +44,22 @@ export class CouponToModify {
 export class CouponPresenter {
     @IsString()
     @Expose()
-    id!: string;
-
-    @IsString()
-    @Expose()
-    code!: string;
+    name!: string;
 
     @IsNumber()
     @Expose()
-    discount!: number;
+    reduction!: number;
+
+    @IsString()
+    @Expose()
+    reductionType!: 'percentage' | 'fixed';
 
     @IsDate()
     @Expose()
-    expirationDate!: Date;
+    startDate!: Date;
 
+    @IsOptional()
+    @IsDate()
     @Expose()
-    @ValidateNested({ each: true })
-    @Type(() => ProductPresenter)
-    products!: ProductPresenter[]
+    endDate?: Date;
 }

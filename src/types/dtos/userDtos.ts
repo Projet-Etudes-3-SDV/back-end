@@ -197,6 +197,28 @@ export class SearchUserCriteria {
   limit: number = 10;
 }
 
+export class AdminSearchUserCriteria extends SearchUserCriteria {
+  @IsString()
+  @IsOptional()
+  @Expose()
+  authToken?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  isValidated?: boolean;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  paymentSessionId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripeCustomerId?: string;
+}
+
 export class UserLogin {
   @IsString()
   @Expose()
@@ -244,7 +266,7 @@ export class UserPresenter {
   @Expose()
   @ValidateNested({ each: true })
   @Type(() => SubscriptionPresenter)
-  subscriptions!: SubscriptionPresenter;
+  subscriptions?: SubscriptionPresenter;
 
   @Expose()
   @IsArray()

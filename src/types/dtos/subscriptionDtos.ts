@@ -1,7 +1,23 @@
-import { IsString, IsDate, IsEnum, IsBoolean, IsOptional } from "class-validator";
+import { IsString, IsDate, IsEnum, IsBoolean, IsOptional, IsNumber } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import { SubscriptionPlan, SubscriptionStatus } from "../../models/subscription.model";
 import { ProductPresenter } from "./productDtos";
+import { CouponPresenter, ISubscriptionCoupon } from "./couponDtos";
+
+export interface IUserSubscription {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  currency: string;
+  startDate: Date;
+  endDate: Date;
+  status: 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'trialing';
+  planType: 'monthly' | 'yearly';
+  coupon?: ISubscriptionCoupon;
+  cancelAtPeriodEnd: boolean;
+  productId: string;
+}
 
 export class SubscriptionToCreate {
   @IsString()
@@ -81,6 +97,14 @@ export class SearchSubscriptionCriteria {
   @IsDate()
   @Expose()
   startDate?: Date;
+
+  @IsNumber()
+  @Expose()
+  page?: number;
+
+  @IsNumber()
+  @Expose()
+  limit?: number;
 }
 
 export class SubscriptionPresenter {
@@ -90,7 +114,19 @@ export class SubscriptionPresenter {
 
   @IsString()
   @Expose()
-  plan!: SubscriptionPlan;
+  name!: string;
+
+  @IsString()
+  @Expose()
+  description!: string;
+
+  @IsNumber()
+  @Expose()
+  price!: number; // Prix en centimes
+
+  @IsString()
+  @Expose()
+  currency!: string;
 
   @IsDate()
   @Expose()
@@ -102,11 +138,19 @@ export class SubscriptionPresenter {
 
   @IsString()
   @Expose()
-  status!: SubscriptionStatus;
+  status!: 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'unpaid' | 'trialing';
+
+  @IsString()
+  @Expose()
+  planType!: 'monthly' | 'yearly';
+
+  @Expose()
+  @Type(() => CouponPresenter)
+  coupon?: CouponPresenter;
 
   @IsBoolean()
   @Expose()
-  autoRenew!: boolean;
+  cancelAtPeriodEnd!: boolean;
 
   @Expose()
   @Type(() => ProductPresenter)

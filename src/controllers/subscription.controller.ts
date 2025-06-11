@@ -1,15 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import { SubscriptionService } from "../services/subscription.service";
-import { validate } from "class-validator";
 import { plainToClass } from "class-transformer";
-import { SubscriptionDto, SubscriptionPresenter, SubscriptionToCreate } from "../types/dtos/subscriptionDtos";
+import { SubscriptionPresenter } from "../types/dtos/subscriptionDtos";
 import { AppError } from "../utils/AppError";
+import { EncodedRequest } from "../utils/EncodedRequest";
+import { UserRepository } from "../repositories/user.repository";
+import { UserNotFound } from "../types/errors/user.errors";
 
 export class SubscriptionController {
   private subscriptionService: SubscriptionService;
+  private userRepository: UserRepository;
 
   constructor() {
     this.subscriptionService = new SubscriptionService();
+    this.userRepository = new  UserRepository();
   }
 
   async getSubscriptions(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -23,11 +27,11 @@ export class SubscriptionController {
     }
   }
 
-  async getSubscriptionBy(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getSubscriptionById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const filters = req.query;
-      const subscriptions = await this.subscriptionService.getSubscriptionBy(filters);
-      const subscriptionPresenter = subscriptions?.map(subscription => plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true }));
+      const { id } = req.params;
+      const subscription = await this.subscriptionService.getSubscriptionById(id);
+      const subscriptionPresenter = plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true });
       res.status(200).json(subscriptionPresenter);
     }
     catch (error) {
@@ -35,44 +39,26 @@ export class SubscriptionController {
     }
   }
 
-  async addSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getUserSubscriptions(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const subscriptionData = req.body;
-      const subscriptionDto = plainToClass(SubscriptionToCreate, subscriptionData);
-      const dtoErrors = await validate(subscriptionDto);
-      if (dtoErrors.length > 0) {
-        const errors = dtoErrors.map(error => ({
-          field: error.property,
-          constraints: error.constraints ? Object.values(error.constraints) : []
-        }));
-        throw new AppError("Validation failed", 400, errors);
+      const userId = req.decoded.user.id;
+      if (!userId) {
+        throw new AppError("Validation failed", 400, [{ field: "userId", constraints: ["userId should not be empty"] }]);
       }
-      const subscription = await this.subscriptionService.addSubscription(subscriptionDto);
-      const subscriptionPresenter = plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true });
-      res.status(201).json(subscriptionPresenter);
-    } catch (error) {
-      next(error);
-    }
-  }
 
-  async patchSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const { subscriptionId } = req.query;
-      const subscriptionData = req.body;
-      const subscriptionDto = plainToClass(SubscriptionDto, subscriptionData);
-      const dtoErrors = await validate(subscriptionDto);
-      if (dtoErrors.length > 0) {
-        const errors = dtoErrors.map(error => ({
-          field: error.property,
-          constraints: error.constraints ? Object.values(error.constraints) : []
-        }));
-        throw new AppError("Validation failed", 400, errors);
+      const user = await this.userRepository.findById(userId);
+      if (!user) {
+        throw new UserNotFound()
       }
-      const subscription = await this.subscriptionService.patchSubscription(subscriptionId as string, subscriptionDto);
-      const subscriptionPresenter = plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true });
+      if (!user.stripeCustomerId) {
+        res.status(200).json([]);
+        return
+      }
+
+      const subscriptions = await this.subscriptionService.getUserSubscription(user.stripeCustomerId);
+      const subscriptionPresenter = subscriptions?.map(subscription => plainToClass(SubscriptionPresenter, subscription, { excludeExtraneousValues: true }));
       res.status(200).json(subscriptionPresenter);
-    }
-    catch (error) { 
+    } catch (error) {
       next(error);
     }
   }
@@ -92,19 +78,6 @@ export class SubscriptionController {
       } else {
         res.status(404).json({ message: "User not found" });
       }
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async deleteSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const { subscriptionId } = req.query;
-      if (!subscriptionId) {
-        throw new AppError("Validation failed", 400, [{ field: "subscriptionId", constraints: ["subscriptionId should not be empty"] }]);
-      }
-      const result = await this.subscriptionService.deleteSubscription(subscriptionId as string);
-      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

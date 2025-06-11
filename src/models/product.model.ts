@@ -1,7 +1,6 @@
 import mongoose, { Schema, type Document } from "mongoose"
 import { v4 as uuidv4 } from "uuid"
 import { ICategory } from "./category.model";
-import { ICoupon } from "./coupon.model";
 
 // Product model
 export interface IProduct extends Document {
@@ -11,7 +10,6 @@ export interface IProduct extends Document {
   category: ICategory["_id"];
   available: boolean;
   addedDate: Date;
-  coupons: ICoupon["_id"][];
   stripeProductId: string;
   stripePriceId: string;
   stripePriceIdYearly: string;
@@ -36,7 +34,6 @@ const ProductSchema: Schema = new Schema(
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
     available: { type: Boolean, default: true },
     addedDate: { type: Date, default: Date.now },
-    coupons: { type: Schema.Types.ObjectId, ref: "Coupon", required: false },
     stripeProductId: { type: String, required: true },
     stripePriceId: { type: String, required: true },
     stripePriceIdYearly: { type: String, required: true },

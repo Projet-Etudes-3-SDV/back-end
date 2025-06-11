@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import Stripe from 'stripe';
 import { EncodedRequest } from '../utils/EncodedRequest';
 import { CartService } from '../services/cart.service';
@@ -25,6 +25,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     const lineItems = []
     let isMonthly = false
     let isYearly = false
+    const user = await userService.getUserBy({id: req.decoded.user.id, page: 1, limit: 1});
 
     for (const product of cart.products) {
       const productData = await productService.getProduct(product.product.id);
@@ -56,17 +57,34 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       });
     }
 
-    const session = await stripe.checkout.sessions.create({
-      success_url: `https://example.com/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://example.com/failure`,
-      line_items: lineItems,
-      mode: 'subscription',
-      payment_method_types: ['card'],
-      customer_email: req.decoded.user.email,
-      allow_promotion_codes: true,
-    });
+    let sessionId = '';
+    let sessionUrl = '';
+    if (!user.stripeCustomerId){
+      const session = await stripe.checkout.sessions.create({
+        success_url: `https://example.com/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://example.com/failure`,
+        line_items: lineItems,
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        customer_email: req.decoded.user.email,
+        allow_promotion_codes: true,
+      });
+      sessionId = session.id;
+      sessionUrl = session.url ?? '';
+    } else {
+      const session = await stripe.checkout.sessions.create({
+        success_url: `https://example.com/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://example.com/failure`,
+        line_items: lineItems,
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        customer: user.stripeCustomerId,
+        allow_promotion_codes: true,
+      });
+      sessionId = session.id;
+      sessionUrl = session.url ?? '';
+    }
 
-    const sessionId = session.id;
 
     const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
     await cartService.updateCartStatus(req.decoded.user.id, CartStatus.PENDING);
@@ -81,7 +99,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       })),
     });
 
-    res.json({ url: session.url });
+    res.json({ url: sessionUrl });
 
   } catch (e) {
     next(e);
@@ -89,43 +107,22 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
 };
 
 
-export const stripeWebhook = async (req: EncodedRequest, res: Response, next: NextFunction) => {
+export const stripeWebhook = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const event = req.body;
     const session = event.data.object as Stripe.Checkout.Session;
 
     switch (event.type) {
       case 'checkout.session.completed': {
-        console.log('✅ Paiement réussi pour la session :', session.id);
         break;
       }
 
-      case 'checkout.session.async_payment_succeeded': {
-        try {
-          const session = event.data.object as Stripe.Checkout.Session;
-          console.log('✅ Paiement réussi pour la session :', session.id);
-
-          // On récupère l’utilisateur lié à cette session
-          const user = await userService.getUserByPaymentSessionId(session.id);
-          console.log('✅ Utilisateur trouvé :', user.id);
-
-          const cart = await cartService.validateCart(user.id);
-          console.log('✅ Panier validé pour l\'utilisateur :', user.id, cart.id);
-
-          await userService.updateUserPaymentSessionId(user.id, '');
-          await orderService.updateOrderStatusBySessionId(session.id, OrderStatus.PAID);
-          console.log('✅ Commande mise à jour pour la session :', session.id, OrderStatus.PAID);
-
-        } catch (err) {
-          console.error('❌ Erreur webhook Stripe :', err);
-        }
-
+      case 'checkout.session.payment_succeeded': {
         break;
         }
   
       case 'checkout.session.async_payment_failed': {
         const session = event.data.object as Stripe.Checkout.Session;
-        console.log('❌ Échec du paiement pour la session :', session.id);
         const user = await userService.getUserByPaymentSessionId(session.id);
 
         await userService.updateUserPaymentSessionId(user.id, '')
@@ -134,23 +131,57 @@ export const stripeWebhook = async (req: EncodedRequest, res: Response, next: Ne
 
         break;
       }
-      case 'charge.updated':
-      case 'charge.succeeded':
-      case 'payment_intent.created':
+
+      case 'customer.created': {
+        const email = event.data.object.email as string;
+        const user = await userService.getUserBy({ email: email, page: 1, limit: 1 });
+        await userService.patchUser(user.id, {
+          stripeCustomerId: event.data.object.id,
+        });
+        break;
+      }
+      
       case 'payment_intent.succeeded': {
+        try {
+          const session = event.data.object as Stripe.Checkout.Session;
+
+          // On récupère l’utilisateur lié à cette session
+          const stripeCustomerId = session.customer as string;
+          const user = await userService.getUserBy({
+            stripeCustomerId,
+            page: 1,
+            limit: 1
+          });
+
+          await cartService.validateCart(user.id);
+
+          await userService.updateUserPaymentSessionId(user.id, '');
+          if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID);
+
+        } catch (err) {
+          console.error('❌ Erreur webhook Stripe :', err);
+        }
+        break;
+      }
+
+      case 'payment_intent.payment_failed': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        console.log('❌ Payment Intent échoué:', paymentIntent.id);
+
+        const user = await userService.getUserByStripeCustomerId(session.id);
+
+        await userService.updateUserPaymentSessionId(user.id, session.id)
+        await cartService.updateCartStatus(user.id, CartStatus.READY)
+        await orderService.updateOrderStatusBySessionId(session.id, OrderStatus.CANCELLED)
         break;
       }
 
       default: {
         console.log(`ℹ️ Événement non géré : ${event.type}`);
-
-        await userService.updateUserPaymentSessionId(req.decoded.user.id, session.id)
-        await cartService.updateCartStatus(req.decoded.user.id, CartStatus.READY)
-        await orderService.updateOrderStatusBySessionId(session.id, OrderStatus.CANCELLED)
-
       }
-        
     }
+
+    
   
     res.status(200).json({ received: true });
   } catch (error) {

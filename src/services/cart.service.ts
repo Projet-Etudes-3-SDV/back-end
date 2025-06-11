@@ -64,9 +64,12 @@ export class CartService {
       throw new CartDifferentPlans();
     }
 
-    const existingSubscription = user.subscriptions.find((sub) => sub.product.id === productId && sub.status === "active");
-    if (existingSubscription) {
-      throw new CartAlreadySubscribed();
+    if (user.stripeCustomerId) {
+      const existingSubscription = await this.subscriptionService.getUserSubscription(user.stripeCustomerId);
+      existingSubscription.map((sub => {
+        if (sub.productId === product.stripeProductId && sub.status === "active") {
+          throw new CartAlreadySubscribed();
+        }}));
     }
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);
@@ -224,16 +227,6 @@ export class CartService {
     const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new CartNotFound();
-    }
-
-    // Logic to subscribe user to products in the cart
-    for (const item of cart.products) {
-      const product = await this.productRepository.findById(item.product.id)
-      if (!product) {
-        throw new CartProductNotFound();
-      }
-
-      await this.subscriptionService.addSubscription({ user: user.id, product: product.id, plan: item.plan });
     }
 
     // Clear the cart after validation

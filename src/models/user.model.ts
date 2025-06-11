@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { ICart } from "./cart.model";
 import { IAddress } from "./adress.model";
-import { ISubscription } from "./subscription.model";
+import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 
 export enum UserRole {
   USER = "user",
@@ -32,12 +32,58 @@ export interface IUser extends Document {
   isSubscriptionActive(): boolean;
   cancelSubscription(): void;
   updateSubscriptionEndDate(newEndDate: Date): void;
-  subscriptions: ISubscription["_id"][];
   addresses: IAddress[];
   paymentSessionId?: string;
   authCode?: string;
   authCodeExpires?: Date;
   generateAuthCode(): string;
+  stripeCustomerId?: string;
+}
+
+export interface IUserWithSubscriptions extends IUser {
+  subscriptions?: IUserSubscription[];
+}
+
+export class UserWithSubscriptions {
+  id: string;
+  lastName: string;
+  firstName: string;
+  email: string;
+  password: string;
+  phone?: string;
+  role: UserRole;
+  registrationDate: Date;
+  lastLogin?: Date;
+  cart: ICart["_id"][];
+  resetPasswordToken?: string;
+  authToken?: string;
+  isValidated: boolean;
+  addresses: IAddress[];
+  paymentSessionId?: string;
+  authCode?: string;
+  authCodeExpires?: Date;
+  subscriptions?: IUserSubscription[];
+
+  constructor(user: IUser, subscriptions?: IUserSubscription[]) {
+    this.id = user.id;
+    this.lastName = user.lastName;
+    this.firstName = user.firstName;
+    this.email = user.email;
+    this.password = user.password;
+    this.phone = user.phone;
+    this.role = user.role;
+    this.registrationDate = user.registrationDate;
+    this.lastLogin = user.lastLogin;
+    this.cart = user.cart;
+    this.resetPasswordToken = user.resetPasswordToken;
+    this.authToken = user.authToken;
+    this.isValidated = user.isValidated;
+    this.addresses = user.addresses || [];
+    this.paymentSessionId = user.paymentSessionId;
+    this.authCode = user.authCode;
+    this.authCodeExpires = user.authCodeExpires;
+    this.subscriptions = subscriptions || [];
+  }
 }
 
 const UserSchema: Schema = new Schema(
@@ -55,11 +101,11 @@ const UserSchema: Schema = new Schema(
     resetPasswordToken: { type: String, default: null, unique: true },
     authToken: { type: String, default: null, unique: true },
     isValidated: { type: Boolean, default: false },
-    subscriptions: [{ type: Schema.Types.ObjectId, ref: "Subscription", default: [] }],
     addresses: [{ type: Schema.Types.Mixed, default: [] }],
     paymentSessionId: { type: String, default: null },
     authCode: { type: String, default: null },
     authCodeExpires: { type: Date, default: null },
+    stripeCustomerId: { type: String, default: null },
   },
   { versionKey: false, timestamps: true }
 );

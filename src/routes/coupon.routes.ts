@@ -96,7 +96,7 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  *       400:
  *         description: Invalid input
  */
-router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.updateCoupon(req, res, next));
+// router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.updateCoupon(req, res, next));
 
 /**
  * @swagger
@@ -117,6 +117,6 @@ router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest
  *       400:
  *         description: Invalid input
  */
-router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.deleteCoupon(req, res, next));
+// router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.deleteCoupon(req, res, next));
 
 export default router;

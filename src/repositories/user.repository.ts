@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import User, { type IUser } from "../models/user.model";
-import { UserToCreate, SearchUserCriteria } from "../types/dtos/userDtos";
+import { UserToCreate, SearchUserCriteria, AdminSearchUserCriteria } from "../types/dtos/userDtos";
 
 export class UserRepository {
   async create(userData: UserToCreate): Promise<IUser> {
@@ -18,17 +18,11 @@ export class UserRepository {
       {
         path: 'owner',
       }],
-    }, {
-      path: 'subscriptions',
-      populate: {
-        path: 'product',
-        populate: { path: 'category' }
-      }
     }]);
   }
 
-  async findOneBy(filters: FilterQuery<SearchUserCriteria>): Promise<IUser | null> {
-    const query: FilterQuery<SearchUserCriteria> = {};
+  async findOneBy(filters: FilterQuery<AdminSearchUserCriteria>): Promise<IUser | null> {
+    const query: FilterQuery<AdminSearchUserCriteria> = {};
     if (filters) {
       if (filters.lastName) query.lastName = { $regex: filters.lastName, $options: "i" };
       if (filters.firstName) query.firstName = { $regex: filters.firstName, $options: "i" };
@@ -40,6 +34,11 @@ export class UserRepository {
       if (filters.isValidated) query.isValidated = filters.isValidated;
       if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
       if (filters.paymentSessionId) query.paymentSessionId = filters.paymentSessionId;
+      if (filters.stripeCustomerId) query.stripeCustomerId = filters.stripeCustomerId;
+      if (filters.authCode) query.authCode = filters.authCode;
+      if (filters.authCodeExpires) query.authCodeExpires = { $gte: new Date() };
+      if (filters.id) query.id = filters.id;
+
     } else {
       return null;
     }
@@ -53,12 +52,6 @@ export class UserRepository {
       {
         path: 'owner',
       }],
-    }, {
-      path: 'subscriptions',
-      populate: {
-        path: 'product',
-        populate: { path: 'category' }
-      }
     }]);
   }
 
@@ -74,12 +67,6 @@ export class UserRepository {
       {
         path: 'owner',
       }],
-    }, {
-      path: 'subscriptions',
-      populate: {
-        path: 'product',
-        populate: { path: 'category' }
-      }
     }]),
       User.countDocuments()
     ]);
@@ -107,12 +94,6 @@ export class UserRepository {
       {
         path: 'owner',
       }],
-    }, {
-      path: 'subscriptions',
-      populate: {
-        path: 'product',
-        populate: { path: 'category' }
-      }
     }]),
       User.countDocuments(query)
     ]);
@@ -129,12 +110,6 @@ export class UserRepository {
       {
         path: 'owner',
       }],
-    }, {
-      path: 'subscriptions',
-      populate: {
-        path: 'product',
-        populate: { path: 'category' }
-      }
     }]);
   }
 
