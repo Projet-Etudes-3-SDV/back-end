@@ -20,10 +20,14 @@ export class ProductToCreate {
 
   @IsNumber()
   @Expose()
+  @Min(0)
+  @Max(1000000)
   monthlyPrice!: number;
 
   @IsNumber()
   @Expose()
+  @Min(0)
+  @Max(1000000)
   yearlyPrice!: number;
 
   @IsBoolean()
@@ -125,12 +129,16 @@ export class SearchProductCriteria {
   @IsNumber()
   @IsOptional()
   @Expose()
-  monthlyPrice?: number;
+  @Type(() => Number)
+  @Min(0)
+  minimumPrice?: number;
 
   @IsNumber()
   @IsOptional()
   @Expose()
-  yearlyPrice?: number;
+  @Type(() => Number)
+  @Min(0)
+  maximumPrice?: number;
 
   @IsUUID()
   @IsOptional()
@@ -156,7 +164,29 @@ export class SearchProductCriteria {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => FeaturesPresenter)
-  features!: Array<FeaturesPresenter>;
+  features?: Array<FeaturesPresenter>;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  description?: string;
+}
+
+export class AdminSearchProductCriteria extends SearchProductCriteria {
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripeProductId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceIdYearly?: string;
 }
 
 export class ProductToReplace extends ProductToCreate {}
@@ -174,8 +204,9 @@ export class ProductPriced {
   stripePriceId: string
   stripePriceIdYearly: string
   stripeProductId: string
+  count?: number
 
-  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number) {
+  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number, count?: number) {
     this._id = product._id;
     this.id = product.id;
     this.name = product.name;
@@ -191,6 +222,7 @@ export class ProductPriced {
     this.stripePriceId = product.stripePriceId
     this.stripePriceIdYearly = product.stripePriceIdYearly
     this.stripeProductId = product.stripeProductId
+    this.count = count
   }
 }
 
@@ -225,6 +257,10 @@ export class ProductPresenter {
   @IsOptional()
   @Expose()
   imageUrl?: string;
+
+  @IsOptional()
+  @Expose()
+  count?: number
 }
 
 export class FeaturesPresenter {

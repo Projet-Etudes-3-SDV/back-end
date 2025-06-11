@@ -41,3 +41,9 @@ export class ProductDeleteFailed extends AppError {
     super("Échec de la suppression du produit", 500, [], "PRODUCT_DELETE_FAILED");
   }
 }
+
+export class ProductSearchPriceRangeInvalid extends AppError {
+  constructor() {
+    super("La plage de prix de recherche est invalide", 400, [], "PRODUCT_SEARCH_PRICE_RANGE_INVALID");
+  }
+}
