@@ -38,7 +38,7 @@ const ProductSchema: Schema = new Schema(
     stripeProductId: { type: String, required: true },
     stripePriceId: { type: String, required: true },
     stripePriceIdYearly: { type: String, required: true },
-    imageUrl: { type: String },
+    imageUrl: { type: String }
   },
   { versionKey: false, timestamps: true }
 );

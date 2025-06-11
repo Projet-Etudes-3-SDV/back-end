@@ -258,6 +258,10 @@ export class UserPresenter {
   phone?: string;
 
   @Expose()
+  @IsEnum(UserRole)
+  role!: UserRole;
+
+  @Expose()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CartItemPresenter)
