@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/user.repository";
-import { CartStatus, ICart } from "../models/cart.model";
+import { ICart } from "../models/cart.model";
 import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
 import { SubscriptionPlan } from "../models/subscription.model";
@@ -7,7 +7,6 @@ import { SubscriptionService } from "./subscription.service";
 import {
   CartProductNotFound,
   CartInvalidPlan,
-  CartBusy,
   CartItemExists,
   CartDifferentPlans,
   CartAlreadySubscribed,
@@ -47,10 +46,6 @@ export class CartService {
     if (!cart) {
       cart = await this.cartRepository.create({ owner: user._id });
       user.cart = cart._id;
-    }
-
-    if (cart.status !== CartStatus.READY) {
-      throw new CartBusy();
     }
     
     const existingItem = cart.products.find((item) => item.product.id === productId);
@@ -99,10 +94,6 @@ export class CartService {
       user.cart = cart._id;
     }
 
-    if (cart.status !== CartStatus.READY) {
-      throw new CartBusy();
-    }
-
     for (let i = 0; i < newCart.products.length; i++) {
       const product = await this.productRepository.findOneBy({ id: newCart.products[i].product.id });
       if (!product) {
@@ -131,26 +122,6 @@ export class CartService {
     return updatedCart;
   }
 
-  async updateCartStatus(userId: string, status: CartStatus): Promise<ICart> {
-    const user = await this.userRepository.findOneBy({ id: userId });
-    if (!user) {
-      throw new UserNotFound();
-    }
-    
-    const cart = await this.cartRepository.findByUserId(user._id);
-    if (!cart) {
-      throw new CartNotFound();
-    }
-    cart.status = status;
-    const updatedCart = await this.cartRepository.update(cart.id, cart);
-
-    if (!updatedCart) {
-      throw new CartUpdateFailed();
-    }
-
-    return updatedCart;
-  }
-
   async deleteItemFromCart(userId: string, productId: string): Promise<ICart> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
@@ -160,10 +131,6 @@ export class CartService {
     const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new CartNotFound();
-    }
-
-    if (cart.status !== CartStatus.READY) {
-      throw new CartBusy();
     }
 
     cart.products = cart.products.filter((cartItem) => cartItem.product.id !== productId);
@@ -186,10 +153,6 @@ export class CartService {
     const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new CartNotFound();
-    }
-
-    if (cart.status !== CartStatus.READY) {
-      throw new CartBusy();
     }
 
     cart.products = [];
@@ -231,7 +194,7 @@ export class CartService {
 
     // Clear the cart after validation
     cart.products = [];
-    cart.status = CartStatus.READY;
+
     const updatedCart = await this.cartRepository.update(cart.id, cart);
     console.log("Cart validated and cleared for user:", updatedCart);
     if (!updatedCart) {

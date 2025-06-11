@@ -3,7 +3,6 @@ import Stripe from 'stripe';
 import { EncodedRequest } from '../utils/EncodedRequest';
 import { CartService } from '../services/cart.service';
 import { UserService } from '../services/user.service';
-import { CartStatus } from '../models/cart.model';
 import { OrderService } from '../services/order.service';
 import { OrderStatus } from '../models/order.model';
 import { ProductService } from '../services/product.service';
@@ -56,8 +55,19 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
         quantity: product.quantity,
       });
     }
+    const sessionId = `session_${Date.now()}_${req.decoded.user.id}`;
+    const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
+    await orderService.createOrder({
+      user: updatedUser._id,
+      total: total,
+      status: OrderStatus.PENDING,
+      sessionId: sessionId,
+      products: cart.products.map(product => ({
+        product: product.product._id,
+        plan: product.plan,
+      })),
+    });
 
-    let sessionId = '';
     let sessionUrl = '';
     if (!user.stripeCustomerId){
       const session = await stripe.checkout.sessions.create({
@@ -69,35 +79,19 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
         customer_email: req.decoded.user.email,
         allow_promotion_codes: true,
       });
-      sessionId = session.id;
       sessionUrl = session.url ?? '';
     } else {
       const session = await stripe.checkout.sessions.create({
-        success_url: `https://example.com/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `https://example.com/failure`,
+        success_url: `http://localhost:3000/checkout-success?orderId=`,
+        cancel_url: `http://localhost:3000/checkout-success`,
         line_items: lineItems,
         mode: 'subscription',
         payment_method_types: ['card'],
         customer: user.stripeCustomerId,
         allow_promotion_codes: true,
       });
-      sessionId = session.id;
       sessionUrl = session.url ?? '';
     }
-
-
-    const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
-    await cartService.updateCartStatus(req.decoded.user.id, CartStatus.PENDING);
-    await orderService.createOrder({
-      user: updatedUser._id,
-      total: total,
-      status: OrderStatus.PENDING,
-      sessionId: sessionId,
-      products: cart.products.map(product => ({
-        product: product.product._id,
-        plan: product.plan,
-      })),
-    });
 
     res.json({ url: sessionUrl });
 
@@ -126,7 +120,6 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
         const user = await userService.getUserByPaymentSessionId(session.id);
 
         await userService.updateUserPaymentSessionId(user.id, '')
-        await cartService.updateCartStatus(user.id, CartStatus.READY)
         await orderService.updateOrderStatusBySessionId(session.id, OrderStatus.CANCELLED)
 
         break;
@@ -168,10 +161,6 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
         console.log('❌ Payment Intent échoué:', paymentIntent.id);
 
-        const user = await userService.getUserByStripeCustomerId(session.id);
-
-        await userService.updateUserPaymentSessionId(user.id, session.id)
-        await cartService.updateCartStatus(user.id, CartStatus.READY)
         await orderService.updateOrderStatusBySessionId(session.id, OrderStatus.CANCELLED)
         break;
       }
