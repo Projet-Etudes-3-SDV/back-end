@@ -162,6 +162,7 @@ export class SearchProductCriteria {
 export class ProductToReplace extends ProductToCreate {}
 
 export class ProductPriced {
+  _id: IProduct["_id"];
   id: string;
   name: string;
   description: string;
@@ -175,6 +176,7 @@ export class ProductPriced {
   stripeProductId: string
 
   constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number) {
+    this._id = product._id;
     this.id = product.id;
     this.name = product.name;
     this.description = product.description;

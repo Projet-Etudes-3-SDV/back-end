@@ -3,12 +3,18 @@ import { IProduct } from "./product.model";
 import { v4 as uuidv4 } from "uuid";
 import { IUser } from "./user.model";
 import { SubscriptionPlan } from "./subscription.model";
+import { ProductPriced } from "../types/dtos/productDtos";
 
 export interface ICart extends Document {
   id: string;
   products: { product: IProduct["_id"], quantity: number, plan: SubscriptionPlan }[];
   owner: IUser["_id"];
-  status: CartStatus;
+}
+
+export interface ICartWithPrices extends Omit<ICart, 'products'> {
+  id: string;
+  products: { product: ProductPriced, quantity: number, plan: SubscriptionPlan }[];
+  owner: IUser["_id"];
 }
 
 export enum CartStatus {
@@ -23,8 +29,7 @@ const CartItemSchema: Schema = new Schema({
     quantity: { type: Number, required: true },
     plan: { type: String, enum: SubscriptionPlan, required: true }
   }],
-  owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  status: { type: String, enum: CartStatus, default: "ready" },
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: true }
 }, 
 { versionKey: false, timestamps: true });
 

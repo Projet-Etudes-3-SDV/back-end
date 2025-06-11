@@ -14,10 +14,14 @@ import {
   CartNotFound
 } from "../types/errors/cart.errors";
 import { UserNotFound } from "../types/errors/user.errors";
+import { ProductService } from "./product.service";
+import { ProductPriced } from "../types/dtos/productDtos";
+import { CartWithPricedProducts } from "../types/dtos/cartDtos";
 
 export class CartService {
   private userRepository: UserRepository;
   private productRepository: ProductRepository;
+  private productService: ProductService;
   private cartRepository: CartRepository;
   private subscriptionService: SubscriptionService;
 
@@ -26,9 +30,10 @@ export class CartService {
     this.productRepository = new ProductRepository();
     this.cartRepository = new CartRepository();
     this.subscriptionService = new SubscriptionService();
+    this.productService = new ProductService();
   }
 
-  async addItemToCart(userId: string, productId: string, plan: string): Promise<ICart> {
+  async addItemToCart(userId: string, productId: string, plan: string): Promise<CartWithPricedProducts> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new UserNotFound();
@@ -79,10 +84,14 @@ export class CartService {
       throw new CartUpdateFailed();
     }
 
-    return updatedCart;
+    const productPrices = await this.getCartPrices(updatedCart)
+
+    const cartWithPrices = new CartWithPricedProducts(updatedCart, productPrices);
+
+    return cartWithPrices;
   }
 
-  async updateCart(userId: string, newCart: ICart): Promise<ICart> {
+  async updateCart(userId: string, newCart: ICart): Promise<CartWithPricedProducts> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new UserNotFound();
@@ -119,10 +128,14 @@ export class CartService {
       throw new CartUpdateFailed();
     }
 
-    return updatedCart;
+    const productPrices = await this.getCartPrices(updatedCart)
+
+    const cartWithPrices = new CartWithPricedProducts(updatedCart, productPrices);
+
+    return cartWithPrices;
   }
 
-  async deleteItemFromCart(userId: string, productId: string): Promise<ICart> {
+  async deleteItemFromCart(userId: string, productId: string): Promise<CartWithPricedProducts> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new UserNotFound();
@@ -141,7 +154,11 @@ export class CartService {
       throw new CartUpdateFailed();
     }
 
-    return updatedCart;
+    const productPrices = await this.getCartPrices(updatedCart)
+
+    const cartWithPrices = new CartWithPricedProducts(updatedCart, productPrices);
+
+    return cartWithPrices;
   }
 
   async resetCart(userId: string): Promise<ICart> {
@@ -166,7 +183,7 @@ export class CartService {
     return updatedCart;
   }
 
-  async getCart(userId: string): Promise<ICart> {
+  async getCart(userId: string): Promise<CartWithPricedProducts> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new UserNotFound();
@@ -177,7 +194,25 @@ export class CartService {
       throw new CartNotFound();
     }
 
-    return cart;
+    const productPrices = await this.getCartPrices(cart)
+
+    const cartWithPrices = new CartWithPricedProducts(cart, productPrices);
+
+    return cartWithPrices;
+  }
+
+  async getCartPrices(cart: ICart): Promise<ProductPriced[]> {
+    const productsWithPrices: ProductPriced[] = [];
+
+    for (const item of cart.products) {
+      const productPriced = await this.productService.getProduct(item.product.id);
+      if (!productPriced) {
+        throw new CartProductNotFound();
+      }
+      productsWithPrices.push(productPriced as ProductPriced);
+    }
+
+    return productsWithPrices
   }
 
   async validateCart(userId: string): Promise<ICart> {

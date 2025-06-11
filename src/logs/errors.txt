@@ -2351,4 +2351,18 @@ Not connected - 10.111.9.92
     - Utilisateur non trouvé
     - USER_NOT_FOUND
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T14:10:05.741Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur est déjà abonné à ce produit
+    - ALREADY_SUBSCRIBED
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T14:34:02.092Z 
+    - GET /api/cart/me 
+    - 500 
+    - Cannot read properties of undefined (reading 'id')
+    - 
+
     
