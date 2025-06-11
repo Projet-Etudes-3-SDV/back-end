@@ -28,12 +28,8 @@ export class CartController {
       const { productId, plan } = addItemToCartDto;
       const userId = req.decoded.user.id
       const cart = await this.cartService.addItemToCart(userId, productId, plan);
-      const sanitizedUser = {
-          ...cart.toObject(),
-          owner: cart.owner.id
-  
-        };
-            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
+      const cartPresenter = plainToClass(CartItemPresenter, cart, { excludeExtraneousValues: true });
 
 
       res.status(200).json(cartPresenter);
@@ -55,10 +51,8 @@ export class CartController {
       }
       const { userId, productId } = deleteItemFromCartDto;
       const updatedUserCart = await this.cartService.deleteItemFromCart(userId, productId);
-      const sanitizedUser = {
-          ...updatedUserCart.toObject(),  
-        };
-            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
+      const cartPresenter = plainToClass(CartItemPresenter, updatedUserCart, { excludeExtraneousValues: true });
 
 
       res.status(200).json(cartPresenter);
@@ -109,11 +103,8 @@ export class CartController {
       }
 
       const updatedUserCart = await this.cartService.updateCart(userId, cart);
-      const sanitizedUser = {
-          ...updatedUserCart.toObject() 
-  
-        };
-            const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
+      const cartPresenter = plainToClass(CartItemPresenter, updatedUserCart, { excludeExtraneousValues: true });
 
 
       res.status(200).json(cartPresenter);
@@ -126,10 +117,8 @@ export class CartController {
     try {
       const userId = req.decoded.user.id;
       const updatedUserCart = await this.cartService.getCart(userId);
-      const sanitizedUser = {
-          ...updatedUserCart.toObject()  
-        };
-      const cartPresenter = plainToClass(CartItemPresenter, sanitizedUser, { excludeExtraneousValues: true });
+
+      const cartPresenter = plainToClass(CartItemPresenter, updatedUserCart, { excludeExtraneousValues: true });
 
       res.status(200).json(cartPresenter);
     } catch (error) {

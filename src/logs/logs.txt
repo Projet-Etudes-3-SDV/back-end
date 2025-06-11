@@ -3791,3 +3791,63 @@ Not connected
 Not connected 
   - 2025-06-11T13:43:33.719Z 
   - GET /api/invoices/sub_1RYjuTEPd59k1bJgcNqLfyGM
+Not connected 
+  - 2025-06-11T14:09:44.015Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:10:04.275Z 
+  - POST /api/cart/add
+Not connected 
+  - 2025-06-11T14:10:27.343Z 
+  - POST /api/cart/add
+Not connected 
+  - 2025-06-11T14:10:50.654Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:12:18.139Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:33:28.679Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:34:01.306Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:35:20.387Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:36:42.373Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:38:17.610Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:40:25.069Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:41:22.586Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:41:51.785Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:42:30.521Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T14:43:05.563Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T15:00:26.567Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-11T15:00:36.874Z 
+  - GET /api/subscriptions/me
+Not connected 
+  - 2025-06-11T15:00:42.058Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-11T15:00:56.109Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-11T15:01:04.866Z 
+  - GET /api/products
