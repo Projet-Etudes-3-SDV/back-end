@@ -173,6 +173,7 @@ export class ProductPriced {
   stripePriceId: string
   stripePriceIdYearly: string
   stripeProductId: string
+  imageUrl?: string;
 
   constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number) {
     this.id = product.id;
@@ -189,6 +190,7 @@ export class ProductPriced {
     this.stripePriceId = product.stripePriceId
     this.stripePriceIdYearly = product.stripePriceIdYearly
     this.stripeProductId = product.stripeProductId
+    this.imageUrl = product.imageUrl;
   }
 }
 
