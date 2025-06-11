@@ -17,6 +17,7 @@ import paymentRoutes from './routes/payment.route';
 import landingRoutes from './routes/landing.routes';
 import orderRoutes from './routes/order.routes';
 import invoiceRoutes from './routes/invoice.routes';
+import uploadRoutes from './routes/upload.routes';
 
 dotenv.config();
 
@@ -76,6 +77,8 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/landings', landingRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/invoices', invoiceRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/uploads', express.static(path.join(process.cwd(), 'storage', 'images')));
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => errorHandler(err, req as EncodedRequest, res, next));
 

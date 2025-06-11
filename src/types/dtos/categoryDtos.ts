@@ -57,4 +57,8 @@ export class CategoryPresenter {
 
   @Expose()
   description!: string;
+
+  @IsOptional()
+  @Expose()
+  imageUrl?: string;
 }

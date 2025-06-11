@@ -17,6 +17,7 @@ export interface IProduct extends Document {
     title: string;
     description: string;
   }>
+  imageUrl?: string;
 }
 
 const ProductSchema: Schema = new Schema(
@@ -37,6 +38,7 @@ const ProductSchema: Schema = new Schema(
     stripeProductId: { type: String, required: true },
     stripePriceId: { type: String, required: true },
     stripePriceIdYearly: { type: String, required: true },
+    imageUrl: { type: String },
   },
   { versionKey: false, timestamps: true }
 );

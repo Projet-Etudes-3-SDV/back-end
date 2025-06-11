@@ -6,6 +6,7 @@ export interface ICategory extends Document {
   id: string;
   name: string;
   description: string;
+  imageUrl?: string;
 }
 
 const CategorySchema: Schema = new Schema(
@@ -13,6 +14,7 @@ const CategorySchema: Schema = new Schema(
     id: { type: String, default: uuidv4, unique: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
+    imageUrl: { type: String }
   },
   { versionKey: false, timestamps: true }
 );
