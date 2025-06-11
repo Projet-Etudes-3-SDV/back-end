@@ -12,12 +12,6 @@ export class CartInvalidPlan extends AppError {
   }
 }
 
-export class CartBusy extends AppError {
-  constructor() {
-    super("Vous ne pouvez pas modifier le panier pendant le paiement", 400, [], "CART_BUSY");
-  }
-}
-
 export class CartItemExists extends AppError {
   constructor() {
     super("L'utilisateur possède déjà cet article dans son panier", 400, [], "CART_ITEM_EXISTS");

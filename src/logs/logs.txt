@@ -3788,3 +3788,6 @@ Not connected
 Not connected 
   - 2025-06-11T13:37:03.923Z 
   - GET /api/invoices/sub_1RYjuTEPd59k1bJgcNqLfyGM
+Not connected 
+  - 2025-06-11T13:43:33.719Z 
+  - GET /api/invoices/sub_1RYjuTEPd59k1bJgcNqLfyGM
