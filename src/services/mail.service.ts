@@ -3,6 +3,12 @@ import dotenv from "dotenv";
 import { AppError } from '../utils/AppError';
 dotenv.config();
 
+export interface EmailAttachment {
+  filename: string;
+  content: string | Buffer;
+  contentType?: string;
+}
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -11,12 +17,17 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = (to: string, subject: string, text: string): void => {
+export const sendEmail = (to: string, subject: string, text: string, attachments?: EmailAttachment[]): void => {
   const mailOptions = {
     from: process.env.EMAIL,
     to,
     subject,
-    text
+    text,
+    attachments: attachments?.map(att => ({
+      filename: att.filename,
+      content: att.content,
+      contentType: att.contentType || 'text/html'
+    }))
   };
 
   transporter.sendMail(mailOptions, (error: Error | null, info: { response: string; }) => {
