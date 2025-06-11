@@ -40,13 +40,16 @@ export class ProductService {
       }
     });
 
-    await this.stripe.prices.create({
+    const yearlyPrice = await this.stripe.prices.create({
       product: product.id,
       unit_amount: productData.yearlyPrice * 100,
       currency: 'eur',
       recurring: { interval: 'year' },
     });
-    
+
+    productData.stripeProductId = product.id;
+    productData.stripePriceIdYearly = yearlyPrice.id;
+    productData.stripePriceId = product.default_price?.toString();
 
     productData.category = category._id;
 

@@ -2393,4 +2393,11 @@ Not connected - 10.111.9.92
     - Field `foundMonth.unit_amount` is an unsupported search field for resource `prices`. See http://stripe.com/docs/search#query-fields-for-prices for a list of supported fields.
     - 
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-11T19:37:03.655Z 
+    - POST /api/products 
+    - 500 
+    - Product validation failed: stripePriceIdYearly: Path `stripePriceIdYearly` is required.
+    - 
+
     

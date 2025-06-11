@@ -3926,3 +3926,15 @@ Not connected
 Not connected 
   - 2025-06-11T19:19:34.373Z 
   - GET /api/products
+Not connected 
+  - 2025-06-11T19:34:47.109Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-11T19:36:44.540Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-11T19:37:02.838Z 
+  - POST /api/products
+Not connected 
+  - 2025-06-11T19:38:38.386Z 
+  - POST /api/products
