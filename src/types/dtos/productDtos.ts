@@ -221,6 +221,10 @@ export class ProductPresenter {
   @ValidateNested({ each: true })
   @Type(() => FeaturesPresenter)
   features!: Array<FeaturesPresenter>;
+
+  @IsOptional()
+  @Expose()
+  imageUrl?: string;
 }
 
 export class FeaturesPresenter {
