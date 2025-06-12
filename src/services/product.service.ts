@@ -1,9 +1,10 @@
 import type { IProduct } from "../models/product.model";
 import { ProductAlreadyExists, ProductNotFound, ProductCategoryNotFound, ProductUpdateFailed, ProductDeleteFailed } from "../types/errors/product.errors";
-import { ProductPriced, ProductToCreate, ProductToModify, SearchProductCriteria, StripePriceData } from "../types/dtos/productDtos";
+import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria, StripePriceData } from "../types/dtos/productDtos";
 import { ProductRepository } from "../repositories/product.repository";
 import { CategoryRepository } from "../repositories/category.repository";
 import Stripe from "stripe";
+import { plainToClass } from "class-transformer";
 
 export class ProductService {
   private productRepository: ProductRepository;
@@ -178,12 +179,43 @@ export class ProductService {
   }
 
 
-  async updateProduct(id: string, productData: ProductToModify): Promise<IProduct> {
+  async updateProduct(id: string, productData: ProductToModifyDTO): Promise<IProduct> {
     const product = await this.productRepository.findById(id);
     if (!product) {
       throw new ProductNotFound();
     }
-    const updatedProduct = await this.productRepository.update(id, productData);
+
+    await this.stripe.products.update(product.stripeProductId, {
+      name: productData.name ?? product.name,
+      description: productData.description ?? product.description
+    });
+
+    if (productData.monthlyPrice) {
+      const newMonthlyPrice = await this.stripe.prices.create({
+        product: product.stripeProductId,
+        unit_amount: productData.monthlyPrice * 100,
+        currency: 'eur',
+        recurring: { interval: 'month' },
+      });
+
+      productData.stripePriceId = newMonthlyPrice.id;
+    }
+
+    if (productData.yearlyPrice) {
+      const newMonthlyPrice = await this.stripe.prices.create({
+        product: product.stripeProductId,
+        unit_amount: productData.yearlyPrice * 100,
+        currency: 'eur',
+        recurring: { interval: 'year' },
+      });
+
+      productData.stripePriceId = newMonthlyPrice.id;
+    }
+
+    const productToModify = plainToClass(ProductToModify, productData, { excludeExtraneousValues: true });
+    
+
+    const updatedProduct = await this.productRepository.update(id, productToModify);
     if (!updatedProduct) {
       throw new ProductUpdateFailed();
     }

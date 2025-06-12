@@ -4,7 +4,7 @@ import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { ProductService } from "../services/product.service";
-import { ProductPresenter, ProductToCreate, ProductToModify, SearchProductCriteria } from "../types/dtos/productDtos";
+import { ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria } from "../types/dtos/productDtos";
 
 export class ProductController {
   private productService: ProductService;
@@ -73,7 +73,7 @@ export class ProductController {
 
     async updateProduct(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
         try {
-        const productData = plainToClass(ProductToModify, req.body);
+        const productData = plainToClass(ProductToModifyDTO, req.body);
         const dtoErrors = await validate(productData);
         if (dtoErrors.length > 0) {
             const errors = dtoErrors.map(error => ({

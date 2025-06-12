@@ -57,7 +57,7 @@ export class ProductToCreate {
   stripePriceIdYearly?: string;
 }
 
-export class ProductToModify {
+export class ProductToModifyDTO {
   @IsString()
   @IsOptional()
   @Expose()
@@ -76,11 +76,15 @@ export class ProductToModify {
   @IsNumber()
   @IsOptional()
   @Expose()
+  @Min(0)
+  @Max(1000000)
   monthlyPrice?: number;
 
   @IsNumber()
   @IsOptional()
   @Expose()
+  @Min(0)
+  @Max(1000000)
   yearlyPrice?: number;
 
   @IsBoolean()
@@ -109,6 +113,50 @@ export class ProductToModify {
   @Expose()
   stripePriceIdYearly?: string;
 }
+
+export class ProductToModify {
+  @IsString()
+  @IsOptional()
+  @Expose()
+  name?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  description?: string;
+
+  @IsUUID()
+  @IsOptional()
+  @Expose()
+  category?: string;
+  
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  available?: boolean;
+
+  @Expose()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => FeaturesPresenter)
+  features?: Array<FeaturesPresenter>;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripeProductId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceId?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  stripePriceIdYearly?: string;
+}
+
 
 export class SearchProductCriteria {
   @IsString()
