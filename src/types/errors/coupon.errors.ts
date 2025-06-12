@@ -17,3 +17,10 @@ export class CouponDeleteFailed extends AppError {
     super("Échec de la suppression du coupon", 500, [], "COUPON_DELETE_FAILED");
   }
 }
+
+
+export class PromotionCodeNotFound extends AppError {
+  constructor() {
+    super("Code de promotion non trouvé", 404, [], "PROMOTION_CODE_NOT_FOUND");
+  }
+}

@@ -5,6 +5,7 @@ import { ProductRepository } from "../repositories/product.repository";
 
 import Stripe from "stripe";
 import { CouponToCreate, IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../types/dtos/couponDtos";
+import { CouponNotFound, PromotionCodeNotFound } from "../types/errors/coupon.errors";
 
 export class CouponService {
   private productRepository: ProductRepository;
@@ -72,7 +73,6 @@ export class CouponService {
       duration_in_months: couponData.durationInMonth
     })
 
-    console.log(new Date(couponData.expirationDate.getTime() * 1000))
     const promotionCode = await this.stripe.promotionCodes.create({
       code: couponData.code,
       expires_at: Math.floor(couponData.expirationDate.getTime() / 1000),
@@ -97,41 +97,40 @@ export class CouponService {
     return subscriptionCoupon; 
   }
 
-  // async updateCoupon(id: string, couponData: CouponToModify): Promise<ICoupon> {
-  //   const coupon = await this.couponRepository.findById(id);
-  //   if (!coupon) {
-  //     throw new CouponNotFound();
-  //   }
+  async cancelPromotionCode(id: string): Promise<IAdminSubscriptionCoupon> {
+    const updatedPromotionCode = await this.stripe.promotionCodes.update(id, {
+      active: false
+    });
 
-  //   const updatedCoupon = await this.couponRepository.update(id, couponData);
-  //   if (!updatedCoupon) {
-  //     throw new CouponUpdateFailed();
-  //   }
-  //   return updatedCoupon;
-  // }
+    if (!updatedPromotionCode) {
+      throw new PromotionCodeNotFound()
+    }
 
-  // async deleteCoupon(id: string): Promise<void> {
-  //   const coupon = await this.couponRepository.findById(id);
-  //   if (!coupon) {
-  //     throw new CouponNotFound();
-  //   }
+    const coupon = await this.stripe.coupons.retrieve(
+      typeof updatedPromotionCode.coupon === 'string'
+        ? updatedPromotionCode.coupon
+        : updatedPromotionCode.coupon.id
+    );
 
-  //   for (const productToModify in coupon.products) {
-  //     console.log('Product to modify', productToModify)
-  //     const product = await this.productRepository.findOneBy({ _id: productToModify });
+    if (!coupon) {
+      throw new CouponNotFound();
+    }
 
-  //     if (!product) {
-  //       throw new ProductNotFound();
-  //     }
+    const subscriptionCoupon: IAdminSubscriptionCoupon = {
+      name: coupon.name || 'Réduction',
+      code: updatedPromotionCode.code,
+      promotionCodeId: updatedPromotionCode.id,
+      couponId: coupon.id,
+      reduction: coupon.percent_off ?? 0,
+      reductionType: 'percentage',
+      startDate: new Date(updatedPromotionCode.created * 1000),
+      endDate: updatedPromotionCode.expires_at ? new Date(updatedPromotionCode.expires_at * 1000) : undefined,
+      isActive: updatedPromotionCode.active,
+      timesReedeemed: updatedPromotionCode.times_redeemed || 0,
+      duration: coupon.duration,
+      durationInMonths: coupon.duration === 'repeating' ? coupon.duration_in_months : undefined,
+    };
 
-  //     product.coupons.filter(oldCoupon => oldCoupon.id !== coupon.id)
-
-  //     await product.save();
-  //   }
-
-  //   const result = await this.couponRepository.delete(id);
-  //   if (!result) {
-  //     throw new CouponDeleteFailed();
-  //   }
-  // }
+    return subscriptionCoupon; 
+  }
 }

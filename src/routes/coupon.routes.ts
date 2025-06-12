@@ -63,7 +63,7 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  * @swagger
  * /api/coupons/{id}:
  *   put:
- *     summary: Update a coupon by ID
+ *     summary: Cancel a promotion code by ID
  *     tags: [Coupon]
  *     parameters:
  *       - in: path
@@ -71,9 +71,7 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  *         schema:
  *           type: string
  *         required: true
- *         description: Coupon ID
- *     requestBody:
- *       required: true
+ *         description: Promotion code ID
  *       content:
  *         application/json:
  *           schema:
@@ -96,7 +94,7 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  *       400:
  *         description: Invalid input
  */
-// router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.updateCoupon(req, res, next));
+router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.cancelPromotionCode(req, res, next));
 
 /**
  * @swagger
