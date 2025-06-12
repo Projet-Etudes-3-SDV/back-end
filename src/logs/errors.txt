@@ -2400,4 +2400,11 @@ Not connected - 10.111.9.92
     - Product validation failed: stripePriceIdYearly: Path `stripePriceIdYearly` is required.
     - 
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-12T05:57:26.724Z 
+    - POST /api/coupons 
+    - 400 
+    - Validation failed
+    - undefined
+
     

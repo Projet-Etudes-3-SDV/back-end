@@ -4,7 +4,7 @@ import { ProductRepository } from "../repositories/product.repository";
 // import { ProductNotFound } from "../types/errors/product.errors";
 
 import Stripe from "stripe";
-import { IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../types/dtos/couponDtos";
+import { CouponToCreate, IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../types/dtos/couponDtos";
 
 export class CouponService {
   private productRepository: ProductRepository;
@@ -54,12 +54,47 @@ export class CouponService {
     return coupons;
   }
 
-  async createCoupon(): Promise<Stripe.Coupon> {
-    return (await this.stripe.coupons.create({
-      duration: "once",
-      name: "First",
-      percent_off: 10
-    })) as Stripe.Coupon
+  async createCoupon(couponData: CouponToCreate): Promise<IAdminSubscriptionCoupon> {
+    const productStripeIds: string[] = []
+    if (couponData.products) {
+      const products = await this.productRepository.find({
+        where: { $in: couponData.products }
+      })
+      products.map((p) => productStripeIds.push(p.stripeProductId))
+    }
+
+
+    const coupon = await this.stripe.coupons.create({
+      duration: couponData.duration,
+      name: couponData.name,
+      percent_off: couponData.discount,
+      applies_to: { products: productStripeIds },
+      duration_in_months: couponData.durationInMonth
+    })
+
+    console.log(new Date(couponData.expirationDate.getTime() * 1000))
+    const promotionCode = await this.stripe.promotionCodes.create({
+      code: couponData.code,
+      expires_at: Math.floor(couponData.expirationDate.getTime() / 1000),
+      coupon: coupon.id
+    })
+
+    const subscriptionCoupon: IAdminSubscriptionCoupon = {
+      name: coupon.name || 'Réduction',
+      code: promotionCode.code,
+      promotionCodeId: promotionCode.id,
+      couponId: coupon.id,
+      reduction: coupon.percent_off ?? 0,
+      reductionType: 'percentage',
+      startDate: new Date(promotionCode.created * 1000),
+      endDate: promotionCode.expires_at ? new Date(promotionCode.expires_at * 1000) : undefined,
+      isActive: promotionCode.active,
+      timesReedeemed: promotionCode.times_redeemed || 0,
+      duration: coupon.duration,
+      durationInMonths: coupon.duration === 'repeating' ? coupon.duration_in_months : undefined,
+    };
+
+    return subscriptionCoupon; 
   }
 
   // async updateCoupon(id: string, couponData: CouponToModify): Promise<ICoupon> {

@@ -1,5 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import { CouponService } from "../services/coupon.service";
+import { CouponToCreate } from "../types/dtos/couponDtos";
+import { validate } from "class-validator";
+import { plainToClass } from "class-transformer";
+import { AppError } from "../utils/AppError";
 // import { plainToClass, plainToInstance } from "class-transformer";
 // import { validate } from "class-validator";
 // import { AppError } from "../utils/AppError";
@@ -22,9 +26,17 @@ export class CouponController {
 
   async createCoupon(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
+      const couponCreation = plainToClass(CouponToCreate, req.body);
+      const dtoErrors = await validate(couponCreation);
+            if (dtoErrors.length > 0) {
+              const errors = dtoErrors.map(error => ({
+                field: error.property,
+                constraints: error.constraints ? Object.values(error.constraints) : []
+              }));
+              throw new AppError("Validation failed", 400, errors);
+            }
+      const newCoupon = await this.couponService.createCoupon(couponCreation);
 
-      const newCoupon = await this.couponService.createCoupon();
-      console.log(newCoupon)
       res.status(201).json(newCoupon);
     } catch (error) {
       next(error);

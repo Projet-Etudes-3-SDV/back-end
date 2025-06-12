@@ -3938,3 +3938,18 @@ Not connected
 Not connected 
   - 2025-06-11T19:38:38.386Z 
   - POST /api/products
+Not connected 
+  - 2025-06-12T05:56:51.945Z 
+  - GET /api/subscriptions/me
+Not connected 
+  - 2025-06-12T05:57:26.719Z 
+  - POST /api/coupons
+Not connected 
+  - 2025-06-12T05:59:27.327Z 
+  - POST /api/coupons
+Not connected 
+  - 2025-06-12T06:01:00.174Z 
+  - GET /api/coupons
+Not connected 
+  - 2025-06-12T06:04:36.372Z 
+  - POST /api/coupons

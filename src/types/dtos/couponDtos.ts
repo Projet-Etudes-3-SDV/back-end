@@ -1,5 +1,5 @@
-import { Expose } from 'class-transformer';
-import { IsString, IsNumber, IsDate, IsOptional, IsArray } from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import { IsString, IsNumber, IsDate, IsOptional, IsArray, IsEnum, Max, Min } from 'class-validator';
 import Stripe from 'stripe';
 
 export interface ISubscriptionCoupon {
@@ -8,6 +8,12 @@ export interface ISubscriptionCoupon {
     reductionType: 'percentage' | 'fixed';
     startDate: Date;
     endDate?: Date;
+}
+
+export enum SubscriptionDuration {
+    FOREVER = "forever",
+    ONCE = "once",
+    REPEATING = "repeating"
 }
 
 export interface IAdminSubscriptionCoupon extends ISubscriptionCoupon {
@@ -22,17 +28,43 @@ export interface IAdminSubscriptionCoupon extends ISubscriptionCoupon {
 
 export class CouponToCreate {
     @IsNumber()
+    @Min(0)
+    @Max(100)
     @Expose()
     discount!: number;
 
+    @Type(() => Date)
     @IsDate()
     @Expose()
     expirationDate!: Date;
 
+    @IsEnum(SubscriptionDuration)
+    @Expose()
+    duration!: SubscriptionDuration
+
+    @IsString()
+    @Expose()
+    name!: string
+
+    @IsString()
+    @Expose()
+    code!: string
+
     @IsOptional()
     @IsArray()
     @Expose()
-    products!: string[]
+    products?: string[]
+
+    @IsOptional()
+    @IsNumber()
+    @Expose()
+    durationInMonth?: number
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    @Expose()
+    max_redemptions!: number
 }
 
 export class CouponToModify {
