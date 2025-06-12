@@ -2407,4 +2407,11 @@ Not connected - 10.111.9.92
     - Validation failed
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-12T07:56:06.742Z 
+    - GET /api/products 
+    - 400 
+    - La plage de prix de recherche est invalide
+    - PRODUCT_SEARCH_PRICE_RANGE_INVALID
+
     

@@ -1,5 +1,5 @@
 import type { IProduct } from "../models/product.model";
-import { ProductAlreadyExists, ProductNotFound, ProductCategoryNotFound, ProductUpdateFailed, ProductDeleteFailed } from "../types/errors/product.errors";
+import { ProductAlreadyExists, ProductNotFound, ProductCategoryNotFound, ProductUpdateFailed, ProductDeleteFailed, ProductSearchPriceRangeInvalid } from "../types/errors/product.errors";
 import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria } from "../types/dtos/productDtos";
 import { ProductRepository } from "../repositories/product.repository";
 import { CategoryRepository } from "../repositories/category.repository";
@@ -162,6 +162,10 @@ export class ProductService {
   private async filterProductsByPrice(products: IProduct[], searchCriteria: SearchProductCriteria): Promise<ProductPriced[]> {
     const productPricedList: ProductPriced[] = [];
 
+    if (searchCriteria.minimumPrice && searchCriteria.maximumPrice && searchCriteria.minimumPrice > searchCriteria.maximumPrice) {
+      throw new ProductSearchPriceRangeInvalid();
+    }
+
     for (const product of products) {
       if (!product.stripeProductId) {
         productPricedList.push(ProductPricedFactory.create(product));
@@ -170,11 +174,10 @@ export class ProductService {
 
       const { monthlyPrice, yearlyPrice } = await this.priceService.getPricesForProduct(product.stripeProductId);
 
-      // Validation des filtres de prix
       const foundYear = { unit_amount: yearlyPrice * 100, recurring: { interval: 'year' as const } };
       const foundMonth = { unit_amount: monthlyPrice * 100, recurring: { interval: 'month' as const } };
 
-      if (!ProductValidator.validatePriceFilters(foundYear, foundMonth, searchCriteria.minimumPrice, searchCriteria.maximumPrice)) {
+      if (!ProductValidator.validatePriceFilters(foundYear, foundMonth, searchCriteria.isYearlyPrice, searchCriteria.minimumPrice, searchCriteria.maximumPrice)) {
         continue;
       }
 
@@ -242,6 +245,7 @@ class ProductValidator {
   static validatePriceFilters(
     foundYear: IPriceInterval | undefined,
     foundMonth: IPriceInterval | undefined,
+    isYearlyPrice: boolean,
     minimumPrice?: number,
     maximumPrice?: number
   ): boolean {
@@ -250,11 +254,19 @@ class ProductValidator {
     const yearlyAmount = foundYear?.unit_amount ? foundYear.unit_amount / 100 : Infinity;
     const monthlyAmount = foundMonth?.unit_amount ? foundMonth.unit_amount / 100 : Infinity;
 
-    if (minimumPrice && (yearlyAmount < minimumPrice || monthlyAmount < minimumPrice)) {
+
+    if (!isYearlyPrice && (minimumPrice &&  monthlyAmount < minimumPrice)) {
+      return false;
+    }
+    if (!isYearlyPrice && (maximumPrice && monthlyAmount > maximumPrice)) {
       return false;
     }
 
-    if (maximumPrice && (yearlyAmount > maximumPrice || monthlyAmount > maximumPrice)) {
+    if (isYearlyPrice && (minimumPrice && yearlyAmount < minimumPrice)) {
+      return false;
+    }
+
+    if (isYearlyPrice && (maximumPrice && yearlyAmount > maximumPrice)) {
       return false;
     }
 

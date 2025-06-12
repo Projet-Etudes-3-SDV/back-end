@@ -71,8 +71,8 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     let sessionUrl = '';
     if (!user.stripeCustomerId){
       const session = await stripe.checkout.sessions.create({
-        success_url: `https://example.com/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `https://example.com/failure`,
+        success_url: `https://example.com/success?session_id=${sessionId}`,
+        cancel_url: `http://localhost:3000/checkout-success`,
         line_items: lineItems,
         mode: 'subscription',
         payment_method_types: ['card'],
@@ -82,7 +82,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       sessionUrl = session.url ?? '';
     } else {
       const session = await stripe.checkout.sessions.create({
-        success_url: `http://localhost:3000/checkout-success?orderId=`,
+        success_url: `https://example.com/success?session_id=${sessionId}`,
         cancel_url: `http://localhost:3000/checkout-success`,
         line_items: lineItems,
         mode: 'subscription',
@@ -147,9 +147,8 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
           });
 
           await cartService.validateCart(user.id);
-
-          await userService.updateUserPaymentSessionId(user.id, '');
           if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID);
+          await userService.updateUserPaymentSessionId(user.id, '');
 
         } catch (err) {
           console.error('❌ Erreur webhook Stripe :', err);

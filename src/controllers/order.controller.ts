@@ -47,7 +47,7 @@ export class OrderController {
       const orderPresenters = orders.map(order =>
         plainToClass(OrderPresenter, order, { excludeExtraneousValues: true })
       );
-      res.status(200).json({ orders: orderPresenters, total });
+      res.status(200).json({ orderPresenters, total });
     } catch (error) {
       next(error);
     }

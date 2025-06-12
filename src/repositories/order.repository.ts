@@ -29,7 +29,7 @@ export class OrderRepository {
   async findAll(page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
     const skip = (page - 1) * limit;
     const [orders, total] = await Promise.all([
-      Order.find().skip(skip).limit(limit).populate("user").populate("products.product"),
+      Order.find().sort({ orderDate: -1 }).skip(skip).limit(limit).populate("user").populate("products.product"),
       Order.countDocuments(),
     ]);
     return { orders, total };

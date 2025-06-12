@@ -1,5 +1,5 @@
 import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID, ValidateNested, ArrayNotEmpty } from "class-validator";
-import { Expose, Type } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
 import { CategoryPresenter } from "./categoryDtos";
 import { ICategory } from "../../models/category.model";
@@ -192,6 +192,11 @@ export class SearchProductCriteria {
   @Type(() => Number)
   @Min(0)
   maximumPrice?: number;
+
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => { return value === 'true' })
+  isYearlyPrice: boolean = false;
 
   @IsUUID()
   @IsOptional()
