@@ -8,7 +8,7 @@ export class OrderRepository {
   }
 
   async findById(id: string): Promise<IOrder | null> {
-    return await Order.findOne({ id }).populate("user").populate("products.product");
+    return await Order.findOne({ id }).populate("user").populate("products.product").populate("products.product.category");
   }
 
   async findOneBy(filters: Partial<IOrder>): Promise<IOrder | null> {
@@ -23,13 +23,33 @@ export class OrderRepository {
       return null;
     }
 
-    return await Order.findOne(query).populate("user").populate("products.product");
+    return await Order.findOne(query).populate([
+      {
+        path: "user",
+      },
+      {
+        path: "products.product",
+        populate: {
+          path: "category",
+        },
+      },
+    ]);
   }
 
   async findAll(page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
     const skip = (page - 1) * limit;
     const [orders, total] = await Promise.all([
-      Order.find().sort({ orderDate: -1 }).skip(skip).limit(limit).populate("user").populate("products.product"),
+      Order.find().sort({ orderDate: -1 }).skip(skip).limit(limit).populate([
+        {
+          path: "user",
+        },
+        {
+          path: "products.product",
+          populate: {
+            path: "category",
+          },
+        },
+      ]),
       Order.countDocuments(),
     ]);
     return { orders, total };
@@ -46,14 +66,34 @@ export class OrderRepository {
 
     const skip = (page - 1) * limit;
     const [orders, total] = await Promise.all([
-      Order.find(query).skip(skip).limit(limit).populate("user").populate("products.product"),
+      Order.find(query).skip(skip).limit(limit).populate([
+        {
+          path: "user",
+        },
+        {
+          path: "products.product",
+          populate: {
+            path: "category",
+          },
+        },
+      ]),
       Order.countDocuments(query),
     ]);
     return { orders, total };
   }
 
   async update(id: string, orderData: Partial<IOrder>): Promise<IOrder | null> {
-    return await Order.findOneAndUpdate({ id }, orderData, { new: true }).populate("user").populate("products.product");
+    return await Order.findOneAndUpdate({ id }, orderData, { new: true }).populate([
+      {
+        path: "user",
+      },
+      {
+        path: "products.product",
+        populate: {
+          path: "category",
+        },
+      },
+    ]);
   }
 
   async delete(id: string): Promise<boolean> {

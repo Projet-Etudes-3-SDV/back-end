@@ -2414,4 +2414,11 @@ Not connected - 10.111.9.92
     - La plage de prix de recherche est invalide
     - PRODUCT_SEARCH_PRICE_RANGE_INVALID
 
+    Not connected - 127.0.0.1 
+    - 2025-06-12T17:30:37.261Z 
+    - GET /api/orders/ 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
     

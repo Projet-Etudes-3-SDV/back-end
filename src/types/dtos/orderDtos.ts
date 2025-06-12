@@ -16,7 +16,8 @@ export class OrderProductsCreation {
 }
 
 export class OrderProducts {
-  @IsString()
+  @Type(() => ProductPresenter)
+  @ValidateNested()
   @Expose()
   product!: ProductPresenter;
 
