@@ -71,7 +71,7 @@ export class CartService {
           sub.productId === product.stripeProductId || 
           (sub.productId.includes(',') 
             && sub.productId.split(',').includes(product.stripeProductId))) 
-          && sub.status === "active") {
+          && (sub.endDate < new Date() && sub.status === "active") ) {
           throw new CartAlreadySubscribed();
         }}));
     }
