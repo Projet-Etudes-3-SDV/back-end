@@ -2435,4 +2435,18 @@ Not connected - 10.111.9.92
     - Validation failed
     - undefined
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-12T19:17:28.414Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-12T19:20:42.063Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur est déjà abonné à ce produit
+    - ALREADY_SUBSCRIBED
+
     
