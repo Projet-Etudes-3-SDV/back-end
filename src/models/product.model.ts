@@ -17,6 +17,8 @@ export interface IProduct extends Document {
     title: string;
     description: string;
   }>
+  monthlyPurchaseAmount: number;
+  yearlyPurchaseAmount: number;
   imageUrl?: string;
   active?: boolean;
 }
@@ -40,7 +42,9 @@ const ProductSchema: Schema = new Schema(
     stripePriceId: { type: String, required: true },
     stripePriceIdYearly: { type: String, required: true },
     imageUrl: { type: String },
-    active: { type: Boolean, default: true }
+    active: { type: Boolean, default: true },
+    monthlyPurchaseAmount: { type: Number, default: 0 },
+    yearlyPurchaseAmount: { type: Number, default: 0 },
   },
   { versionKey: false, timestamps: true }
 );

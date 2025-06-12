@@ -42,20 +42,6 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
 
 /**
  * @swagger
- * /api/products/top-products:
- *   get:
- *     summary: Get top products
- *     tags: [Product]
- *     responses:
- *       200:
- *         description: List of top products
- *       400:
- *         description: Invalid input
- */
-router.get('/top-products', (req, res, next) => productController.getTopProducts(req, res, next));
-
-/**
- * @swagger
  * /api/products/{id}:
  *   get:
  *     summary: Get a product by ID

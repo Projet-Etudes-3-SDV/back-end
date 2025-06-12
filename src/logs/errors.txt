@@ -2421,4 +2421,18 @@ Not connected - 10.111.9.92
     - Failed to authenticate token
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-12T18:57:01.051Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-12T19:01:08.618Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
     

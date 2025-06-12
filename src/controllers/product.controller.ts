@@ -4,7 +4,7 @@ import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { ProductService } from "../services/product.service";
-import { ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria } from "../types/dtos/productDtos";
+import { ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
 
 export class ProductController {
   private productService: ProductService;
@@ -45,7 +45,9 @@ export class ProductController {
     async getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
         const searchCriteria = plainToClass(SearchProductCriteria, req.query);
+        const sortCriteria = plainToClass(SortProductCriteria, req.query);
         const dtoErrors = await validate(searchCriteria);
+        dtoErrors.push(...await validate(sortCriteria));
         if (dtoErrors.length > 0) {
             const errors = dtoErrors.map(error => ({
             field: error.property,
@@ -53,21 +55,11 @@ export class ProductController {
             }));
             throw new AppError("Validation failed", 400, errors);
         }
-        const { products, total, pages } = await this.productService.getProducts(searchCriteria);
+        const { products, total, pages } = await this.productService.getProducts(searchCriteria, sortCriteria);
         const productPresenters = plainToInstance(ProductPresenter, products, { excludeExtraneousValues: true });
         res.status(200).json({ result: productPresenters, total, pages });
         } catch (error) {
         next(error);
-        }
-    }
-
-    async getTopProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
-        try {
-            const topProducts = await this.productService.getTopProducts();
-            const productPresenters = plainToInstance(ProductPresenter, topProducts, { excludeExtraneousValues: true });
-            res.status(200).json(productPresenters)
-        } catch (error) {
-            next(error);
         }
     }
 

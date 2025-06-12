@@ -1,6 +1,6 @@
 import type { IProduct } from "../models/product.model";
 import { ProductAlreadyExists, ProductNotFound, ProductCategoryNotFound, ProductUpdateFailed, ProductDeleteFailed, ProductSearchPriceRangeInvalid } from "../types/errors/product.errors";
-import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria } from "../types/dtos/productDtos";
+import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
 import { ProductRepository } from "../repositories/product.repository";
 import { CategoryRepository } from "../repositories/category.repository";
 import Stripe from "stripe";
@@ -9,17 +9,17 @@ import { IPriceService, StripePriceService } from "./price.service";
 
 // Factory pour créer ProductPriced
 class ProductPricedFactory {
-  static create(product: IProduct, monthlyPrice: number = 0, yearlyPrice: number = 0, salesCount: number = 0): ProductPriced {
-    return new ProductPriced(product, monthlyPrice, yearlyPrice, salesCount);
+  static create(product: IProduct, monthlyPrice: number = 0, yearlyPrice: number = 0): ProductPriced {
+    return new ProductPriced(product, monthlyPrice, yearlyPrice);
   }
 
-  static async createWithPrices(product: IProduct, priceService: IPriceService, salesCount: number = 0): Promise<ProductPriced> {
+  static async createWithPrices(product: IProduct, priceService: IPriceService): Promise<ProductPriced> {
     if (!product.stripeProductId) {
-      return this.create(product, 0, 0, salesCount);
+      return this.create(product, 0, 0);
     }
 
     const { monthlyPrice, yearlyPrice } = await priceService.getPricesForProduct(product.stripeProductId);
-    return this.create(product, monthlyPrice, yearlyPrice, salesCount);
+    return this.create(product, monthlyPrice, yearlyPrice);
   }
 }
 
@@ -27,7 +27,6 @@ export class ProductService {
   private productRepository: ProductRepository;
   private categoryRepository: CategoryRepository;
   private priceService: IPriceService;
-  private salesAnalytics: ISalesAnalytics;
 
   constructor() {
     this.productRepository = new ProductRepository();
@@ -38,7 +37,6 @@ export class ProductService {
     });
 
     this.priceService = new StripePriceService(stripe);
-    this.salesAnalytics = new StripeSalesAnalytics(stripe);
   }
 
   async createProduct(productData: ProductToCreate): Promise<IProduct> {
@@ -61,7 +59,7 @@ export class ProductService {
     return await ProductPricedFactory.createWithPrices(product, this.priceService);
   }
 
-  async getProducts(searchCriteria: SearchProductCriteria): Promise<{ products: ProductPriced[]; total: number; pages: number }> {
+  async getProducts(searchCriteria: SearchProductCriteria, sortCriteria: SortProductCriteria): Promise<{ products: ProductPriced[]; total: number; pages: number }> {
     const { page = 1, limit = 10, ...filters } = searchCriteria;
 
     if (filters.category) {
@@ -69,32 +67,11 @@ export class ProductService {
       filters.category = category._id;
     }
 
-    const { products, total } = await this.productRepository.findBy(filters, page, limit);
-    const filteredProducts = await this.filterProductsByPrice(products, searchCriteria);
+    const { products, total } = await this.productRepository.findBy(filters, page, limit, sortCriteria);
+    const filteredProducts = await this.filterProductsByPrice(products, searchCriteria, sortCriteria);
 
     const pages = Math.ceil(total / limit);
     return { products: filteredProducts, total, pages };
-  }
-
-  async getTopProducts(): Promise<ProductPriced[]> {
-    const productCounts = await this.salesAnalytics.getProductSalesCount();
-    const productIds = Object.keys(productCounts);
-
-    if (productIds.length === 0) return [];
-
-    const validProducts = await this.productRepository.find({
-      stripeProductId: { $in: productIds }
-    });
-
-    const productPricedPromises = validProducts.map(product =>
-      ProductPricedFactory.createWithPrices(
-        product,
-        this.priceService,
-        productCounts[product.stripeProductId!] || 0
-      )
-    );
-
-    return await Promise.all(productPricedPromises);
   }
 
   async updateProduct(id: string, productData: ProductToModifyDTO): Promise<IProduct> {
@@ -159,8 +136,8 @@ export class ProductService {
     return product;
   }
 
-  private async filterProductsByPrice(products: IProduct[], searchCriteria: SearchProductCriteria): Promise<ProductPriced[]> {
-    const productPricedList: ProductPriced[] = [];
+  private async filterProductsByPrice(products: IProduct[], searchCriteria: SearchProductCriteria, sortCriteria: SortProductCriteria): Promise<ProductPriced[]> {
+    let productPricedList: ProductPriced[] = [];
 
     if (searchCriteria.minimumPrice && searchCriteria.maximumPrice && searchCriteria.minimumPrice > searchCriteria.maximumPrice) {
       throw new ProductSearchPriceRangeInvalid();
@@ -182,6 +159,28 @@ export class ProductService {
       }
 
       productPricedList.push(ProductPricedFactory.create(product, monthlyPrice, yearlyPrice));
+    }
+
+    if (sortCriteria.sortBy === 'monthlyPrice' || sortCriteria.sortBy === 'yearlyPrice') {
+      productPricedList = productPricedList.sort((a, b) => {
+        let aValue: number, bValue: number;
+        if (sortCriteria.sortBy === 'monthlyPrice') {
+          aValue = a.monthlyPrice;
+          bValue = b.monthlyPrice;
+        } else if (sortCriteria.sortBy === 'yearlyPrice') {
+          aValue = a.yearlyPrice;
+          bValue = b.yearlyPrice;
+        } else {
+          aValue = 0;
+          bValue = 0;
+        }
+
+        if (sortCriteria.sortOrder === 'asc') {
+          return aValue > bValue ? 1 : -1;
+        } else {
+          return aValue < bValue ? 1 : -1;
+        }
+      });
     }
 
     return productPricedList;
@@ -208,39 +207,6 @@ export class ProductService {
     return updatedPriceIds;
   }
 }
-
-interface ISalesAnalytics {
-  getProductSalesCount(): Promise<Record<string, number>>;
-}
-
-class StripeSalesAnalytics implements ISalesAnalytics {
-  constructor(private stripe: Stripe) { }
-
-  async getProductSalesCount(): Promise<Record<string, number>> {
-    const sessions = await this.stripe.checkout.sessions.list({
-      limit: 100,
-      expand: ['data.line_items'],
-      status: 'complete'
-    });
-
-    const productCounts: Record<string, number> = {};
-
-    for (const session of sessions.data) {
-      if (session.payment_status !== 'paid') continue;
-
-      const lineItems = session.line_items?.data || [];
-      for (const item of lineItems) {
-        const productId = item.price?.product as string;
-        if (productId) {
-          productCounts[productId] = (productCounts[productId] || 0) + (item.quantity ?? 0);
-        }
-      }
-    }
-
-    return productCounts;
-  }
-}
-
 class ProductValidator {
   static validatePriceFilters(
     foundYear: IPriceInterval | undefined,

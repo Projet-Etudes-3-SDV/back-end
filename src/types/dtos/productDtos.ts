@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID, ValidateNested, ArrayNotEmpty } from "class-validator";
+import { IsString, IsNumber, IsBoolean, IsOptional, Min, Max, IsUUID, ValidateNested, ArrayNotEmpty, IsIn } from "class-validator";
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
 import { CategoryPresenter } from "./categoryDtos";
@@ -162,6 +162,19 @@ export class ProductToModify {
   stripePriceIdYearly?: string;
 }
 
+export class SortProductCriteria {
+  @IsOptional()
+  @IsString()
+  @IsIn(["name", "addedDate", "monthlyPurchaseAmount", "yearlyPurchaseAmount", "monthlyPrice", "yearlyPrice"])
+  @Expose()
+  sortBy?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsIn(["asc", "desc"])
+  @Expose()
+  sortOrder?: "asc" | "desc";
+}
 
 export class SearchProductCriteria {
   @IsString()
@@ -264,8 +277,10 @@ export class ProductPriced {
   stripeProductId: string
   count?: number
   imageUrl?: string;
+  monthlyPurchaseAmount: number;
+  yearlyPurchaseAmount: number;
 
-  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number, count?: number) {
+  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number) {
     this._id = product._id;
     this.id = product.id;
     this.name = product.name;
@@ -281,8 +296,9 @@ export class ProductPriced {
     this.stripePriceId = product.stripePriceId
     this.stripePriceIdYearly = product.stripePriceIdYearly
     this.stripeProductId = product.stripeProductId
-    this.count = count
     this.imageUrl = product.imageUrl;
+    this.monthlyPurchaseAmount = product.monthlyPurchaseAmount;
+    this.yearlyPurchaseAmount = product.yearlyPurchaseAmount;
   }
 }
 
@@ -318,10 +334,13 @@ export class ProductPresenter {
   @Expose()
   imageUrl?: string;
 
-  @IsOptional()
   @Expose()
-  count?: number
+  monthlyPurchaseAmount?: number
+
+  @Expose()
+  yearlyPurchaseAmount?: number
 }
+
 
 export class FeaturesPresenter {
   @Expose()

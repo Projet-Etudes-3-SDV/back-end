@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import Product, { type IProduct } from "../models/product.model";
-import { AdminSearchProductCriteria, ProductToCreate } from "../types/dtos/productDtos";
+import { AdminSearchProductCriteria, ProductToCreate, SortProductCriteria } from "../types/dtos/productDtos";
 
 export class ProductRepository {
   async create(userData: ProductToCreate): Promise<IProduct> {
@@ -32,7 +32,7 @@ export class ProductRepository {
     return await Product.findOne(query).populate("category");
   }
 
-  async findBy(filters: Partial<AdminSearchProductCriteria>, page: number, limit: number): Promise<{ products: IProduct[]; total: number }> {
+  async findBy(filters: Partial<AdminSearchProductCriteria>, page: number, limit: number, sortCriteria: SortProductCriteria): Promise<{ products: IProduct[]; total: number }> {
     const skip = (page - 1) * limit;
 
     const query: FilterQuery<AdminSearchProductCriteria> = {};
@@ -44,8 +44,13 @@ export class ProductRepository {
     if (filters.stripePriceIdYearly) query.stripePriceIdYearly = filters.stripePriceIdYearly;
     if (filters.stripeProductId) query.stripeProductId = filters.stripeProductId;
     
+    if (sortCriteria.sortBy && sortCriteria.sortBy !== "monthlyPrice" && sortCriteria.sortBy !== "yearlyPrice") {
+      const sortOrder = sortCriteria.sortOrder === "asc" ? 1 : -1;
+      query.sort = { [sortCriteria.sortBy]: sortOrder };
+    }
+
     const [products, total] = await Promise.all([
-      Product.find(query).populate("category").populate("features").skip(skip).limit(limit),
+      Product.find(query).sort(query.sort).populate("category").populate("features").skip(skip).limit(limit),
       Product.countDocuments(query)
     ]);
     return { products, total };

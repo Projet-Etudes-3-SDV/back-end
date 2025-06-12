@@ -226,6 +226,15 @@ export class CartService {
       throw new CartNotFound();
     }
 
+    for (const item of cart.products) {
+      const product = await this.productRepository.findOneBy({ id: item.product.id });
+      if (!product) {
+        throw new CartProductNotFound();
+      }
+      product.monthlyPurchaseAmount = product.monthlyPurchaseAmount++ || 1;
+      await this.productRepository.update(product.id, product);
+    }
+
     // Clear the cart after validation
     cart.products = [];
 
