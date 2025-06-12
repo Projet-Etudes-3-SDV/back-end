@@ -2,7 +2,7 @@ import mongoose, { Schema, type Document } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { ICart } from "./cart.model";
-import { IAddress } from "./adress.model";
+import { IAddress } from "./address.model";
 import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 
 export enum UserRole {

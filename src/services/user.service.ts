@@ -3,7 +3,7 @@ import { UserWithSubscriptions, type IUser } from "../models/user.model";
 import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO, AdminSearchUserCriteria } from "../types/dtos/userDtos";
 import { sendEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
-import { IAddress } from "../models/adress.model";
+import { IAddress } from "../models/address.model";
 import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
 import { SubscriptionService } from "./subscription.service";
 import { IUserSubscription } from "../types/dtos/subscriptionDtos";

@@ -1,6 +1,6 @@
 import { Expose, Type } from "class-transformer";
 import { IsString, IsOptional } from "class-validator";
-import { AdressType } from "../../models/adress.model";
+import { AddressType } from "../../models/address.model";
 
 export class AddressToCreate {
   @Expose()
@@ -22,7 +22,7 @@ export class AddressToCreate {
   @Expose()
   @Type(() => String)
   @IsString()
-  type!: AdressType;
+  type!: AddressType;
 
   @Expose()
   @IsOptional()
@@ -55,7 +55,7 @@ export class AddressToModify {
   @IsOptional()
   @Type(() => String)
   @IsString()
-  type?: AdressType;
+  type?: AddressType;
 
   @Expose()
   @IsOptional()
@@ -83,7 +83,7 @@ export class AddressPresenter {
   @Expose()
   @Type(() => String)
   @IsString()
-  type!: AdressType;
+  type!: AddressType;
 
   @Expose()
   @IsOptional()

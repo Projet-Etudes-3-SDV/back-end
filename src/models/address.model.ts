@@ -1,4 +1,4 @@
-export enum AdressType {
+export enum AddressType {
   BILLING = "billing",
   SHIPPING = "shipping",
 }
@@ -8,6 +8,6 @@ export interface IAddress {
   city: string;
   postalCode: string;
   country: string;
-  type: AdressType;
+  type: AddressType;
   phone?: string;
 }
