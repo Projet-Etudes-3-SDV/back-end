@@ -68,6 +68,11 @@ export class ProductToModifyDTO {
   @Expose()
   description?: string;
 
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  active?: boolean;
+
   @IsUUID()
   @IsOptional()
   @Expose()

@@ -3,6 +3,7 @@ import { Expose, Type } from "class-transformer";
 import { OrderStatus } from "../../models/order.model";
 import { SubscriptionPlan } from "../../models/subscription.model";
 import { ProductPresenter } from "./productDtos";
+import { LiteUserPresenter } from "./userDtos";
 
 export class OrderProductsCreation {
   @IsString()
@@ -67,7 +68,8 @@ export class OrderPresenter {
   id!: string;
 
   @Expose()
-  user!: string;
+  @Type(() => LiteUserPresenter)
+  user!: LiteUserPresenter;
 
   @Expose()
   total!: number;

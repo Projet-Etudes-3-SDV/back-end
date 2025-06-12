@@ -1,129 +1,219 @@
 import type { IProduct } from "../models/product.model";
 import { ProductAlreadyExists, ProductNotFound, ProductCategoryNotFound, ProductUpdateFailed, ProductDeleteFailed } from "../types/errors/product.errors";
-import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria, StripePriceData } from "../types/dtos/productDtos";
+import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria } from "../types/dtos/productDtos";
 import { ProductRepository } from "../repositories/product.repository";
 import { CategoryRepository } from "../repositories/category.repository";
 import Stripe from "stripe";
 import { plainToClass } from "class-transformer";
+import { IPriceService, StripePriceService } from "./price.service";
+
+// Factory pour créer ProductPriced
+class ProductPricedFactory {
+  static create(product: IProduct, monthlyPrice: number = 0, yearlyPrice: number = 0, salesCount: number = 0): ProductPriced {
+    return new ProductPriced(product, monthlyPrice, yearlyPrice, salesCount);
+  }
+
+  static async createWithPrices(product: IProduct, priceService: IPriceService, salesCount: number = 0): Promise<ProductPriced> {
+    if (!product.stripeProductId) {
+      return this.create(product, 0, 0, salesCount);
+    }
+
+    const { monthlyPrice, yearlyPrice } = await priceService.getPricesForProduct(product.stripeProductId);
+    return this.create(product, monthlyPrice, yearlyPrice, salesCount);
+  }
+}
 
 export class ProductService {
   private productRepository: ProductRepository;
   private categoryRepository: CategoryRepository;
-  private stripe: Stripe;
+  private priceService: IPriceService;
+  private salesAnalytics: ISalesAnalytics;
 
   constructor() {
     this.productRepository = new ProductRepository();
     this.categoryRepository = new CategoryRepository();
-    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
       apiVersion: '2025-02-24.acacia',
     });
+
+    this.priceService = new StripePriceService(stripe);
+    this.salesAnalytics = new StripeSalesAnalytics(stripe);
   }
 
   async createProduct(productData: ProductToCreate): Promise<IProduct> {
-    const existingProduct = await this.productRepository.findOneBy({ name: productData.name });
-    if (existingProduct) {
-      throw new ProductAlreadyExists();
-    }
+    await this.validateProductCreation(productData);
 
-    const category = await this.categoryRepository.findOneBy({ id: productData.category });
+    const category = await this.getCategoryById(productData.category);
+    const stripeData = await this.priceService.createProductWithPrices(productData);
 
-    if (!category) {
-      throw new ProductCategoryNotFound();
-    }
+    const productToCreate = {
+      ...productData,
+      ...stripeData,
+      category: category._id
+    };
 
-    const product: Stripe.Product = await this.stripe.products.create({
-      name: productData.name,
-      description: productData.description,
-      default_price_data: {
-        currency: 'eur',
-        unit_amount: productData.monthlyPrice * 100,
-        recurring: { interval: 'month' },
-      }
-    });
-
-    const yearlyPrice = await this.stripe.prices.create({
-      product: product.id,
-      unit_amount: productData.yearlyPrice * 100,
-      currency: 'eur',
-      recurring: { interval: 'year' },
-    });
-
-    productData.stripeProductId = product.id;
-    productData.stripePriceIdYearly = yearlyPrice.id;
-    productData.stripePriceId = product.default_price?.toString();
-
-    productData.category = category._id;
-
-    return await this.productRepository.create(productData);
+    return await this.productRepository.create(productToCreate);
   }
 
   async getProduct(id: string): Promise<ProductPriced> {
-    const product = await this.productRepository.findOneBy({ id });
-    if (!product) {
-      throw new ProductNotFound();
-    }
-    
-    const stripePrice = await this.stripe.prices.list({
-      product: product.stripeProductId,
-      active: true,
-    });
-
-    const jsonStripePrice = JSON.stringify(stripePrice, null, 2)
-    const parsableData = JSON.parse(jsonStripePrice).data;
-    const yearlyPrice = parsableData.find((priceData: StripePriceData) => priceData.recurring.interval == "year").unit_amount / 100
-    const monthlyPrice = parsableData.find((priceData: StripePriceData) => priceData.recurring.interval == "month").unit_amount / 100
-    const productPriced = new ProductPriced(product, monthlyPrice, yearlyPrice)
-
-    return productPriced;
+    const product = await this.findProductById(id);
+    return await ProductPricedFactory.createWithPrices(product, this.priceService);
   }
 
   async getProducts(searchCriteria: SearchProductCriteria): Promise<{ products: ProductPriced[]; total: number; pages: number }> {
     const { page = 1, limit = 10, ...filters } = searchCriteria;
+
     if (filters.category) {
-      const category = await this.categoryRepository.findOneBy({ id: filters.category });
-      if (!category) {
-        throw new ProductCategoryNotFound();
-      }
+      const category = await this.getCategoryById(filters.category);
       filters.category = category._id;
     }
 
     const { products, total } = await this.productRepository.findBy(filters, page, limit);
-
-    const productPricedList: ProductPriced[] = [];
-    for (const product of products) {
-      let monthlyPrice = 0;
-      let yearlyPrice = 0;
-      if (product.stripeProductId) {
-        const stripePrice = await this.stripe.prices.list({
-          product: product.stripeProductId,
-          active: true,
-        });
-        const jsonStripePrice = JSON.stringify(stripePrice, null, 2)
-        const parsableData = JSON.parse(jsonStripePrice).data;
-        const foundYear = parsableData.find((priceData: StripePriceData) => priceData.recurring.interval == "year");
-        const foundMonth = parsableData.find((priceData: StripePriceData) => priceData.recurring.interval == "month");
-
-        if (foundYear.unit_amount && searchCriteria.minimumPrice && foundYear.unit_amount / 100 < searchCriteria.minimumPrice
-          || foundMonth.unit_amount && searchCriteria.minimumPrice && foundMonth.unit_amount / 100 < searchCriteria.minimumPrice
-          || foundYear.unit_amount && searchCriteria.maximumPrice && foundYear.unit_amount / 100 > searchCriteria.maximumPrice
-          || foundMonth.unit_amount && searchCriteria.maximumPrice && foundMonth.unit_amount / 100 > searchCriteria.maximumPrice
-        ) {
-          continue;
-        }
-
-        yearlyPrice = foundYear ? foundYear.unit_amount / 100 : 0;
-        monthlyPrice = foundMonth ? foundMonth.unit_amount / 100 : 0;
-      }
-
-      productPricedList.push(new ProductPriced(product, monthlyPrice, yearlyPrice));
-    }
+    const filteredProducts = await this.filterProductsByPrice(products, searchCriteria);
 
     const pages = Math.ceil(total / limit);
-    return { products: productPricedList, total, pages };
+    return { products: filteredProducts, total, pages };
   }
 
-
   async getTopProducts(): Promise<ProductPriced[]> {
+    const productCounts = await this.salesAnalytics.getProductSalesCount();
+    const productIds = Object.keys(productCounts);
+
+    if (productIds.length === 0) return [];
+
+    const validProducts = await this.productRepository.find({
+      stripeProductId: { $in: productIds }
+    });
+
+    const productPricedPromises = validProducts.map(product =>
+      ProductPricedFactory.createWithPrices(
+        product,
+        this.priceService,
+        productCounts[product.stripeProductId!] || 0
+      )
+    );
+
+    return await Promise.all(productPricedPromises);
+  }
+
+  async updateProduct(id: string, productData: ProductToModifyDTO): Promise<IProduct> {
+    const product = await this.findProductById(id);
+
+    const isUpdated = await this.updateStripeProduct(product, productData);
+    if (!isUpdated) {
+      throw new ProductUpdateFailed();
+    }
+
+    const updatedPriceIds = await this.updateProductPrices(product.stripeProductId, productData);
+
+    const productToModify = plainToClass(ProductToModify, { ...productData, ...updatedPriceIds }, { excludeExtraneousValues: true });
+
+    const updatedProduct = await this.productRepository.update(id, productToModify);
+    if (!updatedProduct) {
+      throw new ProductUpdateFailed();
+    }
+    return updatedProduct;
+  }
+
+  async deleteProduct(id: string): Promise<void> {
+    const product = await this.findProductById(id);
+
+    if (!product.stripeProductId) {
+      throw new ProductNotFound();
+    }
+
+    const isUpdated = await this.updateStripeProduct(product, { active: false });
+    if (!isUpdated) {
+      throw new ProductUpdateFailed();
+    }
+
+    product.active = false;
+
+    const deletedProduct = await this.productRepository.update(id, product);
+    if (!deletedProduct) {
+      throw new ProductDeleteFailed();
+    }
+  }
+
+  private async validateProductCreation(productData: ProductToCreate): Promise<void> {
+    const existingProduct = await this.productRepository.findOneBy({ name: productData.name });
+    if (existingProduct) {
+      throw new ProductAlreadyExists();
+    }
+  }
+
+  private async getCategoryById(categoryId: string) {
+    const category = await this.categoryRepository.findOneBy({ id: categoryId });
+    if (!category) {
+      throw new ProductCategoryNotFound();
+    }
+    return category;
+  }
+
+  private async findProductById(id: string): Promise<IProduct> {
+    const product = await this.productRepository.findOneBy({ id });
+    if (!product) {
+      throw new ProductNotFound();
+    }
+    return product;
+  }
+
+  private async filterProductsByPrice(products: IProduct[], searchCriteria: SearchProductCriteria): Promise<ProductPriced[]> {
+    const productPricedList: ProductPriced[] = [];
+
+    for (const product of products) {
+      if (!product.stripeProductId) {
+        productPricedList.push(ProductPricedFactory.create(product));
+        continue;
+      }
+
+      const { monthlyPrice, yearlyPrice } = await this.priceService.getPricesForProduct(product.stripeProductId);
+
+      // Validation des filtres de prix
+      const foundYear = { unit_amount: yearlyPrice * 100, recurring: { interval: 'year' as const } };
+      const foundMonth = { unit_amount: monthlyPrice * 100, recurring: { interval: 'month' as const } };
+
+      if (!ProductValidator.validatePriceFilters(foundYear, foundMonth, searchCriteria.minimumPrice, searchCriteria.maximumPrice)) {
+        continue;
+      }
+
+      productPricedList.push(ProductPricedFactory.create(product, monthlyPrice, yearlyPrice));
+    }
+
+    return productPricedList;
+  }
+
+  private async updateStripeProduct(product: IProduct, productData: ProductToModifyDTO): Promise<boolean> {
+    if (productData.name || productData.description || productData.active !== undefined) {
+      return await this.priceService.updateProductInfo(product.stripeProductId, productData.name, productData.description, productData.active);
+    }
+    return true
+  }
+
+  private async updateProductPrices(stripeProductId: string, productData: ProductToModifyDTO): Promise<Partial<{ stripePriceId: string; stripePriceIdYearly: string }>> {
+    const updatedPriceIds: Partial<{ stripePriceId: string; stripePriceIdYearly: string }> = {};
+
+    if (productData.monthlyPrice) {
+      updatedPriceIds.stripePriceId = await this.priceService.createPrice(stripeProductId, productData.monthlyPrice, 'month');
+    }
+
+    if (productData.yearlyPrice) {
+      updatedPriceIds.stripePriceIdYearly = await this.priceService.createPrice(stripeProductId, productData.yearlyPrice, 'year');
+    }
+
+    return updatedPriceIds;
+  }
+}
+
+interface ISalesAnalytics {
+  getProductSalesCount(): Promise<Record<string, number>>;
+}
+
+class StripeSalesAnalytics implements ISalesAnalytics {
+  constructor(private stripe: Stripe) { }
+
+  async getProductSalesCount(): Promise<Record<string, number>> {
     const sessions = await this.stripe.checkout.sessions.list({
       limit: 100,
       expand: ['data.line_items'],
@@ -136,7 +226,6 @@ export class ProductService {
       if (session.payment_status !== 'paid') continue;
 
       const lineItems = session.line_items?.data || [];
-
       for (const item of lineItems) {
         const productId = item.price?.product as string;
         if (productId) {
@@ -145,93 +234,35 @@ export class ProductService {
       }
     }
 
-    const productIds = Object.keys(productCounts);
-    if (productIds.length === 0) return [];
-
-    const validProducts = await this.productRepository.find({
-      stripeProductId: { $in: productIds }
-    });
-
-    const pricePromises = validProducts.map(product =>
-      this.stripe.prices.list({
-        product: product.stripeProductId!,
-        active: true,
-      })
-    );
-
-    const allPrices = await Promise.all(pricePromises);
-
-    const productPricedList: ProductPriced[] = validProducts.map((product: IProduct, index: number) => {
-      const prices = allPrices[index].data;
-
-      const yearlyPrice = prices.find(p => p.recurring?.interval === "year");
-      const monthlyPrice = prices.find(p => p.recurring?.interval === "month");
-
-      return new ProductPriced(
-        product,
-        monthlyPrice?.unit_amount ? monthlyPrice.unit_amount / 100 : 0,
-        yearlyPrice?.unit_amount ? yearlyPrice.unit_amount / 100 : 0,
-        productCounts[product.stripeProductId!] || 0 
-      );
-    });
-
-    return productPricedList;
+    return productCounts;
   }
+}
 
+class ProductValidator {
+  static validatePriceFilters(
+    foundYear: IPriceInterval | undefined,
+    foundMonth: IPriceInterval | undefined,
+    minimumPrice?: number,
+    maximumPrice?: number
+  ): boolean {
+    if (!foundYear && !foundMonth) return true;
 
-  async updateProduct(id: string, productData: ProductToModifyDTO): Promise<IProduct> {
-    const product = await this.productRepository.findById(id);
-    if (!product) {
-      throw new ProductNotFound();
+    const yearlyAmount = foundYear?.unit_amount ? foundYear.unit_amount / 100 : Infinity;
+    const monthlyAmount = foundMonth?.unit_amount ? foundMonth.unit_amount / 100 : Infinity;
+
+    if (minimumPrice && (yearlyAmount < minimumPrice || monthlyAmount < minimumPrice)) {
+      return false;
     }
 
-    await this.stripe.products.update(product.stripeProductId, {
-      name: productData.name ?? product.name,
-      description: productData.description ?? product.description
-    });
-
-    if (productData.monthlyPrice) {
-      const newMonthlyPrice = await this.stripe.prices.create({
-        product: product.stripeProductId,
-        unit_amount: productData.monthlyPrice * 100,
-        currency: 'eur',
-        recurring: { interval: 'month' },
-      });
-
-      productData.stripePriceId = newMonthlyPrice.id;
+    if (maximumPrice && (yearlyAmount > maximumPrice || monthlyAmount > maximumPrice)) {
+      return false;
     }
 
-    if (productData.yearlyPrice) {
-      const newMonthlyPrice = await this.stripe.prices.create({
-        product: product.stripeProductId,
-        unit_amount: productData.yearlyPrice * 100,
-        currency: 'eur',
-        recurring: { interval: 'year' },
-      });
-
-      productData.stripePriceId = newMonthlyPrice.id;
-    }
-
-    const productToModify = plainToClass(ProductToModify, productData, { excludeExtraneousValues: true });
-    
-
-    const updatedProduct = await this.productRepository.update(id, productToModify);
-    if (!updatedProduct) {
-      throw new ProductUpdateFailed();
-    }
-    return updatedProduct;
+    return true;
   }
+}
 
-  async deleteProduct(id: string): Promise<void> {
-    const product = await this.productRepository.findById(id);
-
-    if (!product) {
-      throw new ProductNotFound();
-    }
-    const result = await this.productRepository.delete(id);
-    if (!result) {
-      throw new ProductDeleteFailed();
-    }
-  }
-
+interface IPriceInterval {
+  unit_amount: number;
+  recurring: { interval: 'month' | 'year' };
 }

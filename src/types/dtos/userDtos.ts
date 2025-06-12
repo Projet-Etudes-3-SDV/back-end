@@ -241,7 +241,7 @@ export class ValidateLogin{
 
 export class UserToReplace extends UserToCreate {}
 
-export class UserPresenter {
+export class LiteUserPresenter {
   @Expose()
   id!: string;
 
@@ -260,7 +260,9 @@ export class UserPresenter {
   @Expose()
   @IsEnum(UserRole)
   role!: UserRole;
+}
 
+export class UserPresenter extends LiteUserPresenter {
   @Expose()
   @IsArray()
   @ValidateNested({ each: true })
