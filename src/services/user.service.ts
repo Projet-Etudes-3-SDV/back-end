@@ -186,7 +186,7 @@ export class UserService {
     if (!user) {
       throw new UserNotFound();
     }
-    console.log("User found:", user);
+
     return user;
   }
 

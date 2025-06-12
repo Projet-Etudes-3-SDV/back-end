@@ -72,6 +72,8 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  *           type: string
  *         required: true
  *         description: Promotion code ID
+ *     requestBody:
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
@@ -94,6 +96,7 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  *       400:
  *         description: Invalid input
  */
+
 router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.cancelPromotionCode(req, res, next));
 
 export default router;

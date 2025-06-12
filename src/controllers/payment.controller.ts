@@ -57,6 +57,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     }
     const sessionId = `session_${Date.now()}_${req.decoded.user.id}`;
     const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
+
     await orderService.createOrder({
       user: updatedUser._id,
       total: total,
@@ -138,13 +139,13 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
         try {
           const session = event.data.object as Stripe.Checkout.Session;
 
-          // On récupère l’utilisateur lié à cette session
           const stripeCustomerId = session.customer as string;
           const user = await userService.getUserBy({
             stripeCustomerId,
             page: 1,
             limit: 1
           });
+          console.log('✅ Payment Intent réussi pour l\'utilisateur:', user.id, user.paymentSessionId);
 
           await cartService.validateCart(user.id);
           if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID);
