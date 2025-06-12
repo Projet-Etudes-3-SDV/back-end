@@ -96,25 +96,4 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  */
 router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.cancelPromotionCode(req, res, next));
 
-/**
- * @swagger
- * /api/coupons/{id}:
- *   delete:
- *     summary: Delete a coupon by ID
- *     tags: [Coupon]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Coupon ID
- *     responses:
- *       204:
- *         description: Coupon deleted
- *       400:
- *         description: Invalid input
- */
-// router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => couponController.deleteCoupon(req, res, next));
-
 export default router;

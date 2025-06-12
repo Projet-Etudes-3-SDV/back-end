@@ -41,7 +41,6 @@ export class InvoiceService {
   constructor(templatePath?: string) {
     this.templatePath = templatePath || join(process.cwd(), 'templates', 'invoice-template.html');
     this.initializeHelpers();
-    console.log(`Invoice template path: ${this.templatePath}`);
     this.userRepository = new UserRepository();
     this.subscriptionService = new SubscriptionService();
   }
@@ -281,7 +280,6 @@ export class InvoiceService {
       // 5. Envoyer par email
       await this.sendInvoiceByEmail(user.email, invoiceResult, invoiceData, pdfFilePath);
 
-      console.log(`✅ Facture ${invoiceData.invoiceNumber} envoyée à ${user.email}`);
 
     } catch (error) {
       console.error('❌ Erreur lors de la génération/envoi de facture:', error);

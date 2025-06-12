@@ -216,7 +216,6 @@ export class CartService {
   }
 
   async validateCart(userId: string): Promise<ICart> {
-    console.log("Validating cart for user:", userId);
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new UserNotFound();
@@ -231,7 +230,6 @@ export class CartService {
     cart.products = [];
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);
-    console.log("Cart validated and cleared for user:", updatedCart);
     if (!updatedCart) {
       throw new CartUpdateFailed();
     }

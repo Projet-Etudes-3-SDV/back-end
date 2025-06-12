@@ -1,7 +1,4 @@
-// import { CouponToCreate, CouponToModify } from "../types/dtos/couponDtos";
 import { ProductRepository } from "../repositories/product.repository";
-// import { CouponNotFound, CouponUpdateFailed, CouponDeleteFailed } from "../types/errors/coupon.errors";
-// import { ProductNotFound } from "../types/errors/product.errors";
 
 import Stripe from "stripe";
 import { CouponToCreate, IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../types/dtos/couponDtos";

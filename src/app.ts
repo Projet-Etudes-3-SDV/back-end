@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(logger as express.RequestHandler);
 app.use((req, res, next) => {
   if (req.originalUrl === '/api/payment/webhook') {
-    next(); // ne pas parser ici
+    next();
   } else {
     express.json()(req, res, next);
   }

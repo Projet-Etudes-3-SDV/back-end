@@ -4,9 +4,6 @@ import { CouponToCreate } from "../types/dtos/couponDtos";
 import { validate } from "class-validator";
 import { plainToClass } from "class-transformer";
 import { AppError } from "../utils/AppError";
-// import { plainToClass, plainToInstance } from "class-transformer";
-// import { validate } from "class-validator";
-// import { AppError } from "../utils/AppError";
 
 export class CouponController {
   private couponService: CouponService;
@@ -47,20 +44,10 @@ export class CouponController {
     try {
       const { id } = req.params;
       const updatedCoupon = await this.couponService.cancelPromotionCode(id);
-      
+
       res.status(200).json(updatedCoupon);
     } catch (error) {
       next(error);
     }
   }
-
-  // async deleteCoupon(req: Request, res: Response, next: NextFunction): Promise<void> {
-  //   try {
-  //     const { id } = req.params;
-  //     await this.couponService.deleteCoupon(id);
-  //     res.status(204).send();
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
 }

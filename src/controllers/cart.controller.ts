@@ -15,7 +15,6 @@ export class CartController {
 
   async addItemToCart(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      console.log(req)
       const addItemToCartDto = plainToClass(AddItemToCartDto, req.body);
       const dtoErrors = await validate(addItemToCartDto);
       if (dtoErrors.length > 0) {
