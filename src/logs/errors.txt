@@ -2456,4 +2456,11 @@ Not connected - 10.111.9.92
     - Handlebars is not defined
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:30:37.585Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     

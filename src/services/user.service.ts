@@ -79,7 +79,7 @@ export class UserService {
       throw new UserAuthCodeExpired()
     }
     
-    sendHtmlEmail(user.email, "Cyna: Code de connexion", htmlTemplate({ authCode: user.authCode }));
+    sendHtmlEmail(user.email, "Cyna: Code de connexion", htmlTemplate({ authCode: user.authCode, path: join(process.cwd(), 'templates') }));
 
     return user;
   }
