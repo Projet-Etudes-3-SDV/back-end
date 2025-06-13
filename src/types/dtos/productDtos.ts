@@ -187,8 +187,8 @@ export class SearchProductCriteria {
   @Expose()
   name?: string;
 
-  @IsBoolean()
   @IsOptional()
+  @Transform(({ value }) => { return value === 'false' ? false : true })
   @Expose()
   available?: boolean;
 

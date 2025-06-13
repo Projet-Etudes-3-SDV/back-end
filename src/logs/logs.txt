@@ -4355,3 +4355,249 @@ Not connected
 Not connected 
   - 2025-06-13T11:30:37.599Z 
   - GET /api/products
+Not connected 
+  - 2025-06-13T11:31:56.979Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:31:57.332Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T11:31:57.337Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T11:31:57.337Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T11:31:57.337Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T11:31:57.435Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:42:00.180Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:45:23.893Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:45:23.901Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:45:23.910Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:45:31.429Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:45:31.830Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T11:45:31.834Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T11:45:31.838Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T11:45:31.842Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T11:45:59.646Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:45:59.661Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:46:00.023Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T11:46:00.036Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T11:46:00.043Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T11:46:00.057Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T11:48:34.796Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:48:34.811Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:48:35.187Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T11:48:35.188Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T11:48:35.188Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T11:48:35.189Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T11:50:11.189Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:50:11.196Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:50:11.564Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T11:50:11.565Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T11:50:11.565Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T11:50:11.566Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T11:50:11.913Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:50:11.954Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:50:24.768Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:50:25.963Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:50:28.245Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:50:28.914Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:50:29.977Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:50:35.081Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:51:27.385Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:52:20.781Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:52:21.374Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:52:21.412Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:52:33.055Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:54:12.779Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T11:54:12.791Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:54:12.833Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:54:21.935Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:54:31.234Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T11:58:55.612Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T11:58:59.957Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:00:12.778Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T12:00:12.781Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:00:12.917Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:01:07.140Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:01:09.263Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:01:19.282Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:02:04.049Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T12:02:15.535Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-13T12:02:15.661Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:02:15.739Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:02:50.475Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:02:56.907Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:03:03.505Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:03:18.428Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:05:13.639Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:05:13.641Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:05:17.980Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:05:18.331Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T12:05:18.332Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T12:05:18.333Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T12:05:18.334Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T12:05:20.276Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:05:20.347Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:05:21.859Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T12:05:24.646Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T12:05:25.184Z 
+  - GET /api/uploads/1749661760900-423581978.svg
+Not connected 
+  - 2025-06-13T12:05:25.193Z 
+  - GET /api/uploads/1749665249035-731688845.svg
+Not connected 
+  - 2025-06-13T12:26:50.460Z 
+  - GET /api/users
+Not connected 
+  - 2025-06-13T12:27:00.861Z 
+  - GET /api/users

@@ -2463,4 +2463,81 @@ Not connected - 10.111.9.92
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:45:23.897Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:45:59.646Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:48:34.797Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:50:11.190Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:51:27.385Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:52:20.782Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:52:33.072Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:54:12.786Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:00:12.779Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:02:04.050Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:02:15.536Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     
