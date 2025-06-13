@@ -44,7 +44,9 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
  * @swagger
  * /api/products:
  *   get:
- *     summary: Get all products
+ *     summary: Get all products as an admin
+ *     security:
+ *      - bearerAuth: []
  *     tags: [Product]
  *     responses:
  *       200:
@@ -60,6 +62,8 @@ router.get("/admin", checkJWT, (req, res, next) => checkRole(req as EncodedReque
  *   get:
  *     summary: Get a product by ID as an admin
  *     tags: [Product]
+ *     security:
+ *      - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
