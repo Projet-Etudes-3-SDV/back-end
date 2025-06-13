@@ -25,6 +25,7 @@ export interface IUser extends Document {
   lastLogin?: Date;
   cart: ICart["_id"][];
   resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   authToken?: string;
   isValidated: boolean;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -53,6 +54,7 @@ export class UserWithSubscriptions {
   lastLogin?: Date;
   cart: ICart["_id"][];
   resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   authToken?: string;
   isValidated: boolean;
   addresses: IAddress[];
@@ -73,6 +75,7 @@ export class UserWithSubscriptions {
     this.lastLogin = user.lastLogin;
     this.cart = user.cart;
     this.resetPasswordToken = user.resetPasswordToken;
+    this.resetPasswordExpires = user.resetPasswordExpires;
     this.authToken = user.authToken;
     this.isValidated = user.isValidated;
     this.addresses = user.addresses || [];
@@ -96,6 +99,7 @@ const UserSchema: Schema = new Schema(
     lastLogin: { type: Date },
     cart: { type: Schema.Types.ObjectId, ref: "Cart", default: null },
     resetPasswordToken: { type: String, default: null, unique: true },
+    resetPasswordExpires: { type: Date, default: null },
     authToken: { type: String, default: null, unique: true },
     isValidated: { type: Boolean, default: false },
     addresses: [{ type: Schema.Types.Mixed, default: [] }],
@@ -118,6 +122,7 @@ UserSchema.pre<IUser>("save", async function (next) {
 UserSchema.methods.generatePasswordToken = function (): string {
   const token = uuidv4();
   this.resetPasswordToken = token;
+  this.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000);
   return token;
 };
 

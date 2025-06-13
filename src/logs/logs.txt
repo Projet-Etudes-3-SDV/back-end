@@ -4706,3 +4706,60 @@ Not connected
 Not connected 
   - 2025-06-13T13:35:35.583Z 
   - GET /api/users/me
+Not connected 
+  - 2025-06-13T13:40:45.313Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T13:40:45.387Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T13:40:46.388Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T13:40:46.741Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-13T13:40:46.744Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-13T13:40:46.746Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-13T13:40:46.748Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-13T13:41:44.155Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T13:41:44.957Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T13:41:44.986Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T13:41:51.564Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1e
+Not connected 
+  - 2025-06-13T13:41:52.262Z 
+  - GET /api/uploads/1749665269040-938255805.svg
+Not connected 
+  - 2025-06-13T13:41:55.823Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-13T13:41:55.848Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-13T14:50:33.025Z 
+  - POST /api/users/forgot-password
+Not connected 
+  - 2025-06-13T14:51:52.780Z 
+  - POST /api/users/forgot-password
+Not connected 
+  - 2025-06-13T14:52:32.912Z 
+  - POST /api/users/forgot-password
+Not connected 
+  - 2025-06-13T14:52:52.299Z 
+  - POST /api/users/login
+Not connected 
+  - 2025-06-13T14:54:00.510Z 
+  - POST /api/users/forgot-password

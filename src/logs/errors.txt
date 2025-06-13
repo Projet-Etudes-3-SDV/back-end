@@ -2582,4 +2582,11 @@ Not connected - 10.111.9.92
     - Validation failed
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-13T14:52:52.443Z 
+    - POST /api/users/login 
+    - 500 
+    - ENOENT: no such file or directory, open 'D:\Projet Dev\Cyna Projet\templates\auth-code-validation-template.html'
+    - 
+
     

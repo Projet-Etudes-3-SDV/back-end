@@ -242,11 +242,20 @@ export class UserService {
   async forgotPassword(email: string): Promise<void> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user) {
-      throw new UserNotFound();
+      return;
     }
 
     user.generatePasswordToken();
-    sendHtmlEmail(user.email, "Cyna: Réinitialisation du mot de passe", `Cliquez ici pour réinitialiser votre mot de passe: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
+    const templateContent = readFileSync(join(process.cwd(), 'templates', 'password-forgotten-template.html'), 'utf-8');
+    const htmlTemplate = Handlebars.compile(templateContent);
+
+    if (!user.resetPasswordToken) {
+      throw new UserAuthCodeExpired()
+    }
+
+    console.log(`User reset password token: ${user.resetPasswordToken}, to user: ${user.email}`);
+
+    sendHtmlEmail(user.email, "Cyna: Réinitialisation du mot de passe", htmlTemplate({ resetPasswordToken: user.resetPasswordToken, path: join(process.cwd(), 'templates') }));
 
     await user.save();
   }
@@ -257,8 +266,13 @@ export class UserService {
       throw new UserPasswordResetTokenInvalid();
     }
 
+    if (!user.resetPasswordExpires || user.resetPasswordExpires < new Date()) {
+      throw new UserPasswordResetTokenInvalid();
+    }
+
     user.password = newPassword;
     user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
 
     await user.save();
   }

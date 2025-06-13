@@ -216,6 +216,9 @@ export class UserController {
   async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { email } = req.body;
+      if (!email) {
+        throw new AppError("Email is required", 400);
+      }
       await this.userService.forgotPassword(email);
       res.status(200).json({ message: "Password reset email sent" });
     } catch (error) {
