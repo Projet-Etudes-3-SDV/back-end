@@ -1,9 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import { CouponService } from "../services/coupon.service";
-import { CouponToCreate } from "../types/dtos/couponDtos";
 import { validate } from "class-validator";
 import { plainToClass } from "class-transformer";
 import { AppError } from "../utils/AppError";
+import { CouponToCreate } from "../types/requests/coupon.requests";
 
 export class CouponController {
   private couponService: CouponService;

@@ -1,9 +1,9 @@
-import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 import {
   SubscriptionNotFound,
 } from "../types/errors/subscription.errors";
 import Stripe from "stripe";
-import { ISubscriptionCoupon } from "../types/dtos/couponDtos";
+import { IUserSubscription } from "../models/subscription.model";
+import { ISubscriptionCoupon } from "../models/coupons.model";
 
 export class SubscriptionService {
   private stripe: Stripe;

@@ -1,6 +1,8 @@
 import { FilterQuery } from "mongoose";
 import Product, { type IProduct } from "../models/product.model";
-import { AdminSearchProductCriteria, ProductToCreate, SortProductCriteria } from "../types/dtos/productDtos";
+import { ProductToCreate } from "../types/requests/product.requests";
+import { AdminSearchProductCriteria } from "../types/filters/product.filters";
+import { SortProductCriteria } from "../types/sorts/product.sorts";
 
 export class ProductRepository {
   async create(userData: ProductToCreate): Promise<IProduct> {

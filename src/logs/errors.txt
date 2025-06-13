@@ -2540,4 +2540,46 @@ Not connected - 10.111.9.92
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:31:23.491Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:20:00.147Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:20:49.718Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:21:21.838Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:21:33.183Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T13:29:49.641Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
     

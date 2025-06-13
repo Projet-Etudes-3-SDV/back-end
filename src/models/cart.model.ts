@@ -3,7 +3,7 @@ import { IProduct } from "./product.model";
 import { v4 as uuidv4 } from "uuid";
 import { IUser } from "./user.model";
 import { SubscriptionPlan } from "./subscription.model";
-import { ProductPriced } from "../types/dtos/productDtos";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
 
 export interface ICart extends Document {
   id: string;

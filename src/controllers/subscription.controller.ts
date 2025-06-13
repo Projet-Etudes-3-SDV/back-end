@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { SubscriptionService } from "../services/subscription.service";
 import { plainToClass } from "class-transformer";
-import { SubscriptionPresenter } from "../types/dtos/subscriptionDtos";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { UserRepository } from "../repositories/user.repository";
 import { UserNotFound } from "../types/errors/user.errors";
+import { SubscriptionPresenter } from "../types/responses/subscription.responses";
 
 export class SubscriptionController {
   private subscriptionService: SubscriptionService;

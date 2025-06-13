@@ -1,8 +1,9 @@
 import { ProductRepository } from "../repositories/product.repository";
 
 import Stripe from "stripe";
-import { CouponToCreate, IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../types/dtos/couponDtos";
 import { CouponNotFound, PromotionCodeNotFound } from "../types/errors/coupon.errors";
+import { IAdminSubscriptionCoupon, ISubscriptionCoupon } from "../models/coupons.model";
+import { CouponToCreate } from "../types/requests/coupon.requests";
 
 export class CouponService {
   private productRepository: ProductRepository;

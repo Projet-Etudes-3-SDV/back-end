@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { ICart } from "./cart.model";
 import { IAddress } from "./address.model";
-import { IUserSubscription } from "../types/dtos/subscriptionDtos";
+import { IUserSubscription } from "./subscription.model";
 
 export enum UserRole {
   USER = "user",
@@ -11,6 +11,7 @@ export enum UserRole {
   SUPERADMIN = "superadmin",
   SUPPORT = "support",
 }
+
 
 export interface IUser extends Document {
   id: string;

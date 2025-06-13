@@ -3,7 +3,9 @@ import { plainToClass, plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { CategoryService } from "../services/category.service";
-import { CategoryPresenter, CategoryToCreate, CategoryToModify, SearchCategoryCriteria } from "../types/dtos/categoryDtos";
+import { CategoryToCreate, CategoryToModify } from "../types/requests/category.requests";
+import { CategoryPresenter } from "../types/responses/category.responses";
+import { SearchCategoryCriteria } from "../types/filters/category.filters";
 
 export class CategoryController {
   private categoryService: CategoryService;

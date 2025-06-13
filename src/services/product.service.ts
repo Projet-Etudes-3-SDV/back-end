@@ -1,11 +1,14 @@
 import type { IProduct } from "../models/product.model";
 import { ProductAlreadyExists, ProductNotFound, ProductCategoryNotFound, ProductUpdateFailed, ProductDeleteFailed, ProductSearchPriceRangeInvalid } from "../types/errors/product.errors";
-import { ProductPriced, ProductToCreate, ProductToModify, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
 import { ProductRepository } from "../repositories/product.repository";
 import { CategoryRepository } from "../repositories/category.repository";
 import Stripe from "stripe";
 import { plainToClass } from "class-transformer";
 import { IPriceService, StripePriceService } from "./price.service";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
+import { ProductToCreate, ProductToModify, ProductToModifyDTO } from "../types/requests/product.requests";
+import { SearchProductCriteria } from "../types/filters/product.filters";
+import { SortProductCriteria } from "../types/sorts/product.sorts";
 
 // Factory pour créer ProductPriced
 class ProductPricedFactory {

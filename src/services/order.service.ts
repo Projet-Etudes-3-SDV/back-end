@@ -1,8 +1,10 @@
 import { OrderRepository } from "../repositories/order.repository";
 import { IOrder, OrderStatus } from "../models/order.model";
 import { OrderNotFound } from "../types/errors/order.errors";
-import { OrderToCreate, OrderToModify, SearchOrderCriteria, SortOrderCriteria } from "../types/dtos/orderDtos";
 import { UserRepository } from "../repositories/user.repository";
+import { SearchOrderCriteria } from "../types/filters/order.filters";
+import { SortOrderCriteria } from "../types/sorts/order.sorts";
+import { OrderToCreate, OrderToModify } from "../types/requests/order.requests";
 
 export class OrderService {
   private orderRepository: OrderRepository;

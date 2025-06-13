@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { ProductToCreate } from "../types/dtos/productDtos";
+import { ProductToCreate } from "../types/requests/product.requests";
 
 // Interface pour abstraire les opérations de pricing Stripe
 export interface IPriceService {

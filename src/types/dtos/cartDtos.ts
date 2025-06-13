@@ -1,9 +1,10 @@
 import { Expose, Type } from "class-transformer";
 import { IsNotEmpty, IsString, IsUUID, ValidateNested } from "class-validator";
-import { ProductPresenter, ProductPriced } from "./productDtos";
 import { SubscriptionPlan } from "../../models/subscription.model";
 import { IUser } from "../../models/user.model";
 import { ICart } from "../../models/cart.model";
+import { ProductPriced } from "../pojos/product-priced.pojo";
+import { ProductPresenter } from "../responses/product.responses";
 
 export class CartWithPricedProducts{
   id!: string;

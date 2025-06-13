@@ -1,15 +1,17 @@
 import { UserRepository } from "../repositories/user.repository";
 import { UserWithSubscriptions, type IUser } from "../models/user.model";
-import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO, AdminSearchUserCriteria, SortUserCriteria } from "../types/dtos/userDtos";
 import { sendHtmlEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
 import { IAddress } from "../models/address.model";
 import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserAuthTokenCreationFailed, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
 import { SubscriptionService } from "./subscription.service";
-import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 import { readFileSync } from "fs";
 import { join } from "path";
 import Handlebars from 'handlebars';
+import { UserToCreate, UserToModify, ValidateUserDTO } from "../types/requests/user.requests";
+import { AdminSearchUserCriteria, SearchUserCriteria } from "../types/filters/user.filters";
+import { SortUserCriteria } from "../types/sorts/user.sorts";
+import { IUserSubscription } from "../models/subscription.model";
 
 export class UserService {
   private userRepository: UserRepository;

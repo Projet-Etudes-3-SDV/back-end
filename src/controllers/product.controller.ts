@@ -4,7 +4,10 @@ import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { ProductService } from "../services/product.service";
-import { AdminProductPresenter, ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
+import { ProductToCreate, ProductToModifyDTO } from "../types/requests/product.requests";
+import { AdminProductPresenter, ProductPresenter } from "../types/responses/product.responses";
+import { SearchProductCriteria } from "../types/filters/product.filters";
+import { SortProductCriteria } from "../types/sorts/product.sorts";
 
 export class ProductController {
   private productService: ProductService;

@@ -1,5 +1,4 @@
 import { join } from "path";
-import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 import Handlebars from 'handlebars';
 import { readFileSync } from 'fs';
 import { EmailAttachment, sendEmail } from "./mail.service";
@@ -8,6 +7,7 @@ import { SubscriptionService } from "./subscription.service";
 import { UserNotFound } from "../types/errors/user.errors";
 import { SubscriptionNotFound } from "../types/errors/subscription.errors";
 import puppeteer from "puppeteer";
+import { IUserSubscription } from "../models/subscription.model";
 
 export interface IClientInfo {
   name: string;
