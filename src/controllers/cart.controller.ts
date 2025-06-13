@@ -3,8 +3,9 @@ import { CartService } from "../services/cart.service";
 import { AppError } from "../utils/AppError";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
-import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto, CartItemPresenter } from "../types/dtos/cartDtos";
 import { EncodedRequest } from "../utils/EncodedRequest";
+import { AddItemToCartDto, DeleteItemFromCartDto, ResetCartDto } from "../types/requests/cart.requests";
+import { CartItemPresenter } from "../types/responses/cart.responses";
 
 export class CartController {
   private cartService: CartService;

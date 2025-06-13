@@ -1,9 +1,9 @@
 import { Expose, Type } from "class-transformer";
 import { IsArray, ValidateNested, IsEnum } from "class-validator";
-import { CartItemPresenter } from "../dtos/cartDtos";
-import { AddressPresenter } from "../dtos/addressDtos";
 import { UserRole } from "../../models/user.model";
 import { SubscriptionPresenter } from "./subscription.responses";
+import { CartItemPresenter } from "./cart.responses";
+import { AddressPresenter } from "./address.responses";
 
 export class LiteUserPresenter {
   @Expose()

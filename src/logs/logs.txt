@@ -4703,3 +4703,6 @@ Not connected
 Not connected 
   - 2025-06-13T13:29:57.160Z 
   - GET /api/products
+Not connected 
+  - 2025-06-13T13:35:35.583Z 
+  - GET /api/users/me
