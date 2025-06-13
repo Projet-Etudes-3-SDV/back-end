@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO, AdminUserToModify, ValidateLogin } from "../types/dtos/userDtos";
+import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO, AdminUserToModify, ValidateLogin, SortUserCriteria } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
@@ -60,7 +60,9 @@ export class UserController {
   async getUsers(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const searchCriteria = plainToClass(SearchUserCriteria, req.query);
+      const sortCriteria = plainToClass(SortUserCriteria, req.query);
       const dtoErrors = await validate(searchCriteria);
+      dtoErrors.push(...await validate(sortCriteria));
       if (dtoErrors.length > 0) {
         const errors = dtoErrors.map(error => ({
           field: error.property,
@@ -68,7 +70,7 @@ export class UserController {
         }));
         throw new AppError("Validation failed", 400, errors);
       }
-      const { users, total, pages } = await this.userService.getUsers(searchCriteria);
+      const { users, total, pages } = await this.userService.getUsers(searchCriteria, sortCriteria);
       const userPresenters = plainToInstance(UserPresenter, users, { excludeExtraneousValues: true });
       res.status(200).json({ result: userPresenters, total, pages });
     } catch (error) {

@@ -84,3 +84,9 @@ export class UserFailedToUpdate extends AppError {
     super("Échec de la mise à jour de l'utilisateur", 500, [], "USER_FAILED_TO_UPDATE");
   }
 }
+
+export class UserAuthTokenCreationFailed extends AppError {
+  constructor() {
+    super("Échec lors de la création d'un token de connexion", 500, [], "USER_TO_CREATE_TOKEN");
+  }
+}

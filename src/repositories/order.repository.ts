@@ -1,5 +1,6 @@
 import { FilterQuery } from "mongoose";
 import Order, { IOrder } from "../models/order.model";
+import { SortOrderCriteria } from "../types/dtos/orderDtos";
 
 export class OrderRepository {
   async create(orderData: Partial<IOrder>): Promise<IOrder> {
@@ -55,16 +56,20 @@ export class OrderRepository {
     return { orders, total };
   }
 
-  async findManyBy(filters: Partial<IOrder>, page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
+  async findManyBy(filters: Partial<IOrder>, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: IOrder[]; total: number }> {
+    const skip = (page - 1) * limit;
+
     const query: FilterQuery<IOrder> = {};
-    if (filters) {
-      if (filters.id) query.id = filters.id;
-      if (filters.user) query.user = filters.user;
-      if (filters.status) query.status = filters.status;
-      if (filters.sessionId) query.sessionId = filters.sessionId;
+    if (filters.id) query.id = filters.id;
+    if (filters.user) query.user = filters.user;
+    if (filters.status) query.status = filters.status;
+    if (filters.sessionId) query.sessionId = filters.sessionId;
+    
+    if (sortCriteria.sortBy) {
+      const sortOrder = sortCriteria.sortOrder === "asc" ? 1 : -1;
+      query.sort = { [sortCriteria.sortBy]: sortOrder };
     }
 
-    const skip = (page - 1) * limit;
     const [orders, total] = await Promise.all([
       Order.find(query).skip(skip).limit(limit).populate([
         {

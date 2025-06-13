@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import User, { type IUser } from "../models/user.model";
-import { UserToCreate, SearchUserCriteria, AdminSearchUserCriteria } from "../types/dtos/userDtos";
+import { UserToCreate, SearchUserCriteria, AdminSearchUserCriteria, SortUserCriteria } from "../types/dtos/userDtos";
 
 export class UserRepository {
   async create(userData: UserToCreate): Promise<IUser> {
@@ -38,7 +38,7 @@ export class UserRepository {
       if (filters.authCode) query.authCode = filters.authCode;
       if (filters.authCodeExpires) query.authCodeExpires = { $gte: new Date() };
       if (filters.id) query.id = filters.id;
-
+      
     } else {
       return null;
     }
@@ -73,7 +73,7 @@ export class UserRepository {
     return { users, total };
   }
 
-  async findBy(filters: Partial<SearchUserCriteria>, page: number, limit: number): Promise<{ users: IUser[]; total: number }> {
+  async findBy(filters: Partial<SearchUserCriteria>, page: number, limit: number, sortCriteria: SortUserCriteria): Promise<{ users: IUser[]; total: number }> {
     const skip = (page - 1) * limit;
 
     const query: FilterQuery<SearchUserCriteria> = {};
@@ -84,8 +84,13 @@ export class UserRepository {
     if (filters.authToken) query.authToken = filters.authToken;
     if (filters.resetPasswordToken) query.resetPasswordToken = filters.resetPasswordToken;
 
+    if (sortCriteria.sortBy) {
+      const sortOrder = sortCriteria.sortOrder === "asc" ? 1 : -1;
+      query.sort = { [sortCriteria.sortBy]: sortOrder };
+    }
+
     const [users, total] = await Promise.all([
-      User.find(query).skip(skip).limit(limit).populate([{
+      User.find(query).sort(query.sort).skip(skip).limit(limit).populate([{
       path: 'cart',
       populate: [{
         path: 'products.product',

@@ -42,6 +42,41 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
 
 /**
  * @swagger
+ * /api/products:
+ *   get:
+ *     summary: Get all products
+ *     tags: [Product]
+ *     responses:
+ *       200:
+ *         description: List of products
+ *       400:
+ *         description: Invalid input
+ */
+router.get("/admin", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => productController.getProductsAsAdmin(req, res, next));
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   get:
+ *     summary: Get a product by ID as an admin
+ *     tags: [Product]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Product ID
+ *     responses:
+ *       200:
+ *         description: Product details
+ *       400:
+ *         description: Invalid input
+ */
+router.get("/admin/:id", checkJWT,(req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => productController.getProductAsAdmin(req, res, next));
+
+/**
+ * @swagger
  * /api/products/{id}:
  *   get:
  *     summary: Get a product by ID

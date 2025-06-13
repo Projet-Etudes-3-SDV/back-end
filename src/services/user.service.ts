@@ -1,12 +1,15 @@
 import { UserRepository } from "../repositories/user.repository";
 import { UserWithSubscriptions, type IUser } from "../models/user.model";
-import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO, AdminSearchUserCriteria } from "../types/dtos/userDtos";
-import { sendEmail } from "./mail.service";
+import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO, AdminSearchUserCriteria, SortUserCriteria } from "../types/dtos/userDtos";
+import { sendHtmlEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
 import { IAddress } from "../models/address.model";
-import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
+import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserAuthTokenCreationFailed, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
 import { SubscriptionService } from "./subscription.service";
 import { IUserSubscription } from "../types/dtos/subscriptionDtos";
+import { readFileSync } from "fs";
+import { join } from "path";
+import Handlebars from 'handlebars';
 
 export class UserService {
   private userRepository: UserRepository;
@@ -31,7 +34,14 @@ export class UserService {
     
     user.generateAuthToken();
 
-    sendEmail(user.email, "Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
+    if (!user.authToken) {
+      throw new UserAuthTokenCreationFailed()
+    }
+
+    const templateContent = readFileSync(join(process.cwd(), 'templates', 'email-validation-template.html'), 'utf-8');
+    const htmlTemplate = Handlebars.compile(templateContent);
+
+    sendHtmlEmail(user.email, "Cyna: Confirmation du mail", htmlTemplate({ authToken: user.authToken }));
 
     return await user.save();
   }
@@ -46,16 +56,30 @@ export class UserService {
       throw new InvalidUserCredential
     }
 
+    
     if (!user.isValidated) {
       user.generateAuthToken();
       await user.save();
-      sendEmail(user.email, "Cyna: Confirmation du mail", `Cliquez ici pour valider votre compte: http://localhost:8100/account-validation/${user.authToken}`);
+      const templateContent = readFileSync(join(process.cwd(), 'templates', 'email-validation-template.html'), 'utf-8');
+      const htmlTemplate = Handlebars.compile(templateContent);
+      if (!user.authToken){
+        throw new UserAuthTokenCreationFailed()
+      }
+
+      sendHtmlEmail(user.email, "Cyna: Confirmation du mail", htmlTemplate({ authToken: user.authToken }));
       throw new UserNotValidated()
     }
 
     await user.generateAuthCode();
     await user.save();
-    sendEmail(user.email, "Cyna: Code de connexion", "Une connexion a été effectuée sur votre compte. Si ce n'est pas vous, veuillez changer votre mot de passe. Si c'est vous, voici votre code de connexion valable 10 minutes : " + user.authCode);
+    const templateContent = readFileSync(join(process.cwd(), 'templates', 'auth-code-validation-template.html'), 'utf-8');
+    const htmlTemplate = Handlebars.compile(templateContent);
+
+    if (!user.authCode) {
+      throw new UserAuthCodeExpired()
+    }
+    
+    sendHtmlEmail(user.email, "Cyna: Code de connexion", htmlTemplate({ authCode: user.authCode }));
 
     return user;
   }
@@ -114,9 +138,9 @@ export class UserService {
     return user;
   }
 
-  async getUsers(searchCriteria: SearchUserCriteria): Promise<{ users: UserWithSubscriptions[]; total: number; pages: number }> {
+  async getUsers(searchCriteria: SearchUserCriteria, sortCriteria: SortUserCriteria): Promise<{ users: UserWithSubscriptions[]; total: number; pages: number }> {
     const { page = 1, limit = 10, ...filters } = searchCriteria;
-    const { users, total } = await this.userRepository.findBy(filters, page, limit);
+    const { users, total } = await this.userRepository.findBy(filters, page, limit, sortCriteria);
     const pages = Math.ceil(total / limit);
 
     const usersWithSubscriptions = await Promise.all(users.map(async (user) => {
@@ -220,7 +244,7 @@ export class UserService {
     }
 
     user.generatePasswordToken();
-    sendEmail(user.email, "Cyna: Réinitialisation du mot de passe", `Cliquez ici pour réinitialiser votre mot de passe: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
+    sendHtmlEmail(user.email, "Cyna: Réinitialisation du mot de passe", `Cliquez ici pour réinitialiser votre mot de passe: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
 
     await user.save();
   }

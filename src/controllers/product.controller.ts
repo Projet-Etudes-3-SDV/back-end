@@ -4,7 +4,7 @@ import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { ProductService } from "../services/product.service";
-import { ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
+import { AdminProductPresenter, ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
 
 export class ProductController {
   private productService: ProductService;
@@ -32,17 +32,17 @@ export class ProductController {
         }
     }
 
-    async getProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
+    async getProductAsAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
         const product = await this.productService.getProduct(req.params.id);
-        const productPresenter = plainToClass(ProductPresenter, product, { excludeExtraneousValues: true });
+        const productPresenter = plainToClass(AdminProductPresenter, product, { excludeExtraneousValues: true });
         res.status(200).json(productPresenter);
         } catch (error) {
         next(error);
         }
     }
 
-    async getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
+    async getProductsAsAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
         const searchCriteria = plainToClass(SearchProductCriteria, req.query);
         const sortCriteria = plainToClass(SortProductCriteria, req.query);
@@ -56,10 +56,41 @@ export class ProductController {
             throw new AppError("Validation failed", 400, errors);
         }
         const { products, total, pages } = await this.productService.getProducts(searchCriteria, sortCriteria);
-        const productPresenters = plainToInstance(ProductPresenter, products, { excludeExtraneousValues: true });
+        const productPresenters = plainToInstance(AdminProductPresenter, products, { excludeExtraneousValues: true });
         res.status(200).json({ result: productPresenters, total, pages });
         } catch (error) {
         next(error);
+        }
+    }
+
+    async getProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const product = await this.productService.getProduct(req.params.id);
+            const productPresenter = plainToClass(ProductPresenter, product, { excludeExtraneousValues: true });
+            res.status(200).json(productPresenter);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const searchCriteria = plainToClass(SearchProductCriteria, req.query);
+            const sortCriteria = plainToClass(SortProductCriteria, req.query);
+            const dtoErrors = await validate(searchCriteria);
+            dtoErrors.push(...await validate(sortCriteria));
+            if (dtoErrors.length > 0) {
+                const errors = dtoErrors.map(error => ({
+                    field: error.property,
+                    constraints: error.constraints ? Object.values(error.constraints) : []
+                }));
+                throw new AppError("Validation failed", 400, errors);
+            }
+            const { products, total, pages } = await this.productService.getProducts(searchCriteria, sortCriteria);
+            const productPresenters = plainToInstance(ProductPresenter, products, { excludeExtraneousValues: true });
+            res.status(200).json({ result: productPresenters, total, pages });
+        } catch (error) {
+            next(error);
         }
     }
 

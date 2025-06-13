@@ -40,10 +40,6 @@ export interface IUser extends Document {
   stripeCustomerId?: string;
 }
 
-export interface IUserWithSubscriptions extends IUser {
-  subscriptions?: IUserSubscription[];
-}
-
 export class UserWithSubscriptions {
   id: string;
   lastName: string;

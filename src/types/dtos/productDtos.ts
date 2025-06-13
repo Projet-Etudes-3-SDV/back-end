@@ -333,12 +333,23 @@ export class ProductPresenter {
   @IsOptional()
   @Expose()
   imageUrl?: string;
+}
+
+export class AdminProductPresenter extends ProductPresenter {
+  @Expose()
+  stripeProductId!: string;
 
   @Expose()
-  monthlyPurchaseAmount?: number
+  stripePriceId!: string;
 
   @Expose()
-  yearlyPurchaseAmount?: number
+  stripePriceIdYearly!: string;
+
+  @Expose()
+  monthlyPurchaseAmount!: number;
+
+  @Expose()
+  yearlyPurchaseAmount!: number;
 }
 
 

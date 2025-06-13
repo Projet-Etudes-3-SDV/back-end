@@ -2449,4 +2449,11 @@ Not connected - 10.111.9.92
     - L'utilisateur est déjà abonné à ce produit
     - ALREADY_SUBSCRIBED
 
+    Not connected - 127.0.0.1 
+    - 2025-06-13T07:12:06.324Z 
+    - POST /api/users/login 
+    - 500 
+    - Handlebars is not defined
+    - 
+
     

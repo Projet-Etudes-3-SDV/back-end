@@ -1,9 +1,61 @@
-import { IsString, IsNumber, IsEnum, IsOptional, Min, ValidateNested } from "class-validator";
+import { IsString, IsNumber, IsEnum, IsOptional, Min, ValidateNested, IsIn, Max } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import { OrderStatus } from "../../models/order.model";
 import { SubscriptionPlan } from "../../models/subscription.model";
 import { ProductPresenter } from "./productDtos";
 import { LiteUserPresenter } from "./userDtos";
+
+export class SortOrderCriteria {
+  @IsString()
+  @IsOptional()
+  @IsIn(["orderDate", "total", "status"])
+  @Expose()
+  sortBy?: "orderDate" | "total" | "status";
+
+  @IsOptional()
+  @IsString()
+  @IsIn(["asc", "desc"])
+  @Expose()
+  sortOrder?: "asc" | "desc";
+}
+
+export class SearchOrderCriteria {
+  @IsString()
+  @IsOptional()
+  @Expose()
+  id?: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  user?: string;
+
+  @IsEnum(OrderStatus)
+  @IsOptional()
+  @Expose()
+  status?: OrderStatus;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  sessionId?: string;
+
+  @IsNumber()
+  @IsOptional()
+  @Min(1)
+  @Type(() => Number)
+  @Expose()
+  page: number = 1;
+
+  @IsNumber()
+  @IsOptional()
+  @Min(1)
+  @Max(100)
+  @Type(() => Number)
+  @Expose()
+  limit: number = 10;
+}
+
 
 export class OrderProductsCreation {
   @IsString()

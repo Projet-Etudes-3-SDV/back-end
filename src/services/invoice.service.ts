@@ -293,22 +293,22 @@ export class InvoiceService {
     invoiceData: IInvoiceData,
     pdfFilePath: string
   ): Promise<void> {
-    const subject = `Votre facture ${invoiceResult.invoiceNumber}`;
+    const subject = `Cyna: Votre facture ${invoiceResult.invoiceNumber}`;
 
     const emailText = `
-Bonjour ${invoiceData.client.name},
+      Bonjour ${invoiceData.client.name},
 
-Nous vous remercions pour votre abonnement !
+      Nous vous remercions pour votre abonnement !
 
-Vous trouverez ci-joint votre facture n° ${invoiceResult.invoiceNumber} d'un montant de ${invoiceResult.totalAmount} ${invoiceResult.currency}.
+      Vous trouverez ci-joint votre facture n° ${invoiceResult.invoiceNumber} d'un montant de ${invoiceResult.totalAmount} ${invoiceResult.currency}.
 
-Détails de votre abonnement :
-- Nom : ${invoiceData.subscription.name}
-- Plan : ${invoiceData.subscription.planType}
-- Période : ${new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.startDate)} - ${new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.endDate)}
+      Détails de votre abonnement :
+      - Nom : ${invoiceData.subscription.name}
+      - Plan : ${invoiceData.subscription.planType}
+      - Période : ${new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.startDate)} - ${new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.endDate)}
 
-Cordialement,
-L'équipe
+      Cordialement,
+      L'équipe de Cyna
     `;
 
     // eslint-disable-next-line @typescript-eslint/no-require-imports

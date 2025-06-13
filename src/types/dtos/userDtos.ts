@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate, Matches, IsEnum } from "class-validator";
+import { IsString, IsNumber, Min, Max, IsOptional, ValidateNested, IsArray, IsBoolean, IsDate, Matches, IsEnum, IsIn } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { CartItemPresenter } from "./cartDtos";
@@ -143,6 +143,21 @@ export class AdminUserToModify {
   @Expose()
   @IsOptional()
   role?: UserRole;
+}
+
+export class SortUserCriteria {
+  @IsString()
+  @IsOptional()
+  @IsIn(["lastName", "firstName", "email", "createdAt", "lastLogin"])
+  @Expose()
+  sortBy?: "lastName" | "firstName" | "email" | "createdAt" | "lastLogin";
+
+  @IsString()
+  @IsOptional()
+  @IsIn(["asc", "desc"])
+  @Expose()
+  sortOrder?: "asc" | "desc";
+
 }
 
 export class SearchUserCriteria {

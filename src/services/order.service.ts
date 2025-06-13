@@ -1,13 +1,15 @@
 import { OrderRepository } from "../repositories/order.repository";
 import { IOrder, OrderStatus } from "../models/order.model";
 import { OrderNotFound } from "../types/errors/order.errors";
-import { OrderToCreate, OrderToModify } from "../types/dtos/orderDtos";
+import { OrderToCreate, OrderToModify, SearchOrderCriteria, SortOrderCriteria } from "../types/dtos/orderDtos";
+import { UserRepository } from "../repositories/user.repository";
 
 export class OrderService {
   private orderRepository: OrderRepository;
-
+  private userRepository: UserRepository;
   constructor() {
     this.orderRepository = new OrderRepository();
+    this.userRepository = new UserRepository();
   }
 
   async createOrder(orderData: OrderToCreate): Promise<IOrder> {
@@ -22,12 +24,17 @@ export class OrderService {
     return order;
   }
 
-  async getOrders(page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
-    return await this.orderRepository.findAll(page, limit);
+  async getOrders(searchCriteria: SearchOrderCriteria, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: IOrder[]; total: number }> {
+    if (searchCriteria.user) {
+      const user = await this.userRepository.findOneBy({ id: searchCriteria.user });
+      searchCriteria.user = user?._id
+    }
+
+    return await this.orderRepository.findManyBy(searchCriteria, page, limit, sortCriteria);
   }
 
-  async getOrdersByUser(userId: string, page: number, limit: number): Promise<{ orders: IOrder[]; total: number }> {
-    return await this.orderRepository.findManyBy({ user: userId }, page, limit);
+  async getOrdersByUser(userId: string, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: IOrder[]; total: number }> {
+    return await this.orderRepository.findManyBy({ user: userId }, page, limit, sortCriteria);
   }
 
   async updateOrder(id: string, orderData: OrderToModify): Promise<IOrder> {

@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { OrderService } from "../services/order.service";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
-import { OrderToCreate, OrderToModify, OrderPresenter } from "../types/dtos/orderDtos";
+import { OrderToCreate, OrderToModify, OrderPresenter, SearchOrderCriteria, SortOrderCriteria } from "../types/dtos/orderDtos";
 import { EncodedRequest } from "../utils/EncodedRequest";
+import { AppError } from "../utils/AppError";
 
 export class OrderController {
   private orderService: OrderService;
@@ -40,9 +41,20 @@ export class OrderController {
 
   async getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
-      const { orders, total } = await this.orderService.getOrders(page, limit);
+      const searchOrderCriteria = plainToClass(SearchOrderCriteria, req.query);
+      const sortOrderCriteria = plainToClass(SortOrderCriteria, req.query);
+
+      const dtoErrors = await validate(searchOrderCriteria);
+      dtoErrors.push(...await validate(sortOrderCriteria));
+      if (dtoErrors.length > 0) {
+          const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+          }));
+          throw new AppError("Validation failed", 400, errors);
+      }
+          
+      const { orders, total } = await this.orderService.getOrders(searchOrderCriteria, searchOrderCriteria.page, searchOrderCriteria.limit, sortOrderCriteria);
 
       const orderPresenters = orders.map(order =>
         plainToClass(OrderPresenter, order, { excludeExtraneousValues: true })
@@ -59,8 +71,18 @@ export class OrderController {
       const limit = parseInt(req.query.limit as string) || 10;
 
       const userId = req.decoded.user._id;
+      const sortOrderCriteria = plainToClass(SortOrderCriteria, req.query);
 
-      const { orders, total } = await this.orderService.getOrdersByUser(userId, page, limit);
+      const dtoErrors = await validate(sortOrderCriteria);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }      
+      
+      const { orders, total } = await this.orderService.getOrdersByUser(userId, page, limit, sortOrderCriteria);
 
       const orderPresenters = orders.map(order =>
         plainToClass(OrderPresenter, order, { excludeExtraneousValues: true })
