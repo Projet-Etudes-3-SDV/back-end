@@ -63,15 +63,16 @@ export class SubscriptionController {
     }
   }
 
-  async cancelSubscription(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async cancelSubscription(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const subscriptionId = req.params.subscriptionId;
+      const userId = req.decoded.user.id;
 
       if (!subscriptionId) {
         throw new AppError("Validation failed", 400, [{ field: "subscriptionId", constraints: ["subscriptionId should not be empty"] }]);
       }
 
-      const user = await this.subscriptionService.cancelSubscription(subscriptionId);
+      const user = await this.subscriptionService.cancelSubscription(subscriptionId, userId);
       const subscriptionPresenter = plainToClass(SubscriptionPresenter, user, { excludeExtraneousValues: true });
       if (user) {
         res.status(200).json(subscriptionPresenter);

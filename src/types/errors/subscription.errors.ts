@@ -17,3 +17,9 @@ export class SubscriptionDeleteFailed extends AppError {
     super("Échec de la suppression de l'abonnement", 500, [], "SUBSCRIPTION_DELETE_FAILED");
   }
 }
+
+export class UnauthorizedSubscriptionAccess extends AppError {
+  constructor() {
+    super("Accès non autorisé à l'abonnement", 403, [], "UNAUTHORIZED_SUBSCRIPTION_ACCESS");
+  }
+}

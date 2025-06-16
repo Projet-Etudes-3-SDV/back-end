@@ -2624,4 +2624,53 @@ Not connected - 10.111.9.92
     - Commande non trouvée
     - ORDER_NOT_FOUND
 
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:08.544Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:11.771Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:12.836Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:23.589Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T07:59:18.234Z 
+    - POST /api/subscriptions/cancel/sub_1RYjWnEPd59k1bJg2ipzdpYS 
+    - 403 
+    - Accès non autorisé à l'abonnement
+    - UNAUTHORIZED_SUBSCRIPTION_ACCESS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:00:20.208Z 
+    - POST /api/subscriptions/cancel/sub_1RYjWnEPd59k1bJg2ipzdpYS 
+    - 403 
+    - Accès non autorisé à l'abonnement
+    - UNAUTHORIZED_SUBSCRIPTION_ACCESS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:03:50.729Z 
+    - POST /api/subscriptions/cancel/sub_1RYjWnEPd59k1bJg2ipzdpYS 
+    - 403 
+    - Accès non autorisé à l'abonnement
+    - UNAUTHORIZED_SUBSCRIPTION_ACCESS
+
     
