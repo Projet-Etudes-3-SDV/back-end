@@ -31,6 +31,9 @@ export class ProductPresenter {
   @Type(() => FeaturesPresenter)
   features!: Array<FeaturesPresenter>;
 
+  @Expose()
+  freeTrialDays?: number;
+
   @IsOptional()
   @Expose()
   imageUrl?: string;

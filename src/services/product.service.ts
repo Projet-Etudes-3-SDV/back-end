@@ -12,8 +12,8 @@ import { SortProductCriteria } from "../types/sorts/product.sorts";
 
 // Factory pour créer ProductPriced
 class ProductPricedFactory {
-  static create(product: IProduct, monthlyPrice: number = 0, yearlyPrice: number = 0): ProductPriced {
-    return new ProductPriced(product, monthlyPrice, yearlyPrice);
+  static create(product: IProduct, monthlyPrice: number = 0, yearlyPrice: number = 0, freeTrialDays: number = 0): ProductPriced {
+    return new ProductPriced(product, monthlyPrice, yearlyPrice, freeTrialDays);
   }
 
   static async createWithPrices(product: IProduct, priceService: IPriceService): Promise<ProductPriced> {
@@ -21,8 +21,8 @@ class ProductPricedFactory {
       return this.create(product, 0, 0);
     }
 
-    const { monthlyPrice, yearlyPrice } = await priceService.getPricesForProduct(product.stripeProductId);
-    return this.create(product, monthlyPrice, yearlyPrice);
+    const { monthlyPrice, yearlyPrice, freeTrialDays } = await priceService.getPricesForProduct(product.stripeProductId);
+    return this.create(product, monthlyPrice, yearlyPrice, freeTrialDays);
   }
 }
 
@@ -152,7 +152,7 @@ export class ProductService {
         continue;
       }
 
-      const { monthlyPrice, yearlyPrice } = await this.priceService.getPricesForProduct(product.stripeProductId);
+      const { monthlyPrice, yearlyPrice, freeTrialDays } = await this.priceService.getPricesForProduct(product.stripeProductId);
 
       const foundYear = { unit_amount: yearlyPrice * 100, recurring: { interval: 'year' as const } };
       const foundMonth = { unit_amount: monthlyPrice * 100, recurring: { interval: 'month' as const } };
@@ -161,7 +161,7 @@ export class ProductService {
         continue;
       }
 
-      productPricedList.push(ProductPricedFactory.create(product, monthlyPrice, yearlyPrice));
+      productPricedList.push(ProductPricedFactory.create(product, monthlyPrice, yearlyPrice, freeTrialDays));
     }
 
     if (sortCriteria.sortBy === 'monthlyPrice' || sortCriteria.sortBy === 'yearlyPrice') {

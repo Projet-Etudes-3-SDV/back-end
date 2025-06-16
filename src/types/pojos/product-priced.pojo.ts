@@ -16,10 +16,11 @@ export class ProductPriced {
   stripeProductId: string
   count?: number
   imageUrl?: string;
+  free_trial_days?: number;
   monthlyPurchaseAmount: number;
   yearlyPurchaseAmount: number;
 
-  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number) {
+  constructor(product: IProduct, monthlyPrice: number, yearlyPrice: number, free_trial_days?: number) {
     this._id = product._id;
     this.id = product.id;
     this.name = product.name;
@@ -38,5 +39,6 @@ export class ProductPriced {
     this.imageUrl = product.imageUrl;
     this.monthlyPurchaseAmount = product.monthlyPurchaseAmount;
     this.yearlyPurchaseAmount = product.yearlyPurchaseAmount;
+    this.free_trial_days = free_trial_days;
   }
 }
