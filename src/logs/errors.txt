@@ -2610,4 +2610,18 @@ Not connected - 10.111.9.92
     - ENOENT: no such file or directory, open 'D:\Projet Dev\Cyna Projet\templates\auth-code-validation-template.html'
     - 
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T07:44:20.521Z 
+    - GET /api/orders/me 
+    - 404 
+    - Commande non trouvée
+    - ORDER_NOT_FOUND
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T07:45:21.548Z 
+    - GET /api/orders/me 
+    - 404 
+    - Commande non trouvée
+    - ORDER_NOT_FOUND
+
     
