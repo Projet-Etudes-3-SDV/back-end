@@ -58,7 +58,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     const sessionId = `session_${Date.now()}_${req.decoded.user.id}`;
     const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
 
-    await orderService.createOrder({
+    const order = await orderService.createOrder({
       user: updatedUser._id,
       total: total,
       status: OrderStatus.PENDING,
@@ -72,7 +72,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     let sessionUrl = '';
     if (!user.stripeCustomerId){
       const session = await stripe.checkout.sessions.create({
-        success_url: `http://localhost:8100/checkout-success/${sessionId}`,
+        success_url: `http://localhost:8100/checkout-success/${order.id}`,
         cancel_url: `http://localhost:8100/checkout-failure`,
         line_items: lineItems,
         mode: 'subscription',
@@ -86,7 +86,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       sessionUrl = session.url ?? '';
     } else {
       const session = await stripe.checkout.sessions.create({
-        success_url: `http://localhost:8100/checkout-success/${sessionId}`,
+        success_url: `http://localhost:8100/checkout-success/${order.id}`,
         cancel_url: `http://localhost:8100/checkout-failure`,
         line_items: lineItems,
         mode: 'subscription',
