@@ -70,6 +70,11 @@ export class SearchProductCriteria {
 }
 
 export class AdminSearchProductCriteria extends SearchProductCriteria {
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => { return value === 'true' })
+  active: boolean = true;
+
   @IsString()
   @IsOptional()
   @Expose()

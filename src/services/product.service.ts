@@ -7,7 +7,7 @@ import { plainToClass } from "class-transformer";
 import { IPriceService, StripePriceService } from "./price.service";
 import { ProductPriced } from "../types/pojos/product-priced.pojo";
 import { ProductToCreate, ProductToModify, ProductToModifyDTO } from "../types/requests/product.requests";
-import { SearchProductCriteria } from "../types/filters/product.filters";
+import { AdminSearchProductCriteria, SearchProductCriteria } from "../types/filters/product.filters";
 import { SortProductCriteria } from "../types/sorts/product.sorts";
 
 // Factory pour créer ProductPriced
@@ -62,7 +62,7 @@ export class ProductService {
     return await ProductPricedFactory.createWithPrices(product, this.priceService);
   }
 
-  async getProducts(searchCriteria: SearchProductCriteria, sortCriteria: SortProductCriteria): Promise<{ products: ProductPriced[]; total: number; pages: number }> {
+  async getProducts(searchCriteria: AdminSearchProductCriteria, sortCriteria: SortProductCriteria): Promise<{ products: ProductPriced[]; total: number; pages: number }> {
     const { page = 1, limit = 10, ...filters } = searchCriteria;
 
     if (filters.category) {
