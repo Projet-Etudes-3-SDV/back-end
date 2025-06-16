@@ -255,6 +255,31 @@ export class SubscriptionService {
     }
   }
 
+  async adminCancelSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
+    try {
+      const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
+      if (!subscription) {
+        throw new SubscriptionNotFound();
+      }
+
+      if (subscription.status === 'canceled' || subscription.status === 'unpaid') {
+        return subscription;
+      }
+
+      const canceledSubscription = await this.stripe.subscriptions.update(subscriptionId, {
+        cancel_at_period_end: true
+      });
+
+      return canceledSubscription;
+    } catch (error) {
+      console.error('Erreur lors de l\'annulation de l\'abonnement:', error);
+      if (error instanceof Stripe.errors.StripeError && error.code === 'resource_missing') {
+        throw new SubscriptionNotFound();
+      }
+      throw error;
+    }
+  }
+
   async reactivateSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
     try {
       const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
