@@ -1,5 +1,5 @@
 import { OrderRepository } from "../repositories/order.repository";
-import { IOrder, OrderStatus } from "../models/order.model";
+import { IOrder, OrderStatus, OrderWithPricedProducts } from "../models/order.model";
 import { OrderNotFound } from "../types/errors/order.errors";
 import { UserRepository } from "../repositories/user.repository";
 import { SearchOrderCriteria } from "../types/filters/order.filters";
@@ -8,6 +8,14 @@ import { OrderToCreate, OrderToModify } from "../types/requests/order.requests";
 import { IPriceService, StripePriceService } from "./price.service";
 import Stripe from "stripe";
 import { ProductPricedFactory } from "./product.service";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
+import { SubscriptionPlan } from "../models/subscription.model";
+
+export class OrderPricedFactory {
+  static create(order: IOrder, products: { product: ProductPriced; plan: SubscriptionPlan }[]): OrderWithPricedProducts {
+    return new OrderWithPricedProducts(order, products);
+  }
+}
 
 export class OrderService {
   private orderRepository: OrderRepository;
@@ -27,37 +35,51 @@ export class OrderService {
     return await this.orderRepository.create(orderData);
   }
 
-  async getOrder(id: string): Promise<IOrder> {
+  async getOrder(id: string): Promise<OrderWithPricedProducts> {
     const order = await this.orderRepository.findById(id);
     if (!order) {
       throw new OrderNotFound();
     }
-
-    order.products.map(async (product, index) => {
-      order.products[index].product = await ProductPricedFactory.createWithPrices(product.product, this.priceService);
-    });
-    return order;
+    const products = await this.getProductsForOrder(order);
+    return OrderPricedFactory.create(order, products);
   }
 
-  async getOrders(searchCriteria: SearchOrderCriteria, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: IOrder[]; total: number }> {
+  async getOrders(searchCriteria: SearchOrderCriteria, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: OrderWithPricedProducts[]; total: number }> {
     if (searchCriteria.user) {
       const user = await this.userRepository.findOneBy({ id: searchCriteria.user });
       searchCriteria.user = user?._id
     }
 
-    return await this.orderRepository.findManyBy(searchCriteria, page, limit, sortCriteria);
+    const { orders, total } = await this.orderRepository.findManyBy(searchCriteria, page, limit, sortCriteria);
+
+    const pricedOrders = await Promise.all(
+      orders.map(async (order) => {
+        const products = await this.getProductsForOrder(order);
+        return OrderPricedFactory.create(order, products);
+      })
+    );
+    return { orders: pricedOrders, total };
   }
 
-  async getOrdersByUser(userId: string, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: IOrder[]; total: number }> {
-    return await this.orderRepository.findManyBy({ user: userId }, page, limit, sortCriteria);
+  async getOrdersByUser(userId: string, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: OrderWithPricedProducts[]; total: number }> {
+    const { orders, total } = await this.orderRepository.findManyBy({ user: userId }, page, limit, sortCriteria);
+
+    const pricedOrders = await Promise.all(
+      orders.map(async (order) => {
+        const products = await this.getProductsForOrder(order);
+        return OrderPricedFactory.create(order, products);
+      })
+    );
+    return { orders: pricedOrders, total };
   }
 
-  async updateOrder(id: string, orderData: OrderToModify): Promise<IOrder> {
+  async updateOrder(id: string, orderData: OrderToModify): Promise<OrderWithPricedProducts> {
     const order = await this.orderRepository.update(id, orderData);
     if (!order) {
       throw new OrderNotFound();
     }
-    return order;
+    const products = await this.getProductsForOrder(order);
+    return OrderPricedFactory.create(order, products);
   }
 
   async deleteOrder(id: string): Promise<void> {
@@ -74,5 +96,14 @@ export class OrderService {
     }
     order.status = status;
     return await this.orderRepository.update(order.id, order);
+  }
+
+  async getProductsForOrder(order: IOrder): Promise<{ product: ProductPriced; plan: SubscriptionPlan }[]> {
+    return Promise.all(
+      order.products.map(async (product) => ({
+        product: await ProductPricedFactory.createWithPrices(product.product, this.priceService),
+        plan: product.plan
+      }))
+    );
   }
 }

@@ -6320,3 +6320,15 @@ Not connected
 Not connected 
   - 2025-06-16T14:47:45.068Z 
   - POST /api/cart/add
+Not connected 
+  - 2025-06-16T14:53:56.686Z 
+  - GET /api/orders/83eb2dba-baab-4527-be8b-6842641c0f84
+Not connected 
+  - 2025-06-16T14:55:02.565Z 
+  - GET /api/orders/83eb2dba-baab-4527-be8b-6842641c0f84
+Not connected 
+  - 2025-06-16T14:57:36.617Z 
+  - GET /api/orders/83eb2dba-baab-4527-be8b-6842641c0f84
+Not connected 
+  - 2025-06-16T14:57:41.782Z 
+  - GET /api/orders
