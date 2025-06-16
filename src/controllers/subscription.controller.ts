@@ -83,4 +83,25 @@ export class SubscriptionController {
       next(error);
     }
   }
+
+  async adminCancelSubscription(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const subscriptionId = req.params.subscriptionId;
+
+      if (!subscriptionId) {
+        throw new AppError("Validation failed", 400, [{ field: "subscriptionId", constraints: ["subscriptionId should not be empty"] }]);
+      }
+
+      const user = await this.subscriptionService.adminCancelSubscription(subscriptionId);
+      const subscriptionPresenter = plainToClass(SubscriptionPresenter, user, { excludeExtraneousValues: true });
+      if (user) {
+        res.status(200).json(subscriptionPresenter);
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }
+

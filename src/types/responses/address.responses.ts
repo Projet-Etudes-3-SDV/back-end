@@ -22,7 +22,8 @@ export class AddressPresenter {
   @Expose()
   @Type(() => String)
   @IsString()
-  type!: AddressType;
+  @IsOptional()
+  type?: AddressType;
 
   @Expose()
   @IsOptional()

@@ -8,6 +8,6 @@ export interface IAddress {
   city: string;
   postalCode: string;
   country: string;
-  type: AddressType;
+  type?: AddressType;
   phone?: string;
 }

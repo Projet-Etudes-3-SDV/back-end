@@ -205,6 +205,32 @@ router.post("/reset-password", (req, res, next) => userController.resetPassword(
  */
 router.post("/add-address", checkJWT, (req, res, next) => userController.addAddress(req as EncodedRequest, res, next));
 
+
+/**
+ * @swagger
+ * /api/users/update-address:
+ *   put:
+ *     summary: Update an address of the user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               addressId:
+ *                 type: string
+ *               newAddress:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Address updated
+ *       400:
+ *         description: Invalid input
+ */
+router.put("/update-address/:index", checkJWT, (req, res, next) => userController.updateAddress(req as EncodedRequest, res, next));
+
 /**
  * @swagger
  * /api/users/remove-address:
