@@ -89,6 +89,7 @@ export class ProductService {
 
     const productToModify = plainToClass(ProductToModify, { ...productData, ...updatedPriceIds }, { excludeExtraneousValues: true });
 
+    productToModify.category = product.category._id;
     const updatedProduct = await this.productRepository.update(id, productToModify);
     if (!updatedProduct) {
       throw new ProductUpdateFailed();

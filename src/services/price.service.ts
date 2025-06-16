@@ -67,7 +67,7 @@ export class StripePriceService implements IPriceService {
   async createPrice(stripeProductId: string, amount: number, interval: 'month' | 'year'): Promise<string> {
     const price = await this.stripe.prices.create({
       product: stripeProductId,
-      unit_amount: amount * 100,
+      unit_amount: Math.round(amount * 100),
       currency: 'eur',
       recurring: { interval },
     });
