@@ -66,7 +66,6 @@ export class CartService {
     if (user.stripeCustomerId) {
       const existingSubscription = await this.subscriptionService.getUserSubscription(user.stripeCustomerId);
       existingSubscription.map((sub => {
-        console.log(sub.productId, product.stripeProductId);
         if ((
           sub.productId === product.stripeProductId || 
           (sub.productId.includes(',') 

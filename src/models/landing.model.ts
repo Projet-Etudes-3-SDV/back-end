@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IProduct } from "./product.model";
 import { v4 as uuidv4 } from "uuid";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
 
 export interface ICarouselProduct {
     product: IProduct["_id"];
@@ -12,6 +13,31 @@ export interface ILanding {
     header: { title: string; subtitle?: string };
     carouselSection?: { title: string; description?: string; products: ICarouselProduct[]; order: number };
     categorySection?: { title: string; description?: string; order: number };
+    isMain: boolean;
+}
+
+export interface PricedCarouselProduct {
+    product: ProductPriced;
+    order: number;
+}
+
+export class LandingWithPricedProducts {
+    id: string;
+    header: { title: string; subtitle?: string };
+    carouselSection?: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
+    categorySection?: { title: string; description?: string; order: number };
+    isMain: boolean;
+
+    constructor(landing: ILanding, products: PricedCarouselProduct[]) {
+        this.id = landing.id;
+        this.header = landing.header;
+        this.carouselSection = landing.carouselSection ? {
+            ...landing.carouselSection,
+            products
+        } : undefined;
+        this.categorySection = landing.categorySection;
+        this.isMain = landing.isMain;
+    }
 }
 
 const LandingSchema: Schema = new Schema<ILanding>(
@@ -37,6 +63,11 @@ const LandingSchema: Schema = new Schema<ILanding>(
             description: { type: String, required: false },
             order: { type: Number, required: true },
         },
+        isMain: {
+            type: Boolean,
+            default: false,
+            required: true,
+        }
     },
     {
         versionKey: false,

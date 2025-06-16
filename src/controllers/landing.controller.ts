@@ -45,6 +45,19 @@ export class LandingController {
     }
   }
 
+  async getMainLanding(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const landing = await this.landingService.getMainLanding();
+      if (!landing) {
+        throw new AppError("Landing not found", 404, [], "LANDING_NOT_FOUND");
+      }
+      const landingPresenter = plainToClass(LandingPresenter, landing, { excludeExtraneousValues: true });
+      res.status(200).json(landingPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getAllLandings(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const page = parseInt(req.query.page as string) || 1;

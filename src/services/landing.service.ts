@@ -1,25 +1,36 @@
 import { LandingRepository } from "../repositories/landing.repository";
-import { ILanding } from "../models/landing.model";
+import { ILanding, LandingWithPricedProducts, PricedCarouselProduct } from "../models/landing.model";
 import { LandingToCreate, LandingToModify } from "../types/dtos/landingDtos";
-import Product from "../models/product.model"; // Import the Product model
+import Product, { IProduct } from "../models/product.model"; // Import the Product model
 import { AppError } from "../utils/AppError"; // Import AppError for error handling
 import { ObjectId } from "mongoose";
+import { MainLandingExists } from "../types/errors/landing.errors";
+import Stripe from "stripe";
+import { IPriceService, StripePriceService } from "./price.service";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
 
 export class LandingService {
   private landingRepository: LandingRepository;
+  private priceService: IPriceService;
 
   constructor() {
     this.landingRepository = new LandingRepository();
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+      apiVersion: '2025-02-24.acacia',
+    });
+
+    this.priceService = new StripePriceService(stripe);
   }
 
   async createLanding(data: LandingToCreate): Promise<ILanding> {
     if (data.carouselSection?.products && data.carouselSection.products.length > 0) {
       const products = data.carouselSection.products.map((product) => product.product);
       const productIds = await this.verifyProductsExist(products);
-      
+
       data.carouselSection.products = data.carouselSection.products.map((product) => ({
-          product: productIds.find((p) => p.id === product.product)?._id || "",
-          order: product.order
+        product: productIds.find((p) => p.id === product.product)?._id || "",
+        order: product.order
       }));
 
       await this.verifyUniqueProductOrder(data.carouselSection.products);
@@ -30,28 +41,53 @@ export class LandingService {
     ) {
       await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order);
     }
+
+    if (data.isMain) {
+      const existingMainLanding = await this.landingRepository.findMainLanding();
+      if (!existingMainLanding) {
+        throw new MainLandingExists()
+      }
+      existingMainLanding.isMain = false;
+      await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
+    }
+
     return await this.landingRepository.create(data);
   }
 
-  async getLandingById(id: string): Promise<ILanding | null> {
-    return await this.verifyLandingExists(id);
+  async getLandingById(id: string): Promise<LandingWithPricedProducts | null> {
+    const landing = await this.verifyLandingExists(id);
+    return await this.enrichLandingWithPrices(landing);
   }
 
-  async getAllLandings(page: number, limit: number): Promise<{ landings: ILanding[]; total: number }> {
-    return await this.landingRepository.findAll(page, limit);
+  async getMainLanding(): Promise<LandingWithPricedProducts | null> {
+    const landing = await this.landingRepository.findMainLanding();
+    if (!landing) {
+      throw new AppError("Main landing not found", 404, [], "MAIN_LANDING_NOT_FOUND");
+    }
+    return await this.enrichLandingWithPrices(landing);
   }
 
-  async updateLanding(id: string, data: LandingToModify): Promise<ILanding | null> {
+  async getAllLandings(page: number, limit: number): Promise<{ landings: LandingWithPricedProducts[]; total: number }> {
+    const { landings, total } = await this.landingRepository.findAll(page, limit);
+
+    const enrichedLandings = await Promise.all(
+      landings.map(landing => this.enrichLandingWithPrices(landing))
+    );
+
+    return { landings: enrichedLandings, total };
+  }
+
+  async updateLanding(id: string, data: LandingToModify): Promise<LandingWithPricedProducts | null> {
     await this.verifyLandingExists(id);
     if (data.carouselSection?.products && data.carouselSection.products.length > 0) {
-        const products = data.carouselSection.products.map((product) => product.product);
-        const productIds = await this.verifyProductsExist(products);
+      const products = data.carouselSection.products.map((product) => product.product);
+      const productIds = await this.verifyProductsExist(products);
 
       data.carouselSection.products = data.carouselSection.products.map((product) => ({
         product: productIds.find((p) => p.id === product.product)?._id || "",
         order: product.order
-    }));
-    
+      }));
+
       await this.verifyUniqueProductOrder(data.carouselSection.products);
     }
     if (
@@ -60,7 +96,22 @@ export class LandingService {
     ) {
       await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order);
     }
-    return await this.landingRepository.update(id, data);
+
+    if (data.isMain) {
+      const existingMainLanding = await this.landingRepository.findMainLanding();
+      if (!existingMainLanding) {
+        throw new MainLandingExists()
+      }
+      existingMainLanding.isMain = false;
+      await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
+    }
+
+    const updatedLanding = await this.landingRepository.update(id, data);
+    if (!updatedLanding) {
+      return null;
+    }
+
+    return await this.enrichLandingWithPrices(updatedLanding);
   }
 
   async deleteLanding(id: string): Promise<boolean> {
@@ -101,10 +152,56 @@ export class LandingService {
     }
   }
 
+  /**
+   * Enrichit un landing avec les prix des produits du carousel
+   */
+  private async enrichLandingWithPrices(landing: ILanding): Promise<LandingWithPricedProducts> {
+    if (!landing.carouselSection?.products || landing.carouselSection.products.length === 0) {
+      return new LandingWithPricedProducts(landing, []);
+    }
+
+    const pricedProducts = await Promise.all(
+      landing.carouselSection.products.map(async (carouselProduct) => {
+        const product = await Product.findById(carouselProduct.product).populate('category');
+        if (!product) {
+          throw new AppError("Product not found in carousel", 404, [], "CAROUSEL_PRODUCT_NOT_FOUND");
+        }
+
+        // Créer le ProductPriced avec les prix depuis Stripe
+        const productPriced = await this.createProductPricedWithPrices(product);
+
+        const pricedCarouselProduct: PricedCarouselProduct = {
+          product: productPriced,
+          order: carouselProduct.order
+        };
+
+        return pricedCarouselProduct;
+      })
+    );
+
+    // Trier les produits par ordre
+    pricedProducts.sort((a, b) => a.order - b.order);
+
+    return new LandingWithPricedProducts(landing, pricedProducts);
   }
-  
+
+  private async createProductPricedWithPrices(product: IProduct): Promise<ProductPriced> {
+    if (!product.stripeProductId) {
+      return new ProductPriced(product, 0, 0);
+    }
+
+    try {
+      const { monthlyPrice, yearlyPrice, freeTrialDays } = await this.priceService.getPricesForProduct(product.stripeProductId);
+      return new ProductPriced(product, monthlyPrice, yearlyPrice, freeTrialDays);
+    } catch (error) {
+      // En cas d'erreur avec Stripe, retourner le produit avec des prix à 0
+      console.error(`Error fetching prices for product ${product.id}:`, error);
+      return new ProductPriced(product, 0, 0);
+    }
+  }
+}
+
 class LandingIDs {
   id!: string;
   _id!: ObjectId;
 }
-

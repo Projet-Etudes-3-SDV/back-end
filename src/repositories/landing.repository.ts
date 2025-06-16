@@ -12,6 +12,23 @@ export class LandingRepository {
       {
         path: "carouselSection.products.product",
         model: "Product",
+        populate: {
+          path: "category",
+          model: "Category",
+        }
+      },
+    ]);
+  }
+
+  async findMainLanding(): Promise<ILanding | null> {
+    return await LandingSchema.findOne({ isMain: true }).populate([
+      {
+        path: "carouselSection.products.product",
+        model: "Product",
+        populate: {
+          path: "category",
+          model: "Category",
+        }
       },
     ]);
   }
@@ -23,6 +40,10 @@ export class LandingRepository {
         {
           path: "carouselSection.products.product",
           model: "Product",
+          populate: {
+            path: "category",
+            model: "Category",
+          }
         },
       ]),
       LandingSchema.countDocuments(),
@@ -35,6 +56,10 @@ export class LandingRepository {
       {
         path: "carouselSection.products.product",
         model: "Product",
+        populate: {
+          path: "category",
+          model: "Category",
+        }
       },
     ]);
   }

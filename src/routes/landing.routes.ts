@@ -35,24 +35,17 @@ router.post("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, 
 
 /**
  * @swagger
- * /api/landings/{id}:
+ * /api/landings/main:
  *   get:
- *     summary: Get a landing by ID
+ *     summary: Get the main landing
  *     tags: [Landing]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Landing ID
  *     responses:
  *       200:
- *         description: Landing details
+ *         description: Main landing details
  *       404:
- *         description: Landing not found
+ *         description: Main landing not found
  */
-router.get("/:id", (req, res, next) => landingController.getLandingById(req, res, next));
+router.get("/main", (req, res, next) => landingController.getMainLanding(req, res, next));
 
 /**
  * @swagger
@@ -75,7 +68,28 @@ router.get("/:id", (req, res, next) => landingController.getLandingById(req, res
  *       200:
  *         description: List of landings
  */
-router.get("/", checkJWT, (req, res, next) => landingController.getAllLandings(req, res, next));
+router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => landingController.getAllLandings(req, res, next));
+
+/**
+ * @swagger
+ * /api/landings/{id}:
+ *   get:
+ *     summary: Get a landing by ID
+ *     tags: [Landing]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Landing ID
+ *     responses:
+ *       200:
+ *         description: Landing details
+ *       404:
+ *         description: Landing not found
+ */
+router.get("/:id", (req, res, next) => landingController.getLandingById(req, res, next));
 
 /**
  * @swagger

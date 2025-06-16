@@ -1,7 +1,8 @@
-import { IsString, IsOptional, IsArray, ValidateNested, IsNumber } from "class-validator";
+import { IsString, IsOptional, IsArray, ValidateNested, IsNumber, IsBoolean } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { ObjectId } from "mongoose";
+import { ProductPresenter } from "../responses/product.responses";
 
 class CarouselProductDTO {
   @IsString()
@@ -77,26 +78,32 @@ export class LandingToCreate {
   @IsOptional()
   @Expose()
   categorySection?: CategorySectionDTO;
+
+  @IsBoolean()
+  @IsOptional()
+  @Expose()
+  isMain?: boolean;
 }
 
 export class LandingToModify {
   @ValidateNested()
   @Type(() => HeaderDTO)
-  @IsOptional()
   @Expose()
-  header?: HeaderDTO;
+  header!: HeaderDTO;
 
   @ValidateNested()
   @Type(() => CarouselSectionDTO)
-  @IsOptional()
   @Expose()
-  carouselSection?: CarouselSectionDTO;
+  carouselSection!: CarouselSectionDTO;
 
   @ValidateNested()
   @Type(() => CategorySectionDTO)
-  @IsOptional()
   @Expose()
-  categorySection?: CategorySectionDTO;
+  categorySection!: CategorySectionDTO;
+
+  @IsBoolean()
+  @Expose()
+  isMain!: boolean;
 }
 
 export class LandingPresenter {
@@ -142,21 +149,4 @@ class ProductsPresenter {
 
   @Expose()
   order!: number;
-}
-
-class ProductPresenter {
-  @Expose()
-  id!: string;
-
-  @Expose()
-  name!: string;
-
-  @Expose()
-  monthlyPrice!: number;
-
-  @Expose()
-  yearlyPrice!: number;
-
-  @Expose()
-  description!: string;
 }
