@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import Order, { IOrder } from "../models/order.model";
-import { SortOrderCriteria } from "../types/dtos/orderDtos";
+import { SortOrderCriteria } from "../types/sorts/order.sorts";
 
 export class OrderRepository {
   async create(orderData: Partial<IOrder>): Promise<IOrder> {
@@ -71,7 +71,7 @@ export class OrderRepository {
     }
 
     const [orders, total] = await Promise.all([
-      Order.find(query).skip(skip).limit(limit).populate([
+      Order.find(query).sort(query.sort).skip(skip).limit(limit).populate([
         {
           path: "user",
         },

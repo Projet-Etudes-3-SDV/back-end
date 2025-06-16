@@ -4,7 +4,10 @@ import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { ProductService } from "../services/product.service";
-import { AdminProductPresenter, ProductPresenter, ProductToCreate, ProductToModifyDTO, SearchProductCriteria, SortProductCriteria } from "../types/dtos/productDtos";
+import { ProductToCreate, ProductToModifyDTO } from "../types/requests/product.requests";
+import { AdminProductPresenter, ProductPresenter } from "../types/responses/product.responses";
+import { AdminSearchProductCriteria, SearchProductCriteria } from "../types/filters/product.filters";
+import { SortProductCriteria } from "../types/sorts/product.sorts";
 
 export class ProductController {
   private productService: ProductService;
@@ -44,7 +47,7 @@ export class ProductController {
 
     async getProductsAsAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-        const searchCriteria = plainToClass(SearchProductCriteria, req.query);
+        const searchCriteria = plainToClass(AdminSearchProductCriteria, req.query);
         const sortCriteria = plainToClass(SortProductCriteria, req.query);
         const dtoErrors = await validate(searchCriteria);
         dtoErrors.push(...await validate(sortCriteria));
@@ -86,7 +89,9 @@ export class ProductController {
                 }));
                 throw new AppError("Validation failed", 400, errors);
             }
-            const { products, total, pages } = await this.productService.getProducts(searchCriteria, sortCriteria);
+            const adminSearchProductCriteria = searchCriteria as AdminSearchProductCriteria;
+            adminSearchProductCriteria.active = true;
+            const { products, total, pages } = await this.productService.getProducts(adminSearchProductCriteria, sortCriteria);
             const productPresenters = plainToInstance(ProductPresenter, products, { excludeExtraneousValues: true });
             res.status(200).json({ result: productPresenters, total, pages });
         } catch (error) {

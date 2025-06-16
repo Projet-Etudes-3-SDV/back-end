@@ -3,7 +3,7 @@ import { IProduct } from "./product.model";
 import { v4 as uuidv4 } from "uuid";
 import { IUser } from "./user.model";
 import { SubscriptionPlan } from "./subscription.model";
-import { ProductPriced } from "../types/dtos/productDtos";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
 
 export interface ICart extends Document {
   id: string;
@@ -20,6 +20,28 @@ export interface ICartWithPrices extends Omit<ICart, 'products'> {
 export enum CartStatus {
   READY = "ready",
   PENDING = "pending",
+}
+
+export class CartWithPricedProducts {
+  id!: string;
+  products: { product: ProductPriced, quantity: number, plan: SubscriptionPlan }[];
+  owner: IUser;
+
+  constructor(cart: ICart, products: ProductPriced[]) {
+    this.id = cart.id;
+    this.owner = cart.owner;
+    this.products = []
+    for (const product of products) {
+      const cartProduct = cart.products.find(p => p.product.id === product.id);
+      if (cartProduct) {
+        this.products.push({
+          product,
+          quantity: cartProduct.quantity,
+          plan: cartProduct.plan
+        });
+      }
+    }
+  }
 }
 
 const CartItemSchema: Schema = new Schema({

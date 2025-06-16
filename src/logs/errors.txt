@@ -2456,4 +2456,221 @@ Not connected - 10.111.9.92
     - Handlebars is not defined
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:30:37.585Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:45:23.897Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:45:59.646Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:48:34.797Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:50:11.190Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:51:27.385Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:52:20.782Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:52:33.072Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T11:54:12.786Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:00:12.779Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:02:04.050Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:02:15.536Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T12:31:23.491Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:20:00.147Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:20:49.718Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:21:21.838Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-13T13:21:33.183Z 
+    - GET /api/users 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T13:29:49.641Z 
+    - GET /api/products 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-13T14:52:52.443Z 
+    - POST /api/users/login 
+    - 500 
+    - ENOENT: no such file or directory, open 'D:\Projet Dev\Cyna Projet\templates\auth-code-validation-template.html'
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:30:30.153Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:42:19.023Z 
+    - GET /api/orders/me 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:42:25.057Z 
+    - POST /api/users/login 
+    - 500 
+    - ENOENT: no such file or directory, open 'D:\Projet Dev\Cyna Projet\templates\auth-code-validation-template.html'
+    - 
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T07:44:20.521Z 
+    - GET /api/orders/me 
+    - 404 
+    - Commande non trouvée
+    - ORDER_NOT_FOUND
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T07:45:21.548Z 
+    - GET /api/orders/me 
+    - 404 
+    - Commande non trouvée
+    - ORDER_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:08.544Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:11.771Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:12.836Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:53:23.589Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T07:59:18.234Z 
+    - POST /api/subscriptions/cancel/sub_1RYjWnEPd59k1bJg2ipzdpYS 
+    - 403 
+    - Accès non autorisé à l'abonnement
+    - UNAUTHORIZED_SUBSCRIPTION_ACCESS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:00:20.208Z 
+    - POST /api/subscriptions/cancel/sub_1RYjWnEPd59k1bJg2ipzdpYS 
+    - 403 
+    - Accès non autorisé à l'abonnement
+    - UNAUTHORIZED_SUBSCRIPTION_ACCESS
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:03:50.729Z 
+    - POST /api/subscriptions/cancel/sub_1RYjWnEPd59k1bJg2ipzdpYS 
+    - 403 
+    - Accès non autorisé à l'abonnement
+    - UNAUTHORIZED_SUBSCRIPTION_ACCESS
+
     

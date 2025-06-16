@@ -41,7 +41,7 @@ const subscriptionController = new SubscriptionController();
  *       400:
  *         description: Invalid input
  */
-router.post("/cancel/:subscriptionId", checkJWT, (req, res, next) => subscriptionController.cancelSubscription(req, res, next));
+router.post("/cancel/:subscriptionId", checkJWT, (req, res, next) => subscriptionController.cancelSubscription(req as EncodedRequest, res, next));
 
 
 /**

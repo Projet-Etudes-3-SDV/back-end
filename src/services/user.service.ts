@@ -1,15 +1,17 @@
 import { UserRepository } from "../repositories/user.repository";
 import { UserWithSubscriptions, type IUser } from "../models/user.model";
-import { UserToCreate, UserToModify, SearchUserCriteria, ValidateUserDTO, AdminSearchUserCriteria, SortUserCriteria } from "../types/dtos/userDtos";
 import { sendHtmlEmail } from "./mail.service";
 import { CartRepository } from "../repositories/cart.repository";
 import { IAddress } from "../models/address.model";
 import { InvalidUserCredential, UserAdressNotFound, UserAlreadyExists, UserAlreadyValidated, UserAuthCodeExpired, UserAuthCodeInvalid, UserAuthCodeNotSet, UserAuthTokenCreationFailed, UserDeletionFailed, UserFailedToUpdate, UserNotFound, UserNotValidated, UserPasswordResetTokenInvalid, UserValidationTokenInvalid } from "../types/errors/user.errors";
 import { SubscriptionService } from "./subscription.service";
-import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 import { readFileSync } from "fs";
 import { join } from "path";
 import Handlebars from 'handlebars';
+import { UserToCreate, UserToModify, ValidateUserDTO } from "../types/requests/user.requests";
+import { AdminSearchUserCriteria, SearchUserCriteria } from "../types/filters/user.filters";
+import { SortUserCriteria } from "../types/sorts/user.sorts";
+import { IUserSubscription } from "../models/subscription.model";
 
 export class UserService {
   private userRepository: UserRepository;
@@ -79,7 +81,7 @@ export class UserService {
       throw new UserAuthCodeExpired()
     }
     
-    sendHtmlEmail(user.email, "Cyna: Code de connexion", htmlTemplate({ authCode: user.authCode }));
+    sendHtmlEmail(user.email, "Cyna: Code de connexion", htmlTemplate({ authCode: user.authCode, path: join(process.cwd(), 'templates') }));
 
     return user;
   }
@@ -225,6 +227,23 @@ export class UserService {
     }
   }
 
+  async deleteManyUsers(ids: string[]): Promise<void> {
+    if (!ids || ids.length === 0) {
+      throw new UserNotFound();
+    }
+
+    const users = await this.userRepository.findByIds(ids);
+    if (!users || users.length === 0 || users.length !== ids.length) {
+      throw new UserNotFound();
+    }
+
+    const result = await this.userRepository.deleteManyByIds(ids);
+
+    if (!result) {
+      throw new UserDeletionFailed();
+    }
+  }
+
   async patchUser(id: string, userData: Partial<IUser>): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
@@ -240,11 +259,20 @@ export class UserService {
   async forgotPassword(email: string): Promise<void> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user) {
-      throw new UserNotFound();
+      return;
     }
 
     user.generatePasswordToken();
-    sendHtmlEmail(user.email, "Cyna: Réinitialisation du mot de passe", `Cliquez ici pour réinitialiser votre mot de passe: http://localhost:8100/reset-password/${user.resetPasswordToken}`);
+    const templateContent = readFileSync(join(process.cwd(), 'templates', 'password-forgotten-template.html'), 'utf-8');
+    const htmlTemplate = Handlebars.compile(templateContent);
+
+    if (!user.resetPasswordToken) {
+      throw new UserAuthCodeExpired()
+    }
+
+    console.log(`User reset password token: ${user.resetPasswordToken}, to user: ${user.email}`);
+
+    sendHtmlEmail(user.email, "Cyna: Réinitialisation du mot de passe", htmlTemplate({ resetPasswordToken: user.resetPasswordToken, path: join(process.cwd(), 'templates') }));
 
     await user.save();
   }
@@ -255,8 +283,13 @@ export class UserService {
       throw new UserPasswordResetTokenInvalid();
     }
 
+    if (!user.resetPasswordExpires || user.resetPasswordExpires < new Date()) {
+      throw new UserPasswordResetTokenInvalid();
+    }
+
     user.password = newPassword;
     user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
 
     await user.save();
   }

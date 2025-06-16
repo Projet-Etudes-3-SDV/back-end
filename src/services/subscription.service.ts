@@ -1,17 +1,21 @@
-import { IUserSubscription } from "../types/dtos/subscriptionDtos";
 import {
   SubscriptionNotFound,
+  UnauthorizedSubscriptionAccess,
 } from "../types/errors/subscription.errors";
 import Stripe from "stripe";
-import { ISubscriptionCoupon } from "../types/dtos/couponDtos";
+import { IUserSubscription } from "../models/subscription.model";
+import { ISubscriptionCoupon } from "../models/coupons.model";
+import { UserRepository } from "../repositories/user.repository";
 
 export class SubscriptionService {
   private stripe: Stripe;
+  private userRepository: UserRepository;
 
   constructor() {
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
       apiVersion: '2025-02-24.acacia',
     });
+    this.userRepository = new UserRepository();
   }
 
   async getUserSubscription(stripeCustomerId: string): Promise<IUserSubscription[]> {
@@ -221,15 +225,22 @@ export class SubscriptionService {
     }
   }
 
-  async cancelSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
+  async cancelSubscription(subscriptionId: string, userId: string): Promise<Stripe.Subscription | null> {
     try {
-      // Vérifier que l'abonnement existe
       const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
       if (!subscription) {
         throw new SubscriptionNotFound();
       }
 
-      // Annuler l'abonnement à la fin de la période de facturation
+      const user = await this.userRepository.findById(userId);
+      if (!user || user.stripeCustomerId !== subscription.customer as string) {
+        throw new UnauthorizedSubscriptionAccess();
+      }
+
+      if (subscription.status === 'canceled' || subscription.status === 'unpaid') {
+        return subscription;
+      }
+
       const canceledSubscription = await this.stripe.subscriptions.update(subscriptionId, {
         cancel_at_period_end: true
       });
@@ -246,13 +257,11 @@ export class SubscriptionService {
 
   async reactivateSubscription(subscriptionId: string): Promise<Stripe.Subscription | null> {
     try {
-      // Vérifier que l'abonnement existe
       const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
       if (!subscription) {
         throw new SubscriptionNotFound();
       }
 
-      // Réactiver l'abonnement en annulant la programmation d'annulation
       const reactivatedSubscription = await this.stripe.subscriptions.update(subscriptionId, {
         cancel_at_period_end: false
       });

@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongoose";
 import Category, { type ICategory } from "../models/category.model";
-import { SearchCategoryCriteria } from "../types/dtos/categoryDtos";
+import { SearchCategoryCriteria } from "../types/filters/category.filters";
 
 export class CategoryRepository {
   async create(data: Partial<ICategory>): Promise<ICategory> {

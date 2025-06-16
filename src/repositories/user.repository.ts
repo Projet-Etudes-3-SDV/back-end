@@ -1,6 +1,8 @@
 import { FilterQuery } from "mongoose";
 import User, { type IUser } from "../models/user.model";
-import { UserToCreate, SearchUserCriteria, AdminSearchUserCriteria, SortUserCriteria } from "../types/dtos/userDtos";
+import { AdminSearchUserCriteria, SearchUserCriteria } from "../types/filters/user.filters";
+import { UserToCreate } from "../types/requests/user.requests";
+import { SortUserCriteria } from "../types/sorts/user.sorts";
 
 export class UserRepository {
   async create(userData: UserToCreate): Promise<IUser> {
@@ -19,6 +21,10 @@ export class UserRepository {
         path: 'owner',
       }],
     }]);
+  }
+
+  async findByIds(ids: string[]): Promise<IUser[]> {
+    return await User.find({ id: { $in: ids } })
   }
 
   async findOneBy(filters: FilterQuery<AdminSearchUserCriteria>): Promise<IUser | null> {
@@ -121,5 +127,10 @@ export class UserRepository {
   async delete(id: string): Promise<boolean> {
     const result = await User.deleteOne({ id });
     return result.deletedCount === 1;
+  }
+
+  async deleteManyByIds(ids: string[]): Promise<boolean> {
+    const result = await User.deleteMany({ id: { $in: ids } });
+    return result.deletedCount > 0 && result.deletedCount === ids.length;
   }
 }

@@ -62,31 +62,3 @@ export class AddressToModify {
   @IsString()
   phone?: string;
 }
-
-export class AddressPresenter {
-  @Expose()
-  @IsString()
-  street!: string;
-
-  @Expose()
-  @IsString()
-  city!: string;
-
-  @Expose()
-  @IsString()
-  postalCode!: string;
-
-  @Expose()
-  @IsString()
-  country!: string;
-
-  @Expose()
-  @Type(() => String)
-  @IsString()
-  type!: AddressType;
-
-  @Expose()
-  @IsOptional()
-  @IsString()
-  phone?: string;
-}

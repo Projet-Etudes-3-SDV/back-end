@@ -1,12 +1,15 @@
 import type { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { UserPresenter, UserToCreate, UserToModify, SearchUserCriteria, UserCreationPresenter, UserLogin, ValidateUserDTO, AdminUserToModify, ValidateLogin, SortUserCriteria } from "../types/dtos/userDtos";
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { JWTService } from "../services/jwt.service";
-import { AddressToCreate } from "../types/dtos/addressDtos";
+import { AdminUserToModify, UserLogin, UserToCreate, UserToModify, ValidateLogin, ValidateUserDTO } from "../types/requests/user.requests";
+import { LiteUserPresenter, UserPresenter } from "../types/responses/user.responses";
+import { SearchUserCriteria } from "../types/filters/user.filters";
+import { SortUserCriteria } from "../types/sorts/user.sorts";
+import { AddressToCreate } from "../types/requests/address.requests";
 
 export class UserController {
   private userService: UserService;
@@ -40,7 +43,7 @@ export class UserController {
         throw new AppError("Validation failed", 400, errors);
       }
       const user = await this.userService.createUser(userData);
-      const userPresenter = plainToClass(UserCreationPresenter, user, { excludeExtraneousValues: true });
+      const userPresenter = plainToClass(LiteUserPresenter, user, { excludeExtraneousValues: true });
       res.status(201).json(userPresenter);
     } catch (error) {
       next(error);
@@ -101,6 +104,21 @@ export class UserController {
     try {
       await this.userService.deleteUser(req.params.id);
       res.status(200).json({ message: "User deleted" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userIds = req.body.ids;
+
+      if (!Array.isArray(userIds) || userIds.length === 0) {
+        throw new AppError("User IDs must be an array and cannot be empty", 400);
+      }
+
+      await this.userService.deleteManyUsers(userIds);
+      res.status(200).json({ message: "Users deleted" });
     } catch (error) {
       next(error);
     }
@@ -213,6 +231,9 @@ export class UserController {
   async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { email } = req.body;
+      if (!email) {
+        throw new AppError("Email is required", 400);
+      }
       await this.userService.forgotPassword(email);
       res.status(200).json({ message: "Password reset email sent" });
     } catch (error) {

@@ -293,6 +293,23 @@ router.put("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest
  *       400:
  *         description: Invalid input
  */
+router.delete("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.deleteUsers(req, res, next));
+
+
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Delete users by ID
+ *     description: Deletes many users by ID. Requires admin role.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *       400:
+ *         description: Invalid input
+ */
 router.delete("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => userController.deleteUser(req, res, next));
 
 /**

@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/user.repository";
-import { ICart } from "../models/cart.model";
+import { CartWithPricedProducts, ICart } from "../models/cart.model";
 import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
 import { SubscriptionPlan } from "../models/subscription.model";
@@ -15,8 +15,7 @@ import {
 } from "../types/errors/cart.errors";
 import { UserNotFound } from "../types/errors/user.errors";
 import { ProductService } from "./product.service";
-import { ProductPriced } from "../types/dtos/productDtos";
-import { CartWithPricedProducts } from "../types/dtos/cartDtos";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
 
 export class CartService {
   private userRepository: UserRepository;

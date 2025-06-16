@@ -1,7 +1,8 @@
 import type { ICategory } from "../models/category.model";
 import { CategoryAlreadyExists, CategoryNotFound, CategoryUpdateFailed, CategoryDeleteFailed } from "../types/errors/category.errors";
-import { CategoryToCreate, CategoryToModify, SearchCategoryCriteria } from "../types/dtos/categoryDtos";
 import { CategoryRepository } from "../repositories/category.repository";
+import { CategoryToCreate, CategoryToModify } from "../types/requests/category.requests";
+import { SearchCategoryCriteria } from "../types/filters/category.filters";
 
 export class CategoryService {
   private categoryRepository: CategoryRepository;

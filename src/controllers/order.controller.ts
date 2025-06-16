@@ -2,9 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { OrderService } from "../services/order.service";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
-import { OrderToCreate, OrderToModify, OrderPresenter, SearchOrderCriteria, SortOrderCriteria } from "../types/dtos/orderDtos";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { AppError } from "../utils/AppError";
+import { OrderToCreate, OrderToModify } from "../types/requests/order.requests";
+import { OrderPresenter } from "../types/responses/order.responses";
+import { SearchOrderCriteria } from "../types/filters/order.filters";
+import { SortOrderCriteria } from "../types/sorts/order.sorts";
 
 export class OrderController {
   private orderService: OrderService;
