@@ -97,7 +97,7 @@ router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, r
  *       400:
  *         description: Invalid input
  */
-router.get("/", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.getSubscriptionById(req, res, next));
+router.get("/:id", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.getSubscriptionById(req, res, next));
 
 /**
  * @swagger

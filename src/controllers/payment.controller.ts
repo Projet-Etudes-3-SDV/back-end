@@ -73,18 +73,21 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     if (!user.stripeCustomerId){
       const session = await stripe.checkout.sessions.create({
         success_url: `http://localhost:8100/success?session_id=${sessionId}`,
-        cancel_url: `http://localhost:8100/checkout-success`,
+        cancel_url: `http://localhost:8100/checkout-failure`,
         line_items: lineItems,
         mode: 'subscription',
         payment_method_types: ['card'],
         customer_email: req.decoded.user.email,
         allow_promotion_codes: true,
+        subscription_data: {
+          trial_period_days: 14,
+        },
       });
       sessionUrl = session.url ?? '';
     } else {
       const session = await stripe.checkout.sessions.create({
         success_url: `http://localhost:8100/success?session_id=${sessionId}`,
-        cancel_url: `http://localhost:8100/checkout-success`,
+        cancel_url: `http://localhost:8100/checkout-failure`,
         line_items: lineItems,
         mode: 'subscription',
         payment_method_types: ['card'],
@@ -135,7 +138,7 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
         break;
       }
       
-      case 'payment_intent.succeeded': {
+      case 'invoice.paid': {
         try {
           const session = event.data.object as Stripe.Checkout.Session;
 

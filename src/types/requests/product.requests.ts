@@ -143,6 +143,16 @@ export class ProductToModify {
   @Type(() => FeaturesPresenter)
   features?: Array<FeaturesPresenter>;
 
+  @Expose()
+  @IsOptional()
+  @IsBoolean()
+  freeMonthlyTrial?: boolean;
+
+  @Expose()
+  @IsOptional()
+  @IsBoolean()
+  freeYearlyTrial?: boolean;
+
   @IsString()
   @IsOptional()
   @Expose()

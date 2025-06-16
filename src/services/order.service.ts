@@ -5,13 +5,22 @@ import { UserRepository } from "../repositories/user.repository";
 import { SearchOrderCriteria } from "../types/filters/order.filters";
 import { SortOrderCriteria } from "../types/sorts/order.sorts";
 import { OrderToCreate, OrderToModify } from "../types/requests/order.requests";
+import { IPriceService, StripePriceService } from "./price.service";
+import Stripe from "stripe";
+import { ProductPricedFactory } from "./product.service";
 
 export class OrderService {
   private orderRepository: OrderRepository;
   private userRepository: UserRepository;
+  private priceService: IPriceService;
+  private stripe: Stripe;
   constructor() {
     this.orderRepository = new OrderRepository();
     this.userRepository = new UserRepository();
+    this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+      apiVersion: '2025-02-24.acacia',
+    });
+    this.priceService = new StripePriceService(this.stripe);
   }
 
   async createOrder(orderData: OrderToCreate): Promise<IOrder> {
@@ -23,6 +32,10 @@ export class OrderService {
     if (!order) {
       throw new OrderNotFound();
     }
+
+    order.products.map(async (product, index) => {
+      order.products[index].product = await ProductPricedFactory.createWithPrices(product.product, this.priceService);
+    });
     return order;
   }
 

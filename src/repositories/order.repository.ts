@@ -9,7 +9,17 @@ export class OrderRepository {
   }
 
   async findById(id: string): Promise<IOrder | null> {
-    return await Order.findOne({ id }).populate("user").populate("products.product").populate("products.product.category");
+    return await Order.findOne({ id }).populate([
+      {
+        path: "user",
+      },
+      {
+        path: "products.product",
+        populate: {
+          path: "category",
+        },
+      },
+    ]);
   }
 
   async findOneBy(filters: Partial<IOrder>): Promise<IOrder | null> {

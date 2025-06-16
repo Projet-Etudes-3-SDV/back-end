@@ -2701,4 +2701,109 @@ Not connected - 10.111.9.92
     - Validation failed
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-16T11:21:17.850Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T11:21:58.936Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.124Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.126Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.179Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.525Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.594Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.635Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.745Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:38.775Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:39.048Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:39.345Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    d4e110f4-94f7-4c9d-9e36-ee91aadbd283 - 127.0.0.1 
+    - 2025-06-16T11:23:39.355Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T11:29:00.819Z 
+    - POST /api/users/register 
+    - 409 
+    - Un utilisateur avec cet email existe déjà
+    - USER_ALREADY_EXISTS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-16T11:29:20.849Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     

@@ -10,8 +10,7 @@ import { ProductToCreate, ProductToModify, ProductToModifyDTO } from "../types/r
 import { AdminSearchProductCriteria, SearchProductCriteria } from "../types/filters/product.filters";
 import { SortProductCriteria } from "../types/sorts/product.sorts";
 
-// Factory pour créer ProductPriced
-class ProductPricedFactory {
+export class ProductPricedFactory {
   static create(product: IProduct, monthlyPrice: number = 0, yearlyPrice: number = 0, freeTrialDays: number = 0): ProductPriced {
     return new ProductPriced(product, monthlyPrice, yearlyPrice, freeTrialDays);
   }

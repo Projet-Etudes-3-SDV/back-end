@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { IUser } from "./user.model"
 import { SubscriptionPlan } from "./subscription.model";
 import { IProduct } from "./product.model";
+import { ProductPriced } from "../types/pojos/product-priced.pojo";
 
 export interface IOrder extends Document {
   id: string;
@@ -15,6 +16,29 @@ export interface IOrder extends Document {
     product: IProduct["_id"];
     plan: SubscriptionPlan;
   }[]
+}
+
+export class OrderWithPricedProducts {
+  id: string;
+  user: IUser["_id"];
+  total: number;
+  status: OrderStatus;
+  sessionId?: string;
+  orderDate: Date;
+  products: {
+    product: ProductPriced;
+    plan: SubscriptionPlan;
+  }[];
+
+  constructor(order: IOrder, products: { product: ProductPriced; plan: SubscriptionPlan }[]) {
+    this.id = order.id;
+    this.user = order.user;
+    this.total = order.total;
+    this.status = order.status;
+    this.sessionId = order.sessionId;
+    this.orderDate = order.orderDate;
+    this.products = products;
+  }
 }
 
 export enum OrderStatus {
