@@ -4763,3 +4763,18 @@ Not connected
 Not connected 
   - 2025-06-13T14:54:00.510Z 
   - POST /api/users/forgot-password
+Not connected 
+  - 2025-06-16T07:30:27.815Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-16T07:30:27.828Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-16T07:30:30.152Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-16T07:30:30.166Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-16T07:30:30.185Z 
+  - GET /api/categories

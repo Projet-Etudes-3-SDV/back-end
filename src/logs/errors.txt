@@ -2589,4 +2589,11 @@ Not connected - 10.111.9.92
     - ENOENT: no such file or directory, open 'D:\Projet Dev\Cyna Projet\templates\auth-code-validation-template.html'
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-16T07:30:30.153Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     
