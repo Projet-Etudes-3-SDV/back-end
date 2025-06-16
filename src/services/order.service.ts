@@ -1,5 +1,5 @@
 import { OrderRepository } from "../repositories/order.repository";
-import { IOrder, OrderStatus, OrderWithPricedProducts } from "../models/order.model";
+import { IOrder, OrderStatus } from "../models/order.model";
 import { OrderNotFound } from "../types/errors/order.errors";
 import { UserRepository } from "../repositories/user.repository";
 import { SearchOrderCriteria } from "../types/filters/order.filters";
@@ -8,9 +8,6 @@ import { OrderToCreate, OrderToModify } from "../types/requests/order.requests";
 import { IPriceService, StripePriceService } from "./price.service";
 import Stripe from "stripe";
 import { ProductPricedFactory } from "./product.service";
-import type { IProduct } from "../models/product.model";
-
-
 
 export class OrderService {
   private orderRepository: OrderRepository;
@@ -77,21 +74,5 @@ export class OrderService {
     }
     order.status = status;
     return await this.orderRepository.update(order.id, order);
-  }
-}
-
-export class OrderPricedFactory {
-  static async createWithPricedProducts(
-    order: IOrder,
-    priceService: IPriceService
-  ): Promise<OrderWithPricedProducts> {
-    const productsWithPrices = await Promise.all(
-      order.products.map(async ({ product, plan }) => {
-        const productDoc = await (await import("mongoose")).default.model("Product").findById(product).lean();
-        const productPriced = await ProductPricedFactory.createWithPrices(productDoc as IProduct, priceService);
-        return { product: productPriced, plan };
-      })
-    );
-    return new OrderWithPricedProducts(order, productsWithPrices);
   }
 }

@@ -2806,4 +2806,32 @@ Not connected - 10.111.9.92
     - No token provided
     - undefined
 
+    632f44d6-88b4-4ebc-aa92-856dfb08cc82 - 127.0.0.1 
+    - 2025-06-16T14:45:44.746Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    632f44d6-88b4-4ebc-aa92-856dfb08cc82 - 127.0.0.1 
+    - 2025-06-16T14:45:56.499Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    632f44d6-88b4-4ebc-aa92-856dfb08cc82 - 127.0.0.1 
+    - 2025-06-16T14:47:41.241Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur possède déjà cet article dans son panier
+    - CART_ITEM_EXISTS
+
+    632f44d6-88b4-4ebc-aa92-856dfb08cc82 - 127.0.0.1 
+    - 2025-06-16T14:47:45.689Z 
+    - POST /api/cart/add 
+    - 400 
+    - L'utilisateur est déjà abonné à ce produit
+    - ALREADY_SUBSCRIBED
+
     
