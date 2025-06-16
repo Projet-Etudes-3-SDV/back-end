@@ -109,6 +109,21 @@ export class UserController {
     }
   }
 
+  async deleteUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userIds = req.body.ids;
+
+      if (!Array.isArray(userIds) || userIds.length === 0) {
+        throw new AppError("User IDs must be an array and cannot be empty", 400);
+      }
+
+      await this.userService.deleteManyUsers(userIds);
+      res.status(200).json({ message: "Users deleted" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async patchUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const userData = plainToClass(AdminUserToModify, req.body);

@@ -23,6 +23,10 @@ export class UserRepository {
     }]);
   }
 
+  async findByIds(ids: string[]): Promise<IUser[]> {
+    return await User.find({ id: { $in: ids } })
+  }
+
   async findOneBy(filters: FilterQuery<AdminSearchUserCriteria>): Promise<IUser | null> {
     const query: FilterQuery<AdminSearchUserCriteria> = {};
     if (filters) {
@@ -123,5 +127,10 @@ export class UserRepository {
   async delete(id: string): Promise<boolean> {
     const result = await User.deleteOne({ id });
     return result.deletedCount === 1;
+  }
+
+  async deleteManyByIds(ids: string[]): Promise<boolean> {
+    const result = await User.deleteMany({ id: { $in: ids } });
+    return result.deletedCount > 0 && result.deletedCount === ids.length;
   }
 }

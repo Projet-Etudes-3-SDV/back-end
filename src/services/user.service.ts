@@ -227,6 +227,23 @@ export class UserService {
     }
   }
 
+  async deleteManyUsers(ids: string[]): Promise<void> {
+    if (!ids || ids.length === 0) {
+      throw new UserNotFound();
+    }
+
+    const users = await this.userRepository.findByIds(ids);
+    if (!users || users.length === 0 || users.length !== ids.length) {
+      throw new UserNotFound();
+    }
+
+    const result = await this.userRepository.deleteManyByIds(ids);
+
+    if (!result) {
+      throw new UserDeletionFailed();
+    }
+  }
+
   async patchUser(id: string, userData: Partial<IUser>): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
