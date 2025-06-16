@@ -2673,4 +2673,32 @@ Not connected - 10.111.9.92
     - Accès non autorisé à l'abonnement
     - UNAUTHORIZED_SUBSCRIPTION_ACCESS
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:45:28.426Z 
+    - PUT /api/users/add-address 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:46:29.140Z 
+    - POST /api/users/add-address 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:48:09.581Z 
+    - POST /api/users/add-address 
+    - 400 
+    - Validation failed
+    - undefined
+
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-16T08:50:33.462Z 
+    - POST /api/users/add-address 
+    - 400 
+    - Validation failed
+    - undefined
+
     

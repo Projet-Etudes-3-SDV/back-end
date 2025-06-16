@@ -293,6 +293,27 @@ export class UserController {
     }
   }
 
+  async updateAddress(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { index } = req.params;
+      const addressData = plainToClass(AddressToCreate, req.body);
+      const dtoErrors = await validate(addressData);
+      if (dtoErrors.length > 0) {
+        const errors = dtoErrors.map(error => ({
+          field: error.property,
+          constraints: error.constraints ? Object.values(error.constraints) : []
+        }));
+        throw new AppError("Validation failed", 400, errors);
+      }
+      const addressIndexNumber = parseInt(index, 10);
+      const user = await this.userService.updateAddress(req.decoded.user.id, addressIndexNumber, addressData);
+      const userPresenter = plainToClass(UserPresenter, user, { excludeExtraneousValues: true });
+      res.status(200).json(userPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async deleteAddress(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
       const { index } = req.params;

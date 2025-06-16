@@ -314,6 +314,28 @@ export class UserService {
     return updatedUser;
   }
 
+  async updateAddress(id: string, addressIndex: number, address: IAddress): Promise<IUser> {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new UserNotFound();
+    }
+
+    if (!user.addresses || user.addresses.length === 0) {
+      throw new UserAdressNotFound();
+    }
+
+    if (addressIndex < 0 || addressIndex >= user.addresses.length) {
+      throw new UserAdressNotFound();
+    }
+    user.addresses[addressIndex] = address;
+    const updatedUser = await this.userRepository.update(id, { addresses: user.addresses });
+    if (!updatedUser) {
+      throw new UserFailedToUpdate();
+    }
+    return updatedUser;
+  }
+
   async deleteAddress(id: string, addressIndex: number): Promise<IUser> {
     const user = await this.userRepository.findOneBy({ id });
 
