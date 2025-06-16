@@ -20,6 +20,10 @@ export class LiteUserPresenter {
 
   @Expose()
   phone?: string;
+
+  @Expose()
+  @IsEnum(UserRole)
+  role!: UserRole;
 }
 
 export class UserPresenter extends LiteUserPresenter {
@@ -42,10 +46,6 @@ export class UserPresenter extends LiteUserPresenter {
 }
 
 export class AdminUserPresenter extends LiteUserPresenter {
-  @Expose()
-  @IsEnum(UserRole)
-  role!: UserRole;
-
   @Expose()
   @IsArray()
   @ValidateNested({ each: true })
