@@ -1,7 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import { LandingService } from "../services/landing.service";
 import { plainToClass, plainToInstance } from "class-transformer";
-import { LandingToCreate, LandingToModify, LandingPresenter } from "../types/dtos/landingDtos";
+import { LandingPresenter } from "../types/responses/landing.responses";
+import { LandingToCreate, LandingToModify } from "../types/requests/landing.requests";
+
 import { validate } from "class-validator";
 import { AppError } from "../utils/AppError";
 

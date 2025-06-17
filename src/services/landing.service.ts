@@ -1,6 +1,6 @@
 import { LandingRepository } from "../repositories/landing.repository";
 import { ILanding, LandingWithPricedProducts, PricedCarouselProduct } from "../models/landing.model";
-import { LandingToCreate, LandingToModify } from "../types/dtos/landingDtos";
+import { LandingToCreate, LandingToModify } from "../types/requests/landing.requests";
 import Product, { IProduct } from "../models/product.model"; // Import the Product model
 import { AppError } from "../utils/AppError"; // Import AppError for error handling
 import { ObjectId } from "mongoose";

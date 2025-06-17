@@ -1,5 +1,5 @@
 import LandingSchema, { ILanding } from "../models/landing.model";
-import { LandingToCreate, LandingToModify } from "../types/dtos/landingDtos";
+import { LandingToCreate, LandingToModify } from "../types/requests/landing.requests";
 
 export class LandingRepository {
   async create(landingData: LandingToCreate): Promise<ILanding> {

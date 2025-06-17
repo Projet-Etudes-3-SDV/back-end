@@ -2,9 +2,8 @@ import { IsString, IsOptional, IsArray, ValidateNested, IsNumber, IsBoolean } fr
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { ObjectId } from "mongoose";
-import { ProductPresenter } from "../responses/product.responses";
 
-class CarouselProductDTO {
+export class CarouselProductDTO {
   @IsString()
   @Expose()
   product!: string | ObjectId;
@@ -14,7 +13,7 @@ class CarouselProductDTO {
   order!: number;
 }
 
-class HeaderDTO {
+export class HeaderDTO {
   @IsString()
   @Expose()
   title!: string;
@@ -25,7 +24,7 @@ class HeaderDTO {
   subtitle?: string;
 }
 
-class CarouselSectionDTO {
+export class CarouselSectionDTO {
   @IsString()
   @Expose()
   title!: string;
@@ -46,7 +45,7 @@ class CarouselSectionDTO {
   order!: number;
 }
 
-class CategorySectionDTO {
+export class CategorySectionDTO {
   @IsString()
   @Expose()
   title!: string;
@@ -85,6 +84,8 @@ export class LandingToCreate {
   isMain?: boolean;
 }
 
+
+
 export class LandingToModify {
   @ValidateNested()
   @Type(() => HeaderDTO)
@@ -104,49 +105,4 @@ export class LandingToModify {
   @IsBoolean()
   @Expose()
   isMain!: boolean;
-}
-
-export class LandingPresenter {
-  @Expose()
-  id!: string;
-
-  @Expose()
-  @ValidateNested()
-  @Type(() => HeaderDTO)
-  header!: HeaderDTO;
-
-  @Expose()
-  @ValidateNested()
-  @Type(() => CarouselSectionPresenter)
-  carouselSection?: CarouselSectionPresenter;
-
-  @Expose()
-  @ValidateNested()
-  @Type(() => CategorySectionDTO)
-  categorySection?: CategorySectionDTO;
-}
-
-class CarouselSectionPresenter {
-  @Expose()
-  title!: string;
-
-  @Expose()
-  description?: string;
-
-  @Expose()
-  @ValidateNested({ each: true })
-  @Type(() => ProductsPresenter)
-  products!: ProductsPresenter[];
-
-  @Expose()
-  order!: number;
-}
-
-class ProductsPresenter {
-  @Expose()
-  @Type(() => ProductPresenter)
-  product!: ProductPresenter;
-
-  @Expose()
-  order!: number;
 }
