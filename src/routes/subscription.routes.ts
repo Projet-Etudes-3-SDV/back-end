@@ -43,6 +43,34 @@ const subscriptionController = new SubscriptionController();
  */
 router.post("/cancel/:subscriptionId", checkJWT, (req, res, next) => subscriptionController.cancelSubscription(req as EncodedRequest, res, next));
 
+/**
+ * @swagger
+ * /api/subscriptions/admin/cancel/:subscriptionId:
+ *   post:
+ *     summary: Admin cancel a subscription
+ *     tags: [Subscription]
+ *     parameters:
+ *       - in: path
+ *         name: subscriptionId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Subscription ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Subscription cancelled by admin
+ *       400:
+ *         description: Invalid input
+ */
 router.post("/admin/cancel/:subscriptionId", checkJWT, (req, res, next) => checkRole(req as EncodedRequest, res, next), (req, res, next) => subscriptionController.adminCancelSubscription(req as EncodedRequest, res, next));
 
 /**
