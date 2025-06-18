@@ -8,6 +8,7 @@ import { OrderStatus } from '../models/order.model';
 import { ProductService } from '../services/product.service';
 import { AppError } from '../utils/AppError';
 import { CartStatus } from '../models/cart.model';
+import { InvoiceService } from '../services/invoice.service';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2025-02-24.acacia',
@@ -17,6 +18,7 @@ const userService = new UserService()
 const cartService = new CartService()
 const orderService = new OrderService()
 const productService = new ProductService()
+const invoiceService = new InvoiceService();
 
 export const createCheckoutSession = async (req: EncodedRequest, res: Response, next: NextFunction) => {
   try {
@@ -97,7 +99,7 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       sessionUrl = session.url ?? '';
     }
     
-    await cartService.updateCartStatus(cart.id, CartStatus.PENDING);
+    await cartService.updateCartStatus(user.id, CartStatus.PENDING);
 
     res.json({ url: sessionUrl });
 
@@ -136,7 +138,7 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
         }
 
         await orderService.createOrder({
-          user: user._id,
+          user: user._id || '',
           total: total,
           status: OrderStatus.PENDING,
           sessionId: user.paymentSessionId,
@@ -186,8 +188,9 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
           await cartService.validateCart(user.id);
 
           if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID);
+          
           await userService.updateUserPaymentSessionId(user.id, '');
-
+          await invoiceService.generateAndSendInvoice(user.id, session.subscription as string);
         } catch (err) {
           console.error('❌ Erreur webhook Stripe :', err);
         }

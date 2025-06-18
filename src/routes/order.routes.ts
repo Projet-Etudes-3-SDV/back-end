@@ -154,7 +154,7 @@ router.get("/me", checkJWT, (req, res, next) => orderController.getOrdersByUser(
  *       404:
  *         description: Commande non trouvée
  */
-router.get("/:id", checkJWT, (req, res, next) => orderController.getOrder(req, res, next));
+router.get("/:id", checkJWT, (req, res, next) => orderController.getOrder(req as EncodedRequest, res, next));
 
 /**
  * @swagger
@@ -180,7 +180,7 @@ router.get("/:id", checkJWT, (req, res, next) => orderController.getOrder(req, r
  *       404:
  *         description: Commande non trouvée
  */
-router.get("/by-session/:sessionId", checkJWT, (req, res, next) => orderController.getOrderBySession(req, res, next));
+router.get("/by-session/:sessionId", checkJWT, (req, res, next) => orderController.getOrderBySession(req as EncodedRequest, res, next));
 
 
 /**

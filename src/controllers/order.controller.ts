@@ -32,9 +32,9 @@ export class OrderController {
     }
   }
 
-  async getOrder(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getOrder(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const order = await this.orderService.getOrder(req.params.id);
+      const order = await this.orderService.getOrder(req.params.id, req.decoded.user.id);
       const orderPresenter = plainToClass(OrderPresenter, order, { excludeExtraneousValues: true });
       res.status(200).json(orderPresenter);
     } catch (error) {
@@ -42,9 +42,9 @@ export class OrderController {
     }
   }
 
-  async getOrderBySession(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getOrderBySession(req: EncodedRequest, res: Response, next: NextFunction): Promise<void> {
     try {
-      const order = await this.orderService.getOrderBySession(req.params.sessionId);
+      const order = await this.orderService.getOrderBySession(req.params.sessionId, req.decoded.user.id);
       const orderPresenter = plainToClass(OrderPresenter, order, { excludeExtraneousValues: true });
       res.status(200).json(orderPresenter);
     } catch (error) {

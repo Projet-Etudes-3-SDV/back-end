@@ -40,6 +40,7 @@ export interface IUser extends Document {
 }
 
 export class UserWithSubscriptions {
+  _id?: string;
   id: string;
   lastName: string;
   firstName: string;
@@ -59,8 +60,10 @@ export class UserWithSubscriptions {
   authCode?: string;
   authCodeExpires?: Date;
   subscriptions?: IUserSubscription[];
+  stripeCustomerId?: string;
 
   constructor(user: IUser, subscriptions?: IUserSubscription[]) {
+    this._id = user._id;
     this.id = user.id;
     this.lastName = user.lastName;
     this.firstName = user.firstName;
@@ -80,6 +83,7 @@ export class UserWithSubscriptions {
     this.authCode = user.authCode;
     this.authCodeExpires = user.authCodeExpires;
     this.subscriptions = subscriptions || [];
+    this.stripeCustomerId = user.stripeCustomerId;
   }
 }
 

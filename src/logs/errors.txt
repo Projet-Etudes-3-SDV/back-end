@@ -3072,4 +3072,74 @@ Not connected - 10.111.9.92
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:59:13.016Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:59:29.520Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T10:01:12.065Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T10:01:26.661Z 
+    - POST /api/users/register 
+    - 409 
+    - Un utilisateur avec cet email existe déjà
+    - USER_ALREADY_EXISTS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T10:01:32.241Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T10:01:39.043Z 
+    - POST /api/users/register 
+    - 409 
+    - Un utilisateur avec cet email existe déjà
+    - USER_ALREADY_EXISTS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T10:02:50.757Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    99a3d652-7629-47f7-9642-c0144424f613 - 127.0.0.1 
+    - 2025-06-18T10:52:24.571Z 
+    - POST /api/payment/checkout 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    99a3d652-7629-47f7-9642-c0144424f613 - 127.0.0.1 
+    - 2025-06-18T10:52:49.266Z 
+    - POST /api/payment/checkout 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
+    99a3d652-7629-47f7-9642-c0144424f613 - 127.0.0.1 
+    - 2025-06-18T10:52:59.256Z 
+    - POST /api/payment/checkout 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
     

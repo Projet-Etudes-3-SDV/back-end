@@ -115,7 +115,7 @@ export class UserService {
     if (!updatedUser) {
       throw new UserNotFound();
     }
-    
+
     return updatedUser;
   }
 
@@ -139,6 +139,7 @@ export class UserService {
     if (!user) {
       throw new UserNotFound()
     }
+    
     if (user.stripeCustomerId) {
       const userWithSubscriptions: UserWithSubscriptions = new UserWithSubscriptions(user, await this.subscriptionService.getUserSubscription(user.stripeCustomerId));
       return userWithSubscriptions;
@@ -213,13 +214,27 @@ export class UserService {
     return user;
   }
 
-  async getUserBy(userData: AdminSearchUserCriteria): Promise<IUser> {
+  async getUserBy(userData: AdminSearchUserCriteria): Promise<UserWithSubscriptions> {
     const user = await this.userRepository.findOneBy(userData);
     if (!user) {
       throw new UserNotFound();
     }
 
-    return user;
+    let subscriptions: IUserSubscription[] = [];
+
+    if (user.stripeCustomerId) {
+      try {
+        subscriptions = await this.subscriptionService.getUserSubscription(user.stripeCustomerId);
+      } catch (error) {
+        console.error(`Erreur lors de la récupération des abonnements pour l'utilisateur ${user.id}:`, error);
+        subscriptions = [];
+      }
+    }
+
+    const userWithSubscriptions: UserWithSubscriptions = new UserWithSubscriptions(user, subscriptions);
+
+
+    return userWithSubscriptions;
   }
 
   async deleteUser(_id: string): Promise<void> {

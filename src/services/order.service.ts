@@ -32,24 +32,38 @@ export class OrderService {
   }
 
   async createOrder(orderData: OrderToCreate): Promise<IOrder> {
+    const existingOrder = await this.orderRepository.findOneBy({ sessionId: orderData.sessionId });
+    if (existingOrder) {
+      return existingOrder;
+    }
     return await this.orderRepository.create(orderData);
   }
 
-  async getOrder(id: string): Promise<OrderWithPricedProducts> {
+  async getOrder(id: string, userId: string): Promise<OrderWithPricedProducts> {
     const order = await this.orderRepository.findById(id);
     if (!order) {
       throw new OrderNotFound();
     }
+
+    if (order.user.id !== userId) {
+      throw new OrderNotFound();
+    }
+
     const products = await this.getProductsForOrder(order);
     return OrderPricedFactory.create(order, products);
   }
 
 
-  async getOrderBySession(id: string): Promise<OrderWithPricedProducts> {
+  async getOrderBySession(id: string, userId: string): Promise<OrderWithPricedProducts> {
     const order = await this.orderRepository.findOneBy({ sessionId: id });
     if (!order) {
       throw new OrderNotFound();
     }
+
+    if (order.user.id !== userId) {
+      throw new OrderNotFound();
+    }
+
     const products = await this.getProductsForOrder(order);
     return OrderPricedFactory.create(order, products);
   }
