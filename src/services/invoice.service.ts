@@ -46,7 +46,6 @@ export class InvoiceService {
   }
 
   private initializeHelpers(): void {
-    // Helper pour formater les dates
     Handlebars.registerHelper('formatDate', (date: Date) => {
       return new Intl.DateTimeFormat('fr-FR', {
         year: 'numeric',
@@ -54,8 +53,6 @@ export class InvoiceService {
         day: '2-digit'
       }).format(date);
     });
-
-    // Helper pour formater les montants
     Handlebars.registerHelper('formatCurrency', (amount: number, currency: string = 'EUR') => {
       return new Intl.NumberFormat('fr-FR', {
         style: 'currency',
@@ -78,8 +75,6 @@ export class InvoiceService {
 
   private calculateAmounts(subscription: IUserSubscription, tvaRate: number = 20): IInvoiceCalculations {
     let baseAmount = subscription.price;
-
-    // Appliquer le coupon si présent
     if (subscription.coupon) {
       if (subscription.coupon.reductionType === 'percentage') {
         baseAmount = baseAmount * (1 - subscription.coupon.reduction / 100);
@@ -120,8 +115,6 @@ export class InvoiceService {
       <div class="col">${subscription.price.toFixed(2)} €</div>
       <div class="col">${subscription.price.toFixed(2)} €</div>
     </div>`;
-
-    // Ajouter la ligne de réduction si un coupon est appliqué
     if (subscription.coupon) {
       const reductionAmount = subscription.coupon.reductionType === 'percentage'
         ? subscription.price * (subscription.coupon.reduction / 100)
@@ -146,11 +139,8 @@ export class InvoiceService {
   public async generateInvoiceHTML(invoiceData: IInvoiceData): Promise<string> {
     try {
       const template = this.loadTemplate();
-
-      // Format dates for display
       const dateFormatter = (date: Date | undefined) =>
         date ? new Intl.DateTimeFormat('fr-FR').format(date) : '';
-      // Calculate amounts
       const calculations = this.calculateAmounts(invoiceData.subscription,  invoiceData.tvaRate);
       const invoiceDataWithFormattedDatesAndPrices = {
         ...invoiceData,
@@ -191,15 +181,11 @@ export class InvoiceService {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const seq = String(sequence || Math.floor(Math.random() * 9999) + 1).padStart(4, '0');
-
-    // Format: FACT-YYYY-MM-XXXX (ex: FACT-2024-03-0001)
     return `FACT-${year}-${month}-${seq}`;
   }
 
   public validateInvoiceData(invoiceData: IInvoiceData): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
-
-    // Vérifications obligatoires
     if (!invoiceData.invoiceNumber?.trim()) {
       errors.push('Le numéro de facture est obligatoire');
     }
@@ -223,8 +209,6 @@ export class InvoiceService {
         errors.push('Le nom de l\'abonnement est obligatoire');
       }
     }
-
-    // Vérification du taux de TVA
     if (invoiceData.tvaRate !== undefined && (invoiceData.tvaRate < 0 || invoiceData.tvaRate > 100)) {
       errors.push('Le taux de TVA doit être compris entre 0 et 100');
     }
@@ -249,7 +233,6 @@ export class InvoiceService {
         throw new SubscriptionNotFound()
       }
 
-      // 1. Préparer les données de la facture
       const clientInfo: IClientInfo = {
         name: `${user.firstName} ${user.lastName}`,
         email: user.email,
@@ -265,19 +248,12 @@ export class InvoiceService {
         generateDate: new Date()
       };
 
-      // 2. Valider les données
       const validation = this.validateInvoiceData(invoiceData);
       if (!validation.isValid) {
         throw new Error(`Données de facture invalides: ${validation.errors.join(', ')}`);
       }
-
-      // 3. Générer la facture HTML
       const invoiceResult = await this.generateInvoice(invoiceData);
-
-      // 4. Sauvegarder la facture (optionnel)
       const pdfFilePath = await this.saveInvoiceToStorage(user.id, invoiceData, invoiceResult.html);
-
-      // 5. Envoyer par email
       await this.sendInvoiceByEmail(user.email, invoiceResult, invoiceData, pdfFilePath);
 
 
@@ -340,8 +316,6 @@ export class InvoiceService {
     const date = new Date();
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
-
-    // Create directory for storing the invoice
     const invoiceDir = path.join(
       process.cwd(),
       'storage',
@@ -353,11 +327,9 @@ export class InvoiceService {
 
     await fs.mkdir(invoiceDir, { recursive: true });
 
-    // Set the file path for the PDF
     const pdfFilePath = path.join(invoiceDir, `${invoiceData.invoiceNumber}.pdf`);
-
-    // Launch Puppeteer to convert the HTML to a PDF
     const browser = await puppeteer.launch();
+
     const page = await browser.newPage();
     await page.setContent(html);
     await page.pdf({ path: pdfFilePath, format: 'A4' });

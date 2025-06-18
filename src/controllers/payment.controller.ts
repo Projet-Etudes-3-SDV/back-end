@@ -81,6 +81,11 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
         allow_promotion_codes: true,
         subscription_data: {
           trial_period_days: 14,
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: 'cancel',
+            },
+          },
         },
       });
       sessionUrl = session.url ?? '';

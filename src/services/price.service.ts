@@ -1,15 +1,11 @@
 import Stripe from "stripe";
 import { ProductToCreate } from "../types/requests/product.requests";
-
-// Interface pour abstraire les opérations de pricing Stripe
 export interface IPriceService {
   createProductWithPrices(productData: ProductToCreate): Promise<{ stripeProductId: string; stripePriceId: string; stripePriceIdYearly: string }>;
   getPricesForProduct(stripeProductId: string): Promise<{ monthlyPrice: number; yearlyPrice: number; freeTrialDays?: number }>;
   updateProductInfo(stripeProductId: string, name?: string, description?: string, active?: boolean): Promise<boolean>;
   createPrice(stripeProductId: string, amount: number, interval: 'month' | 'year'): Promise<string>;
 }
-
-// Classe dédiée aux opérations de pricing Stripe
 export class StripePriceService implements IPriceService {
   constructor(private stripe: Stripe) { }
 

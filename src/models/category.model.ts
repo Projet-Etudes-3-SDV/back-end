@@ -1,7 +1,6 @@
 import mongoose, { Schema, type Document } from "mongoose"
 import { v4 as uuidv4 } from "uuid"
 
-// Category model
 export interface ICategory extends Document {
   id: string;
   name: string;

@@ -118,9 +118,6 @@ export class LandingService {
     await this.verifyLandingExists(id);
     return await this.landingRepository.delete(id);
   }
-
-  // ------------ UTILITY FUNCTIONS ------------
-
   private async verifyProductsExist(productIds: (string | ObjectId)[]): Promise<LandingIDs[]> {
     const existingProducts = await Product.find({ id: { $in: productIds } });
     if (existingProducts.length !== productIds.length) {
@@ -166,8 +163,6 @@ export class LandingService {
         if (!product) {
           throw new AppError("Product not found in carousel", 404, [], "CAROUSEL_PRODUCT_NOT_FOUND");
         }
-
-        // Créer le ProductPriced avec les prix depuis Stripe
         const productPriced = await this.createProductPricedWithPrices(product);
 
         const pricedCarouselProduct: PricedCarouselProduct = {
@@ -178,8 +173,6 @@ export class LandingService {
         return pricedCarouselProduct;
       })
     );
-
-    // Trier les produits par ordre
     pricedProducts.sort((a, b) => a.order - b.order);
 
     return new LandingWithPricedProducts(landing, pricedProducts);
@@ -194,7 +187,6 @@ export class LandingService {
       const { monthlyPrice, yearlyPrice, freeTrialDays } = await this.priceService.getPricesForProduct(product.stripeProductId);
       return new ProductPriced(product, monthlyPrice, yearlyPrice, freeTrialDays);
     } catch (error) {
-      // En cas d'erreur avec Stripe, retourner le produit avec des prix à 0
       console.error(`Error fetching prices for product ${product.id}:`, error);
       return new ProductPriced(product, 0, 0);
     }

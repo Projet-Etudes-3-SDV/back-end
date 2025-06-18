@@ -238,7 +238,6 @@ export class CartService {
       await this.productRepository.update(product.id, product);
     }
 
-    // Clear the cart after validation
     cart.products = [];
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);

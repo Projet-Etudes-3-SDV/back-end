@@ -157,7 +157,6 @@ export class UserService {
         }
       }
 
-      // Fusionner correctement les données utilisateur avec les abonnements
       const userWithSubscriptions: UserWithSubscriptions = new UserWithSubscriptions(user, subscriptions);
 
       return userWithSubscriptions;
@@ -269,8 +268,6 @@ export class UserService {
     if (!user.resetPasswordToken) {
       throw new UserAuthCodeExpired()
     }
-
-    console.log(`User reset password token: ${user.resetPasswordToken}, to user: ${user.email}`);
 
     sendHtmlEmail(user.email, "Cyna: Réinitialisation du mot de passe", htmlTemplate({ resetPasswordToken: user.resetPasswordToken, path: join(process.cwd(), 'templates') }));
 

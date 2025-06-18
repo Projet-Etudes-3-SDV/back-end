@@ -13,12 +13,20 @@ export interface ILanding {
     header: { title: string; subtitle?: string };
     carouselSection?: { title: string; description?: string; products: ICarouselProduct[]; order: number };
     categorySection?: { title: string; description?: string; order: number };
+    alert?: { title: string; description?: string; type: AlertType; order: number };
     isMain: boolean;
 }
 
 export interface PricedCarouselProduct {
     product: ProductPriced;
     order: number;
+}
+
+export enum AlertType {
+    INFO = "info",
+    WARNING = "warning",
+    ERROR = "error",
+    SUCCESS = "success"
 }
 
 export class LandingWithPricedProducts {
@@ -61,6 +69,16 @@ const LandingSchema: Schema = new Schema<ILanding>(
         categorySection: {
             title: { type: String, required: true },
             description: { type: String, required: false },
+            order: { type: Number, required: true },
+        },
+        alert: {
+            title: { type: String, required: true },
+            description: { type: String, required: false },
+            type: {
+                type: String,
+                enum: Object.values(AlertType),
+                required: true,
+            },
             order: { type: Number, required: true },
         },
         isMain: {
