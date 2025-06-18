@@ -83,10 +83,10 @@ export class InvoiceService {
       }
     }
 
-    const totalHT = baseAmount;
+    const totalHT = subscription.status === 'trialing' ? 0 : baseAmount;
     const TVAAmount = totalHT * (tvaRate / 100);
     const totalTTC = totalHT + TVAAmount;
-    const totalReduction = baseAmount - subscription.price;
+    const totalReduction = subscription.status === 'trialing' ? 0 : baseAmount - subscription.price;
 
     return {
       totalHT: totalHT.toFixed(2),
@@ -142,6 +142,9 @@ export class InvoiceService {
       const dateFormatter = (date: Date | undefined) =>
         date ? new Intl.DateTimeFormat('fr-FR').format(date) : '';
       const calculations = this.calculateAmounts(invoiceData.subscription,  invoiceData.tvaRate);
+
+      invoiceData.subscription.name = invoiceData.subscription.status === "trialing" ? "Période d'essai de " + invoiceData.subscription.name : invoiceData.subscription.name
+
       const invoiceDataWithFormattedDatesAndPrices = {
         ...invoiceData,
         startDateFormatted: dateFormatter(invoiceData.subscription.startDate),
@@ -149,7 +152,7 @@ export class InvoiceService {
         generateDateFormatted: dateFormatter(invoiceData.generateDate),
         total: calculations.totalHT,
         reduction: calculations.totalReduction,
-        basePrice: invoiceData.subscription.price.toFixed(2),
+        basePrice: invoiceData.subscription.status === "trialing" ? 0 : invoiceData.subscription.price.toFixed(2),
       };
       
 

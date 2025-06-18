@@ -3142,4 +3142,11 @@ Not connected - 10.111.9.92
     - Utilisateur non trouvé
     - USER_NOT_FOUND
 
+    c8175064-ad61-4dc0-a2ad-7d816ccfe579 - 127.0.0.1 
+    - 2025-06-18T11:29:22.690Z 
+    - GET /api/invoices/sub_1RYjuTEPd59k1bJgcNqLfyGM 
+    - 404 
+    - Utilisateur non trouvé
+    - USER_NOT_FOUND
+
     
