@@ -38,5 +38,5 @@ export class OrderPresenter {
   orderDate!: Date;
 
   @Expose()
-  sessionId?: string;
+  subscriptionId?: string;
 }

@@ -119,12 +119,15 @@ export class OrderService {
       throw new OrderNotFound();
     }
     order.status = status;
-
+    console.log('subscriptionId inside of update:', subscriptionId);
     if (subscriptionId) {
       order.subscriptionId = subscriptionId;
     }
-    
-    return await this.orderRepository.update(order.id, order);
+    console.log('Before update:', order);
+
+    const orderUpdated = await this.orderRepository.update(order.id, order);
+    console.log('After update:', orderUpdated);  
+    return orderUpdated;
   }
 
   async getProductsForOrder(order: IOrder): Promise<{ product: ProductPriced; plan: SubscriptionPlan }[]> {
