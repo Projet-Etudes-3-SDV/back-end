@@ -36,6 +36,7 @@ export class LandingWithPricedProducts {
     carouselSection: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
     categorySection: { title: string; description?: string; order: number; categories: ICategory[] };
     isMain: boolean;
+    alert?: { title: string; description?: string; type: AlertType; order: number };
 
     constructor(landing: ILanding, products: PricedCarouselProduct[], categories: ICategory[] = []) {
         this.id = landing.id;
@@ -49,6 +50,7 @@ export class LandingWithPricedProducts {
             categories
         };
         this.isMain = landing.isMain;
+        this.alert = landing.alert ? { ...landing.alert } : undefined;
     }
 }
 
@@ -84,6 +86,7 @@ const LandingSchema: Schema = new Schema<ILanding>(
                 required: true,
             },
             order: { type: Number, required: true },
+            required: false,
         },
         isMain: {
             type: Boolean,
