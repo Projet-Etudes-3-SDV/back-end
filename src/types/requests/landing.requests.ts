@@ -102,7 +102,7 @@ export class LandingToCreate {
   @Type(() => AlertSectionDTO)
   @IsOptional()
   @Expose()
-  alertSection?: AlertSectionDTO;
+  alert?: AlertSectionDTO;
 
   @IsBoolean()
   @IsOptional()

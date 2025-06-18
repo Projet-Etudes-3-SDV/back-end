@@ -98,7 +98,7 @@ const UserSchema: Schema = new Schema(
     registrationDate: { type: Date, default: Date.now },
     lastLogin: { type: Date },
     cart: { type: Schema.Types.ObjectId, ref: "Cart", default: null },
-    resetPasswordToken: { type: String, default: null, unique: true },
+    resetPasswordToken: { type: String, default: null, unique: true, sparse: true },
     resetPasswordExpires: { type: Date, default: null },
     authToken: { type: String, default: null, unique: true },
     isValidated: { type: Boolean, default: false },

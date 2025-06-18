@@ -26,7 +26,7 @@ export class LandingService {
   }
 
   async createLanding(data: LandingToCreate): Promise<ILanding> {
-    if (data.carouselSection?.products && data.carouselSection.products.length > 0) {
+    if (data.carouselSection.products.length > 0) {
       const products = data.carouselSection.products.map((product) => product.product);
       const productIds = await this.verifyProductsExist(products);
 
@@ -38,10 +38,11 @@ export class LandingService {
       await this.verifyUniqueProductOrder(data.carouselSection.products);
     }
     if (
-      data.carouselSection?.order !== undefined &&
-      data.categorySection?.order !== undefined
+      data.carouselSection.order !== undefined &&
+      data.categorySection.order !== undefined && 
+      data.alert?.order !== undefined
     ) {
-      await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order);
+      await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order, data.alert?.order);
     }
 
     if (data.isMain) {
@@ -51,6 +52,11 @@ export class LandingService {
       }
       existingMainLanding.isMain = false;
       await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
+    } else if (data.isMain === false) {
+      const existingMainLanding = await this.landingRepository.findMainLanding();
+      if (!existingMainLanding) {
+        data.isMain = true;
+      }
     }
 
     return await this.landingRepository.create(data);
@@ -153,9 +159,12 @@ export class LandingService {
     }
   }
 
-  private async verifySectionOrderUniqueness(carouselOrder: number, categoryOrder: number): Promise<void> {
+  private async verifySectionOrderUniqueness(carouselOrder: number, categoryOrder: number, alertOrder?: number): Promise<void> {
     if (carouselOrder === categoryOrder) {
       throw new AppError("Carousel section order and category section order must be unique", 400, [], "DUPLICATE_SECTION_ORDER");
+    }
+    if (alertOrder !== undefined && (carouselOrder === alertOrder || categoryOrder === alertOrder)) {
+      throw new AppError("Section order must be unique across all sections", 400, [], "DUPLICATE_SECTION_ORDER");
     }
   }
 

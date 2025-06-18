@@ -20,7 +20,6 @@ const productService = new ProductService()
 export const createCheckoutSession = async (req: EncodedRequest, res: Response, next: NextFunction) => {
   try {
     const cart = await cartService.getCart(req.decoded.user.id);
-    let total = 0
     const lineItems = []
     let isMonthly = false
     let isYearly = false
@@ -37,11 +36,9 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       if (product.plan === 'monthly' && productData.stripePriceId) {
         isMonthly = true
         stripePriceId = productData.stripePriceId;
-        total += productData.monthlyPrice;
       } else if (product.plan === 'yearly' && productData.stripePriceIdYearly) {
         isYearly = true
         stripePriceId = productData.stripePriceIdYearly;
-        total += productData.yearlyPrice;
       } else {
         throw new Error(`Price plan mismatch for product ${product.product.name}`);
       }
@@ -58,21 +55,10 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
     const sessionId = `session_${Date.now()}_${req.decoded.user.id}`;
     const updatedUser = await userService.updateUserPaymentSessionId(req.decoded.user.id, sessionId);
 
-    const order = await orderService.createOrder({
-      user: updatedUser._id,
-      total: total,
-      status: OrderStatus.PENDING,
-      sessionId: sessionId,
-      products: cart.products.map(product => ({
-        product: product.product._id,
-        plan: product.plan,
-      })),
-    });
-
     let sessionUrl = '';
     if (!user.stripeCustomerId){
       const session = await stripe.checkout.sessions.create({
-        success_url: `http://localhost:8100/checkout-success/${order.id}`,
+        success_url: `http://localhost:8100/checkout-success/${sessionId}`,
         cancel_url: `http://localhost:8100/checkout-failure`,
         line_items: lineItems,
         mode: 'subscription',
@@ -87,17 +73,33 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
             },
           },
         },
+        metadata: {
+          userId: updatedUser.id,
+          sessionId: sessionId,
+        },
       });
       sessionUrl = session.url ?? '';
     } else {
       const session = await stripe.checkout.sessions.create({
-        success_url: `http://localhost:8100/checkout-success/${order.id}`,
+        success_url: `http://localhost:8100/checkout-success/${sessionId}`,
         cancel_url: `http://localhost:8100/checkout-failure`,
         line_items: lineItems,
         mode: 'subscription',
         payment_method_types: ['card'],
         customer: user.stripeCustomerId,
         allow_promotion_codes: true,
+        subscription_data: {
+          trial_period_days: 14,
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: 'cancel',
+            },
+          },
+        },
+        metadata: {
+          userId: updatedUser.id,
+          sessionId: sessionId,
+        },
       });
       sessionUrl = session.url ?? '';
     }
@@ -117,6 +119,37 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
 
     switch (event.type) {
       case 'checkout.session.completed': {
+        const userId = session.metadata?.userId || '';
+        console.log('✅ Checkout session completed for user:', session.metadata);
+        const user = await userService.getUserBy({ id: userId, page: 1, limit: 1 });
+        const cart = await cartService.getCart(user.id);
+        let total = 0;
+        for (const product of cart.products) {
+          const productData = await productService.getProduct(product.product.id);
+
+          if (!productData || !productData.stripePriceId) {
+            throw new Error(`Stripe price not found for product ${product.product.name}`);
+          }
+
+          if (product.plan === 'monthly' && productData.stripePriceId) {
+            total += productData.monthlyPrice;
+          } else if (product.plan === 'yearly' && productData.stripePriceIdYearly) {
+            total += productData.yearlyPrice;
+          } else {
+            throw new Error(`Price plan mismatch for product ${product.product.name}`);
+          }
+        }
+
+        await orderService.createOrder({
+          user: user._id,
+          total: total,
+          status: OrderStatus.PENDING,
+          sessionId: user.paymentSessionId,
+          products: cart.products.map(product => ({
+            product: product.product._id,
+            plan: product.plan,
+          })),
+        });
         break;
       }
 
@@ -156,6 +189,7 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
           console.log('✅ Payment Intent réussi pour l\'utilisateur:', user.id, user.paymentSessionId);
 
           await cartService.validateCart(user.id);
+
           if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID);
           await userService.updateUserPaymentSessionId(user.id, '');
 
@@ -168,8 +202,9 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
       case 'payment_intent.payment_failed': {
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
         console.log('❌ Payment Intent échoué:', paymentIntent.id);
-
-        await orderService.updateOrderStatusBySessionId(session.id, OrderStatus.CANCELLED)
+        
+        const sessionId = session.metadata?.sessionId || '';
+        await orderService.updateOrderStatusBySessionId(sessionId, OrderStatus.CANCELLED)
         break;
       }
 

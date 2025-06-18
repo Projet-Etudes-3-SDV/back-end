@@ -44,6 +44,16 @@ export class OrderService {
     return OrderPricedFactory.create(order, products);
   }
 
+
+  async getOrderBySession(id: string): Promise<OrderWithPricedProducts> {
+    const order = await this.orderRepository.findOneBy({ sessionId: id });
+    if (!order) {
+      throw new OrderNotFound();
+    }
+    const products = await this.getProductsForOrder(order);
+    return OrderPricedFactory.create(order, products);
+  }
+
   async getOrders(searchCriteria: SearchOrderCriteria, page: number, limit: number, sortCriteria: SortOrderCriteria): Promise<{ orders: OrderWithPricedProducts[]; total: number }> {
     if (searchCriteria.user) {
       const user = await this.userRepository.findOneBy({ id: searchCriteria.user });

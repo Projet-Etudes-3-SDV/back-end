@@ -159,6 +159,33 @@ router.get("/:id", checkJWT, (req, res, next) => orderController.getOrder(req, r
 /**
  * @swagger
  * /orders/{id}:
+ *   get:
+ *     summary: Récupérer une commande par ID de session
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: sessionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Commande trouvée
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/OrderPresenter'
+ *       404:
+ *         description: Commande non trouvée
+ */
+router.get("/by-session/:sessionId", checkJWT, (req, res, next) => orderController.getOrderBySession(req, res, next));
+
+
+/**
+ * @swagger
+ * /orders/{id}:
  *   put:
  *     summary: Modifier une commande existante
  *     tags: [Orders]

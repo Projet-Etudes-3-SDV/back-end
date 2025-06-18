@@ -6524,3 +6524,240 @@ Not connected
 Not connected 
   - 2025-06-18T07:52:48.805Z 
   - GET /api/landings
+Not connected 
+  - 2025-06-18T08:32:44.102Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:32:44.190Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:32:44.267Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:33:25.705Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T08:34:26.214Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T08:37:14.434Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T08:37:39.322Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T08:40:25.034Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T08:40:32.524Z 
+  - POST /api/users/validate
+Not connected 
+  - 2025-06-18T08:40:32.675Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:40:53.359Z 
+  - POST /api/users/login
+Not connected 
+  - 2025-06-18T08:41:05.567Z 
+  - POST /api/users/validate-login
+Not connected 
+  - 2025-06-18T08:41:05.676Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:41:05.728Z 
+  - GET /api/orders/me
+Not connected 
+  - 2025-06-18T08:41:12.223Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:41:12.573Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-18T08:41:12.575Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-18T08:41:12.577Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-18T08:41:12.578Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-18T08:41:12.843Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:41:13.951Z 
+  - GET /api/uploads/1749825583260-44421380.svg
+Not connected 
+  - 2025-06-18T08:41:13.952Z 
+  - GET /api/uploads/1749665281848-55918368.svg
+Not connected 
+  - 2025-06-18T08:41:13.952Z 
+  - GET /api/uploads/1749671256810-279014885.svg
+Not connected 
+  - 2025-06-18T08:41:21.588Z 
+  - GET /api/products/350ff088-3758-4ea9-9250-3d529c53ba5d
+Not connected 
+  - 2025-06-18T08:41:24.138Z 
+  - POST /api/cart/add
+Not connected 
+  - 2025-06-18T08:41:25.925Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-18T08:41:27.899Z 
+  - POST /api/payment/checkout
+Not connected 
+  - 2025-06-18T08:41:52.653Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:41:53.385Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:41:53.401Z 
+  - GET /api/orders/session_1750236088621_e1bbd15e-b12a-4038-9fc1-3d63f5ad2f24
+Not connected 
+  - 2025-06-18T08:41:53.480Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:41:53.781Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:41:53.939Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:42:12.838Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-18T08:42:16.812Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:42:16.841Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:42:17.116Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:42:17.427Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:42:18.004Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-18T08:42:18.052Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:42:42.523Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:42:42.884Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-18T08:42:42.885Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-18T08:42:42.885Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-18T08:42:42.886Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-18T08:42:43.483Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:42:44.432Z 
+  - GET /api/uploads/1749825583260-44421380.svg
+Not connected 
+  - 2025-06-18T08:42:44.433Z 
+  - GET /api/uploads/1749665281848-55918368.svg
+Not connected 
+  - 2025-06-18T08:42:44.434Z 
+  - GET /api/uploads/1749671256810-279014885.svg
+Not connected 
+  - 2025-06-18T08:42:44.635Z 
+  - GET /api/products/d0a7e9b3-55a0-4ba0-bad3-658129d65f1e
+Not connected 
+  - 2025-06-18T08:42:46.532Z 
+  - POST /api/cart/add
+Not connected 
+  - 2025-06-18T08:42:51.602Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-18T08:42:52.670Z 
+  - POST /api/payment/checkout
+Not connected 
+  - 2025-06-18T08:43:00.639Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:00.664Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:00.722Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:09.157Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:09.760Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:09.916Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:10.013Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:10.141Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:10.625Z 
+  - POST /api/payment/webhook
+Not connected 
+  - 2025-06-18T08:43:11.391Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:43:12.047Z 
+  - GET /api/orders/session_1750236173435_e1bbd15e-b12a-4038-9fc1-3d63f5ad2f24
+Not connected 
+  - 2025-06-18T08:43:12.011Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:43:12.127Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:43:12.430Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:43:12.896Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T08:43:30.067Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T08:43:30.131Z 
+  - GET /api/uploads/1749659639977-528928810.svg
+Not connected 
+  - 2025-06-18T08:43:30.134Z 
+  - GET /api/uploads/1749659796072-999450474.svg
+Not connected 
+  - 2025-06-18T08:43:30.136Z 
+  - GET /api/uploads/1749659810664-55620249.svg
+Not connected 
+  - 2025-06-18T08:43:30.138Z 
+  - GET /api/uploads/1749653767150-931685412.svg
+Not connected 
+  - 2025-06-18T08:43:30.952Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T08:43:31.238Z 
+  - GET /api/uploads/1749665307467-208344435.svg
+Not connected 
+  - 2025-06-18T08:43:32.228Z 
+  - GET /api/products/d1f330e3-41d0-4e98-a1d3-373b43507046
+Not connected 
+  - 2025-06-18T08:43:33.155Z 
+  - POST /api/cart/add
+Not connected 
+  - 2025-06-18T08:43:35.315Z 
+  - GET /api/cart/me
+Not connected 
+  - 2025-06-18T08:43:36.384Z 
+  - POST /api/payment/checkout

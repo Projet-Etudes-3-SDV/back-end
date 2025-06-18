@@ -2848,4 +2848,60 @@ Not connected - 10.111.9.92
     - Cannot populate path `carouselSection.products.product.carouselSection.products.product.category` because it is not in your schema. Set the `strictPopulate` option to false to override.
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:32:44.143Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:33:25.962Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:34:26.327Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:37:14.591Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:37:39.557Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:40:32.677Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    e1bbd15e-b12a-4038-9fc1-3d63f5ad2f24 - 127.0.0.1 
+    - 2025-06-18T08:41:53.418Z 
+    - GET /api/orders/session_1750236088621_e1bbd15e-b12a-4038-9fc1-3d63f5ad2f24 
+    - 404 
+    - Commande non trouvée
+    - ORDER_NOT_FOUND
+
+    e1bbd15e-b12a-4038-9fc1-3d63f5ad2f24 - 127.0.0.1 
+    - 2025-06-18T08:43:12.069Z 
+    - GET /api/orders/session_1750236173435_e1bbd15e-b12a-4038-9fc1-3d63f5ad2f24 
+    - 404 
+    - Commande non trouvée
+    - ORDER_NOT_FOUND
+
     

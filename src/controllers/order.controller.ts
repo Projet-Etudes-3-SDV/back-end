@@ -42,6 +42,16 @@ export class OrderController {
     }
   }
 
+  async getOrderBySession(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const order = await this.orderService.getOrderBySession(req.params.sessionId);
+      const orderPresenter = plainToClass(OrderPresenter, order, { excludeExtraneousValues: true });
+      res.status(200).json(orderPresenter);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const searchOrderCriteria = plainToClass(SearchOrderCriteria, req.query);
