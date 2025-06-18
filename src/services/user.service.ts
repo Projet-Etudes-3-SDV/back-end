@@ -109,6 +109,8 @@ export class UserService {
     user.authCode = undefined;
     user.authCodeExpires = undefined;
 
+    user.lastLogin = new Date();
+
     return user;
   }
 

@@ -24,6 +24,9 @@ export class LiteUserPresenter {
   @Expose()
   @IsEnum(UserRole)
   role!: UserRole;
+
+  @Expose()
+  lastLogin?: Date;
 }
 
 export class UserPresenter extends LiteUserPresenter {
