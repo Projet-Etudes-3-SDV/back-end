@@ -45,13 +45,12 @@ export class LandingService {
       await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order, data.alert?.order);
     }
 
-    if (data.isMain) {
+    if (data.isMain === true) {
       const existingMainLanding = await this.landingRepository.findMainLanding();
-      if (!existingMainLanding) {
-        throw new MainLandingExists()
+      if (existingMainLanding) {
+        existingMainLanding.isMain = false;
+        await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
       }
-      existingMainLanding.isMain = false;
-      await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
     } else if (data.isMain === false) {
       const existingMainLanding = await this.landingRepository.findMainLanding();
       if (!existingMainLanding) {
