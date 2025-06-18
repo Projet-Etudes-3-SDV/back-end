@@ -3156,4 +3156,25 @@ Not connected - 10.111.9.92
     - L'utilisateur est déjà abonné à ce produit
     - ALREADY_SUBSCRIBED
 
+    99a3d652-7629-47f7-9642-c0144424f613 - 127.0.0.1 
+    - 2025-06-18T13:24:35.802Z 
+    - GET /api/invoices/undefined 
+    - 404 
+    - Abonnement non trouvé
+    - SUBSCRIPTION_NOT_FOUND
+
+    99a3d652-7629-47f7-9642-c0144424f613 - 127.0.0.1 
+    - 2025-06-18T13:24:49.386Z 
+    - GET /api/invoices/undefined 
+    - 404 
+    - Abonnement non trouvé
+    - SUBSCRIPTION_NOT_FOUND
+
+    99a3d652-7629-47f7-9642-c0144424f613 - 127.0.0.1 
+    - 2025-06-18T13:27:06.942Z 
+    - GET /api/invoices/undefined 
+    - 404 
+    - Abonnement non trouvé
+    - SUBSCRIPTION_NOT_FOUND
+
     

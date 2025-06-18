@@ -40,6 +40,7 @@ export class OrderWithPricedProducts {
     this.sessionId = order.sessionId;
     this.orderDate = order.orderDate;
     this.products = products;
+    this.subscriptionId = order.subscriptionId;
   }
 }
 
