@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import { IProduct } from "./product.model";
 import { v4 as uuidv4 } from "uuid";
 import { ProductPriced } from "../types/pojos/product-priced.pojo";
+import { ICategory } from "./category.model";
 
 export interface ICarouselProduct {
     product: IProduct["_id"];
@@ -11,8 +12,8 @@ export interface ICarouselProduct {
 export interface ILanding {
     id: string;
     header: { title: string; subtitle?: string };
-    carouselSection?: { title: string; description?: string; products: ICarouselProduct[]; order: number };
-    categorySection?: { title: string; description?: string; order: number };
+    carouselSection: { title: string; description?: string; products: ICarouselProduct[]; order: number };
+    categorySection: { title: string; description?: string; order: number };
     alert?: { title: string; description?: string; type: AlertType; order: number };
     isMain: boolean;
 }
@@ -32,18 +33,21 @@ export enum AlertType {
 export class LandingWithPricedProducts {
     id: string;
     header: { title: string; subtitle?: string };
-    carouselSection?: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
-    categorySection?: { title: string; description?: string; order: number };
+    carouselSection: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
+    categorySection: { title: string; description?: string; order: number; categories: ICategory[] };
     isMain: boolean;
 
-    constructor(landing: ILanding, products: PricedCarouselProduct[]) {
+    constructor(landing: ILanding, products: PricedCarouselProduct[], categories: ICategory[] = []) {
         this.id = landing.id;
         this.header = landing.header;
-        this.carouselSection = landing.carouselSection ? {
+        this.carouselSection =  {
             ...landing.carouselSection,
             products
-        } : undefined;
-        this.categorySection = landing.categorySection;
+        };
+        this.categorySection = {
+            ...landing.categorySection,
+            categories
+        };
         this.isMain = landing.isMain;
     }
 }
@@ -57,7 +61,7 @@ const LandingSchema: Schema = new Schema<ILanding>(
         },
         carouselSection: {
             title: { type: String, required: true },
-            description: { type: String, required: false },
+            description: { type: String, required: true },
             products: [
                 {
                     product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
@@ -68,7 +72,7 @@ const LandingSchema: Schema = new Schema<ILanding>(
         },
         categorySection: {
             title: { type: String, required: true },
-            description: { type: String, required: false },
+            description: { type: String, required: true },
             order: { type: Number, required: true },
         },
         alert: {

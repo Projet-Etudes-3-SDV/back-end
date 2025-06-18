@@ -234,7 +234,13 @@ export class CartService {
       if (!product) {
         throw new CartProductNotFound();
       }
-      product.monthlyPurchaseAmount = product.monthlyPurchaseAmount++ || 1;
+      
+      if (item.plan === SubscriptionPlan.MONTHLY) {
+        product.monthlyPurchaseAmount = product.monthlyPurchaseAmount++ || 1;
+      } else if (item.plan === SubscriptionPlan.YEARLY) {
+        product.yearlyPurchaseAmount = product.yearlyPurchaseAmount++ || 1;
+      }
+
       await this.productRepository.update(product.id, product);
     }
 

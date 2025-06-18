@@ -1,8 +1,29 @@
-import { ValidateNested } from "class-validator";
+import { IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
-import { CategorySectionDTO, HeaderDTO } from "../requests/landing.requests"
+import { HeaderDTO } from "../requests/landing.requests"
 import { ProductPresenter } from "./product.responses";
+import { CategoryPresenter } from "./category.responses";
+
+export class CategorySectionPresenter {
+  @IsString()
+  @Expose()
+  title!: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  description?: string;
+
+  @IsNumber()
+  @Expose()
+  order!: number;
+
+  @ValidateNested()
+  @Type(() => CategoryPresenter)
+  @Expose()
+  categories!: CategoryPresenter[];
+}
 
 export class LandingPresenter {
   @Expose()
@@ -20,8 +41,8 @@ export class LandingPresenter {
 
   @Expose()
   @ValidateNested()
-  @Type(() => CategorySectionDTO)
-  categorySection?: CategorySectionDTO;
+  @Type(() => CategorySectionPresenter)
+  categorySection?: CategorySectionPresenter;
 }
 
 class CarouselSectionPresenter {

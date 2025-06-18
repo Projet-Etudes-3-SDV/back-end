@@ -6518,3 +6518,9 @@ Not connected
 Not connected 
   - 2025-06-16T18:15:44.199Z 
   - GET /api/landings
+Not connected 
+  - 2025-06-18T07:50:25.115Z 
+  - GET /api/landings
+Not connected 
+  - 2025-06-18T07:52:48.805Z 
+  - GET /api/landings

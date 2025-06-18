@@ -2,6 +2,7 @@ import { IsString, IsOptional, IsArray, ValidateNested, IsNumber, IsBoolean } fr
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { ObjectId } from "mongoose";
+import { AlertType } from "../../models/landing.model";
 
 export class CarouselProductDTO {
   @IsString()
@@ -60,6 +61,25 @@ export class CategorySectionDTO {
   order!: number;
 }
 
+export class AlertSectionDTO {
+  @IsString()
+  @Expose()
+  title!: string;
+
+  @IsString()
+  @IsOptional()
+  @Expose()
+  description?: string;
+
+  @IsString()
+  @Expose()
+  type!: AlertType
+
+  @IsNumber()
+  @Expose()
+  order!: number;
+}
+
 export class LandingToCreate {
   @ValidateNested()
   @Type(() => HeaderDTO)
@@ -70,18 +90,24 @@ export class LandingToCreate {
   @Type(() => CarouselSectionDTO)
   @IsOptional()
   @Expose()
-  carouselSection?: CarouselSectionDTO;
+  carouselSection!: CarouselSectionDTO;
 
   @ValidateNested()
   @Type(() => CategorySectionDTO)
   @IsOptional()
   @Expose()
-  categorySection?: CategorySectionDTO;
+  categorySection!: CategorySectionDTO;
+
+  @ValidateNested()
+  @Type(() => AlertSectionDTO)
+  @IsOptional()
+  @Expose()
+  alertSection?: AlertSectionDTO;
 
   @IsBoolean()
   @IsOptional()
   @Expose()
-  isMain?: boolean;
+  isMain!: boolean;
 }
 
 
@@ -101,6 +127,12 @@ export class LandingToModify {
   @Type(() => CategorySectionDTO)
   @Expose()
   categorySection!: CategorySectionDTO;
+
+  @ValidateNested()
+  @Type(() => AlertSectionDTO)
+  @IsOptional()
+  @Expose()
+  alertSection?: AlertSectionDTO;
 
   @IsBoolean()
   @Expose()

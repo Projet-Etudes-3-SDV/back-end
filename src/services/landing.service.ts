@@ -8,14 +8,16 @@ import { MainLandingExists } from "../types/errors/landing.errors";
 import Stripe from "stripe";
 import { IPriceService, StripePriceService } from "./price.service";
 import { ProductPriced } from "../types/pojos/product-priced.pojo";
+import { CategoryRepository } from "../repositories/category.repository";
+import { ICategory } from "../models/category.model";
 
 export class LandingService {
   private landingRepository: LandingRepository;
   private priceService: IPriceService;
-
+  private categoryRepository: CategoryRepository;
   constructor() {
     this.landingRepository = new LandingRepository();
-
+    this.categoryRepository = new CategoryRepository();
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
       apiVersion: '2025-02-24.acacia',
     });
@@ -56,7 +58,10 @@ export class LandingService {
 
   async getLandingById(id: string): Promise<LandingWithPricedProducts | null> {
     const landing = await this.verifyLandingExists(id);
-    return await this.enrichLandingWithPrices(landing);
+
+    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
+
+    return await this.enrichLandingWithPrices(landing, categories);
   }
 
   async getMainLanding(): Promise<LandingWithPricedProducts | null> {
@@ -64,14 +69,16 @@ export class LandingService {
     if (!landing) {
       throw new AppError("Main landing not found", 404, [], "MAIN_LANDING_NOT_FOUND");
     }
-    return await this.enrichLandingWithPrices(landing);
+    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
+    return await this.enrichLandingWithPrices(landing, categories);
   }
 
   async getAllLandings(page: number, limit: number): Promise<{ landings: LandingWithPricedProducts[]; total: number }> {
     const { landings, total } = await this.landingRepository.findAll(page, limit);
+    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
 
     const enrichedLandings = await Promise.all(
-      landings.map(landing => this.enrichLandingWithPrices(landing))
+      landings.map(landing => this.enrichLandingWithPrices(landing, categories))
     );
 
     return { landings: enrichedLandings, total };
@@ -110,8 +117,8 @@ export class LandingService {
     if (!updatedLanding) {
       return null;
     }
-
-    return await this.enrichLandingWithPrices(updatedLanding);
+    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
+    return await this.enrichLandingWithPrices(updatedLanding, categories);
   }
 
   async deleteLanding(id: string): Promise<boolean> {
@@ -126,6 +133,9 @@ export class LandingService {
 
     return existingProducts.map((product) => ({ _id: product._id, id: product.id }));
   }
+
+
+  // ---------- UTILS ---------- \\
 
   private async verifyLandingExists(id: string): Promise<ILanding> {
     const landing = await this.landingRepository.findById(id);
@@ -149,12 +159,10 @@ export class LandingService {
     }
   }
 
-  /**
-   * Enrichit un landing avec les prix des produits du carousel
-   */
-  private async enrichLandingWithPrices(landing: ILanding): Promise<LandingWithPricedProducts> {
+
+  private async enrichLandingWithPrices(landing: ILanding, categories: ICategory[]): Promise<LandingWithPricedProducts> {
     if (!landing.carouselSection?.products || landing.carouselSection.products.length === 0) {
-      return new LandingWithPricedProducts(landing, []);
+      return new LandingWithPricedProducts(landing, [], categories);
     }
 
     const pricedProducts = await Promise.all(
@@ -175,7 +183,7 @@ export class LandingService {
     );
     pricedProducts.sort((a, b) => a.order - b.order);
 
-    return new LandingWithPricedProducts(landing, pricedProducts);
+    return new LandingWithPricedProducts(landing, pricedProducts, categories);
   }
 
   private async createProductPricedWithPrices(product: IProduct): Promise<ProductPriced> {
