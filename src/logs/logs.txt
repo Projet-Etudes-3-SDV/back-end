@@ -6854,3 +6854,45 @@ Not connected
 Not connected 
   - 2025-06-18T09:47:21.148Z 
   - POST /api/users/register
+Not connected 
+  - 2025-06-18T09:49:10.483Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T09:49:21.717Z 
+  - POST /api/users/validate
+Not connected 
+  - 2025-06-18T09:49:21.806Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:49:21.811Z 
+  - GET /api/products
+Not connected 
+  - 2025-06-18T09:49:22.121Z 
+  - GET /api/categories
+Not connected 
+  - 2025-06-18T09:49:29.188Z 
+  - POST /api/users/validate
+Not connected 
+  - 2025-06-18T09:49:29.306Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:49:45.156Z 
+  - POST /api/users/login
+Not connected 
+  - 2025-06-18T09:49:53.016Z 
+  - POST /api/users/validate-login
+Not connected 
+  - 2025-06-18T09:49:53.298Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:49:53.356Z 
+  - GET /api/orders/me
+Not connected 
+  - 2025-06-18T09:50:50.605Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T09:54:01.130Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:54:39.495Z 
+  - GET /api/users/me

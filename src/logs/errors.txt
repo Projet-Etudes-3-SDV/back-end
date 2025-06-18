@@ -3037,4 +3037,39 @@ Not connected - 10.111.9.92
     - E11000 duplicate key error collection: CynaPE.users index: authToken_1 dup key: { authToken: null }
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:49:21.733Z 
+    - POST /api/users/validate 
+    - 400 
+    - Le token de validation de l'utilisateur est invalide ou a expiré
+    - USER_VALIDATION_TOKEN_INVALID
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:49:21.807Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:49:29.307Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:54:01.131Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:54:39.495Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     

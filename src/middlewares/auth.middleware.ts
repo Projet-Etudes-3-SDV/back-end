@@ -17,7 +17,7 @@ export const checkRole = (req: EncodedRequest, res: Response, next: NextFunction
     return next(new AppError('User role not found', 403));
   }
 
-  if (decodedUser.user.role !== UserRole.ADMIN) {
+  if (decodedUser.user.role !== UserRole.ADMIN && decodedUser.user.role !== UserRole.SUPERADMIN) {
     return next(new AppError('Forbidden', 403));
   }
   next();
