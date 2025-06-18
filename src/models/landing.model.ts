@@ -9,11 +9,16 @@ export interface ICarouselProduct {
     order: number;
 }
 
+export interface ICarouselCategory {
+    category: ICategory["_id"];
+    order: number;
+}
+
 export interface ILanding {
     id: string;
     header: { title: string; subtitle?: string };
     carouselSection: { title: string; description?: string; products: ICarouselProduct[]; order: number };
-    categorySection: { title: string; description?: string; order: number };
+    categorySection: { title: string; description?: string; categories: ICarouselCategory[]; order: number };
     alert?: { title: string; description?: string; type: AlertType; order: number };
     isMain: boolean;
     createdAt?: Date;
@@ -36,13 +41,13 @@ export class LandingWithPricedProducts {
     id: string;
     header: { title: string; subtitle?: string };
     carouselSection: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
-    categorySection: { title: string; description?: string; order: number; categories: ICategory[] };
+    categorySection: { title: string; description?: string; categories: ICarouselCategory[]; order: number };
     isMain: boolean;
     alert?: { title: string; description?: string; type: AlertType; order: number };
     createdAt?: Date;
     updatedAt?: Date;
 
-    constructor(landing: ILanding, products: PricedCarouselProduct[], categories: ICategory[] = []) {
+    constructor(landing: ILanding, products: PricedCarouselProduct[]) {
         this.id = landing.id;
         this.header = landing.header;
         this.carouselSection =  {
@@ -51,7 +56,6 @@ export class LandingWithPricedProducts {
         };
         this.categorySection = {
             ...landing.categorySection,
-            categories
         };
         this.isMain = landing.isMain;
         this.alert = landing.alert ? { ...landing.alert } : undefined;
@@ -81,6 +85,12 @@ const LandingSchema: Schema = new Schema<ILanding>(
         categorySection: {
             title: { type: String, required: true },
             description: { type: String, required: false },
+            categories: [
+                {
+                    category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+                    order: { type: Number, required: true },
+                },
+            ],
             order: { type: Number, required: true },
         },
         alert: {

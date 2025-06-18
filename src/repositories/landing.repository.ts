@@ -15,8 +15,12 @@ export class LandingRepository {
         populate: {
           path: "category",
           model: "Category",
-        }
+        },
       },
+      {
+        path: "categorySection.categories.category",
+        model: "Category",
+      }
     ]);
   }
 
@@ -30,6 +34,10 @@ export class LandingRepository {
           model: "Category",
         }
       },
+      {
+        path: "categorySection.categories.category",
+        model: "Category",
+      }
     ]);
   }
 
@@ -45,6 +53,10 @@ export class LandingRepository {
             model: "Category",
           }
         },
+        {
+          path: "categorySection.categories.category",
+          model: "Category",
+        }
       ]),
       LandingSchema.countDocuments(),
     ]);
@@ -61,6 +73,10 @@ export class LandingRepository {
           model: "Category",
         }
       },
+      {
+        path: "categorySection.categories.category",
+        model: "Category",
+      }
     ]);
   }
 

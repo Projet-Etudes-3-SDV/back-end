@@ -14,6 +14,16 @@ export class CarouselProductDTO {
   order!: number;
 }
 
+export class CarouselCategoryDTO {
+  @IsString()
+  @Expose()
+  category!: string | ObjectId;
+
+  @IsNumber()
+  @Expose()
+  order!: number;
+}
+
 export class HeaderDTO {
   @IsString()
   @Expose()
@@ -59,6 +69,12 @@ export class CategorySectionDTO {
   @IsNumber()
   @Expose()
   order!: number;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CarouselCategoryDTO)
+  @Expose()
+  categories!: CarouselCategoryDTO[];
 }
 
 export class AlertSectionDTO {

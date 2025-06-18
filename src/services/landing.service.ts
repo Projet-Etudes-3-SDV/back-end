@@ -1,23 +1,21 @@
 import { LandingRepository } from "../repositories/landing.repository";
 import { ILanding, LandingWithPricedProducts, PricedCarouselProduct } from "../models/landing.model";
 import { LandingToCreate, LandingToModify } from "../types/requests/landing.requests";
-import Product, { IProduct } from "../models/product.model"; // Import the Product model
-import { AppError } from "../utils/AppError"; // Import AppError for error handling
+import Product, { IProduct } from "../models/product.model";
 import { ObjectId } from "mongoose";
-import { MainLandingExists } from "../types/errors/landing.errors";
+import { MainLandingExists, LandingNotFound, MainLandingNotFound, DuplicateProductOrder, DuplicateCategoryOrder, DuplicateSectionOrder, CarouselProductNotFound } from "../types/errors/landing.errors";
 import Stripe from "stripe";
 import { IPriceService, StripePriceService } from "./price.service";
 import { ProductPriced } from "../types/pojos/product-priced.pojo";
-import { CategoryRepository } from "../repositories/category.repository";
-import { ICategory } from "../models/category.model";
+import { ProductNotFound } from "../types/errors/product.errors";
+import { CategoryNotFound } from "../types/errors/category.errors";
+import Category from "../models/category.model";
 
 export class LandingService {
   private landingRepository: LandingRepository;
   private priceService: IPriceService;
-  private categoryRepository: CategoryRepository;
   constructor() {
     this.landingRepository = new LandingRepository();
-    this.categoryRepository = new CategoryRepository();
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
       apiVersion: '2025-02-24.acacia',
     });
@@ -36,6 +34,17 @@ export class LandingService {
       }));
 
       await this.verifyUniqueProductOrder(data.carouselSection.products);
+    }
+    if (data.categorySection.categories.length > 0) {
+      const categories = data.categorySection.categories.map((category) => category.category);
+      const categoryIds = await this.verifyCategoriesExist(categories);
+
+      data.categorySection.categories = data.categorySection.categories.map((category) => ({
+        category: categoryIds.find((c) => c.id === category.category)?._id || "",
+        order: category.order
+      }));
+
+      await this.verifyUniqueCategoriesOrder(data.categorySection.categories);
     }
     if (
       data.carouselSection.order !== undefined &&
@@ -64,26 +73,23 @@ export class LandingService {
   async getLandingById(id: string): Promise<LandingWithPricedProducts | null> {
     const landing = await this.verifyLandingExists(id);
 
-    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
 
-    return await this.enrichLandingWithPrices(landing, categories);
+    return await this.enrichLandingWithPrices(landing);
   }
 
   async getMainLanding(): Promise<LandingWithPricedProducts | null> {
     const landing = await this.landingRepository.findMainLanding();
     if (!landing) {
-      throw new AppError("Main landing not found", 404, [], "MAIN_LANDING_NOT_FOUND");
+      throw new MainLandingNotFound();
     }
-    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
-    return await this.enrichLandingWithPrices(landing, categories);
+    return await this.enrichLandingWithPrices(landing);
   }
 
   async getAllLandings(page: number, limit: number): Promise<{ landings: LandingWithPricedProducts[]; total: number }> {
     const { landings, total } = await this.landingRepository.findAll(page, limit);
-    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
 
     const enrichedLandings = await Promise.all(
-      landings.map(landing => this.enrichLandingWithPrices(landing, categories))
+      landings.map(landing => this.enrichLandingWithPrices(landing))
     );
 
     return { landings: enrichedLandings, total };
@@ -122,30 +128,39 @@ export class LandingService {
     if (!updatedLanding) {
       return null;
     }
-    const { categories } = await this.categoryRepository.findBy({}, 1, 5);
-    return await this.enrichLandingWithPrices(updatedLanding, categories);
+
+    return await this.enrichLandingWithPrices(updatedLanding);
   }
 
   async deleteLanding(id: string): Promise<boolean> {
     await this.verifyLandingExists(id);
     return await this.landingRepository.delete(id);
   }
+
+  // ---------- UTILS ---------- \\
+
   private async verifyProductsExist(productIds: (string | ObjectId)[]): Promise<LandingIDs[]> {
     const existingProducts = await Product.find({ id: { $in: productIds } });
     if (existingProducts.length !== productIds.length) {
-      throw new AppError("Some products do not exist", 400, [], "INVALID_PRODUCTS");
+      throw new ProductNotFound();
     }
 
     return existingProducts.map((product) => ({ _id: product._id, id: product.id }));
   }
 
+  private async verifyCategoriesExist(productIds: (string | ObjectId)[]): Promise<LandingIDs[]> {
+    const existingCategories = await Category.find({ id: { $in: productIds } });
+    if (existingCategories.length !== productIds.length) {
+      throw new CategoryNotFound();
+    }
 
-  // ---------- UTILS ---------- \\
+    return existingCategories.map((category) => ({ _id: category._id, id: category.id }));
+  }
 
   private async verifyLandingExists(id: string): Promise<ILanding> {
     const landing = await this.landingRepository.findById(id);
     if (!landing) {
-      throw new AppError("Landing not found", 404, [], "LANDING_NOT_FOUND");
+      throw new LandingNotFound();
     }
     return landing;
   }
@@ -154,30 +169,38 @@ export class LandingService {
     const orders = products.map((p) => p.order);
     const uniqueOrders = new Set(orders);
     if (orders.length !== uniqueOrders.size) {
-      throw new AppError("Product orders must be unique", 400, [], "DUPLICATE_PRODUCT_ORDER");
+      throw new DuplicateProductOrder();
+    }
+  }
+
+  private async verifyUniqueCategoriesOrder(categories: { category: string | ObjectId; order: number }[]): Promise<void> {
+    const orders = categories.map((c) => c.order);
+    const uniqueOrders = new Set(orders);
+    if (orders.length !== uniqueOrders.size) {
+      throw new DuplicateCategoryOrder();
     }
   }
 
   private async verifySectionOrderUniqueness(carouselOrder: number, categoryOrder: number, alertOrder?: number): Promise<void> {
     if (carouselOrder === categoryOrder) {
-      throw new AppError("Carousel section order and category section order must be unique", 400, [], "DUPLICATE_SECTION_ORDER");
+      throw new DuplicateSectionOrder();
     }
     if (alertOrder !== undefined && (carouselOrder === alertOrder || categoryOrder === alertOrder)) {
-      throw new AppError("Section order must be unique across all sections", 400, [], "DUPLICATE_SECTION_ORDER");
+      throw new DuplicateSectionOrder();
     }
   }
 
 
-  private async enrichLandingWithPrices(landing: ILanding, categories: ICategory[]): Promise<LandingWithPricedProducts> {
+  private async enrichLandingWithPrices(landing: ILanding): Promise<LandingWithPricedProducts> {
     if (!landing.carouselSection?.products || landing.carouselSection.products.length === 0) {
-      return new LandingWithPricedProducts(landing, [], categories);
+      return new LandingWithPricedProducts(landing, []);
     }
 
     const pricedProducts = await Promise.all(
       landing.carouselSection.products.map(async (carouselProduct) => {
         const product = await Product.findById(carouselProduct.product).populate('category');
         if (!product) {
-          throw new AppError("Product not found in carousel", 404, [], "CAROUSEL_PRODUCT_NOT_FOUND");
+          throw new CarouselProductNotFound();
         }
         const productPriced = await this.createProductPricedWithPrices(product);
 
@@ -191,7 +214,7 @@ export class LandingService {
     );
     pricedProducts.sort((a, b) => a.order - b.order);
 
-    return new LandingWithPricedProducts(landing, pricedProducts, categories);
+    return new LandingWithPricedProducts(landing, pricedProducts);
   }
 
   private async createProductPricedWithPrices(product: IProduct): Promise<ProductPriced> {
