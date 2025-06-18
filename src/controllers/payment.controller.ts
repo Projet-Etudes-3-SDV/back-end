@@ -7,6 +7,7 @@ import { OrderService } from '../services/order.service';
 import { OrderStatus } from '../models/order.model';
 import { ProductService } from '../services/product.service';
 import { AppError } from '../utils/AppError';
+import { CartStatus } from '../models/cart.model';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2025-02-24.acacia',
@@ -88,14 +89,6 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
         payment_method_types: ['card'],
         customer: user.stripeCustomerId,
         allow_promotion_codes: true,
-        subscription_data: {
-          trial_period_days: 14,
-          trial_settings: {
-            end_behavior: {
-              missing_payment_method: 'cancel',
-            },
-          },
-        },
         metadata: {
           userId: updatedUser.id,
           sessionId: sessionId,
@@ -103,6 +96,8 @@ export const createCheckoutSession = async (req: EncodedRequest, res: Response, 
       });
       sessionUrl = session.url ?? '';
     }
+    
+    await cartService.updateCartStatus(cart.id, CartStatus.PENDING);
 
     res.json({ url: sessionUrl });
 

@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/user.repository";
-import { CartWithPricedProducts, ICart } from "../models/cart.model";
+import { CartStatus, CartWithPricedProducts, ICart } from "../models/cart.model";
 import { ProductRepository } from "../repositories/product.repository";
 import { CartRepository } from "../repositories/cart.repository";
 import { SubscriptionPlan } from "../models/subscription.model";
@@ -11,7 +11,8 @@ import {
   CartDifferentPlans,
   CartAlreadySubscribed,
   CartUpdateFailed,
-  CartNotFound
+  CartNotFound,
+  CartNotReady,
 } from "../types/errors/cart.errors";
 import { UserNotFound } from "../types/errors/user.errors";
 import { ProductService } from "./product.service";
@@ -50,6 +51,10 @@ export class CartService {
     if (!cart) {
       cart = await this.cartRepository.create({ owner: user._id });
       user.cart = cart._id;
+    }
+
+    if (cart.status !== CartStatus.READY) {
+      throw new CartNotReady();
     }
     
     const existingItem = cart.products.find((item) => item.product.id === productId);
@@ -94,6 +99,25 @@ export class CartService {
     return cartWithPrices;
   }
 
+  async updateCartStatus(userId: string, status: CartStatus): Promise<ICart> {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new UserNotFound();
+    }
+
+    const cart = await this.cartRepository.findByUserId(user._id);
+    if (!cart) {
+      throw new CartNotFound();
+    }
+
+    cart.status = status;
+    const updatedCart = await this.cartRepository.update(cart.id, cart);
+    if (!updatedCart) {
+      throw new CartUpdateFailed();
+    }
+    return updatedCart;
+  }
+
   async updateCart(userId: string, newCart: ICart): Promise<CartWithPricedProducts> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
@@ -104,6 +128,10 @@ export class CartService {
     if (!cart) {
       cart = await this.cartRepository.create({ owner: user._id });
       user.cart = cart._id;
+    }
+
+    if (cart.status !== CartStatus.READY) {
+      throw new CartNotReady();
     }
 
     for (let i = 0; i < newCart.products.length; i++) {
@@ -149,6 +177,10 @@ export class CartService {
       throw new CartNotFound();
     }
 
+    if (cart.status !== CartStatus.READY) {
+      throw new CartNotReady();
+    }
+
     cart.products = cart.products.filter((cartItem) => cartItem.product.id !== productId);
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);
@@ -173,6 +205,10 @@ export class CartService {
     const cart = await this.cartRepository.findByUserId(user._id);
     if (!cart) {
       throw new CartNotFound();
+    }
+
+    if (cart.status !== CartStatus.READY) {
+      throw new CartNotReady();
     }
 
     cart.products = [];
@@ -244,6 +280,7 @@ export class CartService {
       await this.productRepository.update(product.id, product);
     }
 
+    cart.status = CartStatus.READY;
     cart.products = [];
 
     const updatedCart = await this.cartRepository.update(cart.id, cart);

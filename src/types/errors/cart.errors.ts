@@ -41,3 +41,15 @@ export class CartNotFound extends AppError {
     super("Panier non trouvé", 404, [], "CART_NOT_FOUND");
   }
 }
+
+export class CartNotReady extends AppError {
+  constructor() {
+    super("Vous ne pouvez pas mettre à jour le panier lors d'un paiement", 400, [], "CART_NOT_READY");
+  }
+}
+
+export class CartInvalidStatus extends AppError {
+  constructor() {
+    super("Le statut du panier est invalide", 400, [], "CART_INVALID_STATUS");
+  }
+}

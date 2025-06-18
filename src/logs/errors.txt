@@ -2904,4 +2904,18 @@ Not connected - 10.111.9.92
     - Commande non trouvée
     - ORDER_NOT_FOUND
 
+    Not connected - 127.0.0.1 
+    - 2025-06-18T08:45:44.485Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:03:27.772Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     

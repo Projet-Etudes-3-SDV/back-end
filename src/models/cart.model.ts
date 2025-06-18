@@ -9,12 +9,14 @@ export interface ICart extends Document {
   id: string;
   products: { product: IProduct["_id"], quantity: number, plan: SubscriptionPlan }[];
   owner: IUser["_id"];
+  status: CartStatus;
 }
 
 export interface ICartWithPrices extends Omit<ICart, 'products'> {
   id: string;
   products: { product: ProductPriced, quantity: number, plan: SubscriptionPlan }[];
   owner: IUser["_id"];
+  status: CartStatus;
 }
 
 export enum CartStatus {
@@ -26,6 +28,7 @@ export class CartWithPricedProducts {
   id!: string;
   products: { product: ProductPriced, quantity: number, plan: SubscriptionPlan }[];
   owner: IUser;
+  status: CartStatus;
 
   constructor(cart: ICart, products: ProductPriced[]) {
     this.id = cart.id;
@@ -41,6 +44,7 @@ export class CartWithPricedProducts {
         });
       }
     }
+    this.status = cart.status;
   }
 }
 
@@ -51,7 +55,8 @@ const CartItemSchema: Schema = new Schema({
     quantity: { type: Number, required: true },
     plan: { type: String, enum: SubscriptionPlan, required: true }
   }],
-  owner: { type: Schema.Types.ObjectId, ref: "User", required: true }
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  status: { type: String, enum: CartStatus, default: CartStatus.READY }
 }, 
 { versionKey: false, timestamps: true });
 
