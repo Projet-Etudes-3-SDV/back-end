@@ -54,6 +54,9 @@ export class AdminProductPresenter extends ProductPresenter {
 
   @Expose()
   yearlyPurchaseAmount!: number;
+
+  @Expose()
+  active!: boolean;
 }
 
 export class FeaturesPresenter {

@@ -2918,4 +2918,74 @@ Not connected - 10.111.9.92
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:14:28.772Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:14:34.117Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:16:50.780Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:18:19.895Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:19:58.356Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:21:24.520Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:22:04.924Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:23:57.378Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:24:36.355Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:24:42.197Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     
