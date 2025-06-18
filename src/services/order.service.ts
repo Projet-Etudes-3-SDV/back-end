@@ -113,12 +113,17 @@ export class OrderService {
     }
   }
 
-  async updateOrderStatusBySessionId(sessionId: string, status: OrderStatus): Promise<IOrder | null> {
+  async updateOrderStatusBySessionId(sessionId: string, status: OrderStatus, subscriptionId?: string): Promise<IOrder | null> {
     const order = await this.orderRepository.findOneBy({ sessionId });
     if (!order) {
       throw new OrderNotFound();
     }
     order.status = status;
+
+    if (subscriptionId) {
+      order.subscriptionId = subscriptionId;
+    }
+    
     return await this.orderRepository.update(order.id, order);
   }
 

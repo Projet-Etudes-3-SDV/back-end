@@ -12,6 +12,7 @@ export interface IOrder extends Document {
   status: OrderStatus;
   sessionId?: string;
   orderDate: Date;
+  subscriptionId?: string;
   products: {
     product: IProduct["_id"];
     plan: SubscriptionPlan;
@@ -25,6 +26,7 @@ export class OrderWithPricedProducts {
   status: OrderStatus;
   sessionId?: string;
   orderDate: Date;
+  subscriptionId?: string;
   products: {
     product: ProductPriced;
     plan: SubscriptionPlan;
@@ -55,6 +57,7 @@ const OrderSchema: Schema = new Schema(
     status: { type: String, enum: OrderStatus, default: "pending" },
     orderDate: { type: Date, default: Date.now },
     sessionId: { type: String, default: null },
+    subscriptionId: { type: String, default: null },
     products: [
       {
         product: { type: Schema.Types.ObjectId, ref: "Product", required: true },

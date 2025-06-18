@@ -187,7 +187,7 @@ export const stripeWebhook = async (req: Request, res: Response, next: NextFunct
 
           await cartService.validateCart(user.id);
 
-          if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID);
+          if (user.paymentSessionId) await orderService.updateOrderStatusBySessionId(user.paymentSessionId, OrderStatus.PAID, session.subscription as string);
           
           await userService.updateUserPaymentSessionId(user.id, '');
           await invoiceService.generateAndSendInvoice(user.id, session.subscription as string);

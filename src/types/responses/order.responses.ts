@@ -36,4 +36,7 @@ export class OrderPresenter {
   @Expose()
   @Type(() => Date)
   orderDate!: Date;
+
+  @Expose()
+  sessionId?: string;
 }
