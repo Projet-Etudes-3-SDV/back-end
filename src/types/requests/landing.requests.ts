@@ -148,7 +148,7 @@ export class LandingToModify {
   @Type(() => AlertSectionDTO)
   @IsOptional()
   @Expose()
-  alertSection?: AlertSectionDTO;
+  alert?: AlertSectionDTO;
 
   @IsBoolean()
   @Expose()

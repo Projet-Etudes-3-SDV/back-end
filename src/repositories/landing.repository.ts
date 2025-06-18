@@ -4,7 +4,8 @@ import { LandingToCreate, LandingToModify } from "../types/requests/landing.requ
 export class LandingRepository {
   async create(landingData: LandingToCreate): Promise<ILanding> {
     const landing = new LandingSchema(landingData);
-    return await landing.save();
+    const created = await landing.save();
+    return await this.findById(created.id) || created;
   }
 
   async findById(id: string): Promise<ILanding | null> {

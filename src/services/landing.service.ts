@@ -3,7 +3,7 @@ import { ILanding, LandingWithPricedProducts, PricedCarouselProduct } from "../m
 import { LandingToCreate, LandingToModify } from "../types/requests/landing.requests";
 import Product, { IProduct } from "../models/product.model";
 import { ObjectId } from "mongoose";
-import { MainLandingExists, LandingNotFound, MainLandingNotFound, DuplicateProductOrder, DuplicateCategoryOrder, DuplicateSectionOrder, CarouselProductNotFound } from "../types/errors/landing.errors";
+import { LandingNotFound, MainLandingNotFound, DuplicateProductOrder, DuplicateCategoryOrder, DuplicateSectionOrder, CarouselProductNotFound } from "../types/errors/landing.errors";
 import Stripe from "stripe";
 import { IPriceService, StripePriceService } from "./price.service";
 import { ProductPriced } from "../types/pojos/product-priced.pojo";
@@ -95,8 +95,10 @@ export class LandingService {
     return { landings: enrichedLandings, total };
   }
 
+
   async updateLanding(id: string, data: LandingToModify): Promise<LandingWithPricedProducts | null> {
     await this.verifyLandingExists(id);
+
     if (data.carouselSection?.products && data.carouselSection.products.length > 0) {
       const products = data.carouselSection.products.map((product) => product.product);
       const productIds = await this.verifyProductsExist(products);
@@ -108,20 +110,32 @@ export class LandingService {
 
       await this.verifyUniqueProductOrder(data.carouselSection.products);
     }
+
+    if (data.categorySection?.categories && data.categorySection.categories.length > 0) {
+      const categories = data.categorySection.categories.map((category) => category.category);
+      const categoryIds = await this.verifyCategoriesExist(categories);
+
+      data.categorySection.categories = data.categorySection.categories.map((category) => ({
+        category: categoryIds.find((c) => c.id === category.category)?._id || "",
+        order: category.order
+      }));
+
+      await this.verifyUniqueCategoriesOrder(data.categorySection.categories);
+    }
+
     if (
       data.carouselSection?.order !== undefined &&
       data.categorySection?.order !== undefined
     ) {
-      await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order);
+      await this.verifySectionOrderUniqueness(data.carouselSection.order, data.categorySection.order, data.alert?.order);
     }
 
     if (data.isMain) {
       const existingMainLanding = await this.landingRepository.findMainLanding();
-      if (!existingMainLanding) {
-        throw new MainLandingExists()
+      if (existingMainLanding && existingMainLanding.id !== id) { // CORRECTION : éviter de se désactiver soi-même
+        existingMainLanding.isMain = false;
+        await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
       }
-      existingMainLanding.isMain = false;
-      await this.landingRepository.update(existingMainLanding.id, existingMainLanding);
     }
 
     const updatedLanding = await this.landingRepository.update(id, data);
