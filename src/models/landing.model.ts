@@ -63,7 +63,7 @@ const LandingSchema: Schema = new Schema<ILanding>(
         },
         carouselSection: {
             title: { type: String, required: true },
-            description: { type: String, required: true },
+            description: { type: String, required: false },
             products: [
                 {
                     product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
@@ -74,19 +74,18 @@ const LandingSchema: Schema = new Schema<ILanding>(
         },
         categorySection: {
             title: { type: String, required: true },
-            description: { type: String, required: true },
+            description: { type: String, required: false },
             order: { type: Number, required: true },
         },
         alert: {
-            title: { type: String, required: true },
+            title: { type: String, required: false },
             description: { type: String, required: false },
             type: {
                 type: String,
                 enum: Object.values(AlertType),
-                required: true,
+                required: false,
             },
-            order: { type: Number, required: true },
-            required: false,
+            order: { type: Number, required: false },
         },
         isMain: {
             type: Boolean,
