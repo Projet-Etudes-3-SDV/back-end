@@ -32,6 +32,16 @@ export class LandingPresenter {
 
   @Expose()
   isMain!: boolean;
+
+  @Expose()
+  @IsOptional()
+  @Type(() => Date)
+  createdAt?: Date;
+
+  @Expose()
+  @IsOptional()
+  @Type(() => Date)
+  updatedAt?: Date;
 }
 
 class AlertSectionPresenter {

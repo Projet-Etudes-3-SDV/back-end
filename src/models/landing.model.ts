@@ -16,6 +16,8 @@ export interface ILanding {
     categorySection: { title: string; description?: string; order: number };
     alert?: { title: string; description?: string; type: AlertType; order: number };
     isMain: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export interface PricedCarouselProduct {
@@ -37,6 +39,8 @@ export class LandingWithPricedProducts {
     categorySection: { title: string; description?: string; order: number; categories: ICategory[] };
     isMain: boolean;
     alert?: { title: string; description?: string; type: AlertType; order: number };
+    createdAt?: Date;
+    updatedAt?: Date;
 
     constructor(landing: ILanding, products: PricedCarouselProduct[], categories: ICategory[] = []) {
         this.id = landing.id;
@@ -51,6 +55,8 @@ export class LandingWithPricedProducts {
         };
         this.isMain = landing.isMain;
         this.alert = landing.alert ? { ...landing.alert } : undefined;
+        this.createdAt = landing.createdAt;
+        this.updatedAt = landing.updatedAt;
     }
 }
 
