@@ -111,7 +111,12 @@ export class UserService {
 
     user.lastLogin = new Date();
 
-    return user;
+    const updatedUser = await this.userRepository.update(user.id, user);
+    if (!updatedUser) {
+      throw new UserNotFound();
+    }
+    
+    return updatedUser;
   }
 
   async validateUser(authToken: ValidateUserDTO): Promise<IUser> {

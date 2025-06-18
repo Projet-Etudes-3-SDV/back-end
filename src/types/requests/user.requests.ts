@@ -23,7 +23,9 @@ export class UserToCreate {
 
   @IsString()
   @Expose()
-  @Matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, { message: 'Password must be longer than 7 characters, contain at least one digit and one special character' })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/, {
+    message: 'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (@$!%*?&)'
+  })
   password!: string;
 
   @IsString()

@@ -6833,3 +6833,24 @@ Not connected
 Not connected 
   - 2025-06-18T09:24:42.196Z 
   - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:29:47.821Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:31:05.802Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:32:08.922Z 
+  - GET /api/users/me
+Not connected 
+  - 2025-06-18T09:34:56.890Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T09:36:57.433Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T09:46:55.176Z 
+  - POST /api/users/register
+Not connected 
+  - 2025-06-18T09:47:21.148Z 
+  - POST /api/users/register

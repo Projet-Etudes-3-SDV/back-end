@@ -2988,4 +2988,53 @@ Not connected - 10.111.9.92
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:29:47.823Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:31:05.803Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:32:08.922Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:34:56.894Z 
+    - POST /api/users/register 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:36:57.576Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:46:55.304Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: resetPasswordToken_1 dup key: { resetPasswordToken: null }
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-18T09:47:21.292Z 
+    - POST /api/users/register 
+    - 500 
+    - E11000 duplicate key error collection: CynaPE.users index: authToken_1 dup key: { authToken: null }
+    - 
+
     
