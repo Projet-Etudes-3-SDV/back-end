@@ -18,6 +18,7 @@ import landingRoutes from './routes/landing.routes';
 import orderRoutes from './routes/order.routes';
 import invoiceRoutes from './routes/invoice.routes';
 import uploadRoutes from './routes/upload.routes';
+import { generalLimiter } from './middlewares/limiter.middleware';
 
 dotenv.config();
 
@@ -65,6 +66,7 @@ const swaggerSpec = swaggerJsdoc(options);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use(generalLimiter)
 
 // Routes
 app.use('/api/users', userRoute);
