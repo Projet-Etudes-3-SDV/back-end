@@ -57,6 +57,9 @@ export class LandingWithPricedProducts {
         this.categorySection = {
             ...landing.categorySection,
         };
+        console.log("this categorySection", this.categorySection);
+        console.log("landing categorySection", landing.categorySection);
+
         this.isMain = landing.isMain;
         this.alert = landing.alert ? { ...landing.alert } : undefined;
         this.createdAt = landing.createdAt;

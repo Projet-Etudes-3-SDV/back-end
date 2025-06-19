@@ -8486,3 +8486,12 @@ Not connected
 Not connected 
   - 2025-06-18T13:30:20.090Z 
   - POST /api/payment/webhook
+Not connected 
+  - 2025-06-19T07:12:04.115Z 
+  - GET /api/landings
+Not connected 
+  - 2025-06-19T07:14:25.054Z 
+  - GET /api/landings
+Not connected 
+  - 2025-06-19T07:15:54.541Z 
+  - GET /api/landings

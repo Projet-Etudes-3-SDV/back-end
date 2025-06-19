@@ -3,8 +3,8 @@ import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { HeaderDTO } from "../requests/landing.requests"
 import { ProductPresenter } from "./product.responses";
-import { CategoryPresenter } from "./category.responses";
 import { AlertType } from "../../models/landing.model";
+import { CategoryPresenter } from "./category.responses";
 
 export class LandingPresenter {
   @Expose()
@@ -89,9 +89,9 @@ export class CategorySectionPresenter {
   order!: number;
 
   @ValidateNested()
-  @Type(() => CategoryPresenter)
+  @Type(() => CategoriesPresenter)
   @Expose()
-  categories!: CategoryPresenter[];
+  categories!: CategoriesPresenter[];
 }
 
 class ProductsPresenter {
@@ -103,3 +103,11 @@ class ProductsPresenter {
   order!: number;
 }
 
+class CategoriesPresenter {
+  @Expose()
+  @Type(() => CategoryPresenter)
+  category!: CategoryPresenter;
+
+  @Expose()
+  order!: number;
+}
