@@ -119,14 +119,11 @@ export class OrderService {
       throw new OrderNotFound();
     }
     order.status = status;
-    console.log('subscriptionId inside of update:', subscriptionId);
     if (subscriptionId) {
       order.subscriptionId = subscriptionId;
     }
-    console.log('Before update:', order);
 
     const orderUpdated = await this.orderRepository.update(order.id, order);
-    console.log('After update:', orderUpdated);  
     return orderUpdated;
   }
 
