@@ -3328,4 +3328,11 @@ Expecting 'CLOSE_RAW_BLOCK', 'CLOSE', 'CLOSE_UNESCAPED', 'OPEN_SEXPR', 'CLOSE_SE
     - Missing helper: "eq"
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-19T09:24:28.219Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     
