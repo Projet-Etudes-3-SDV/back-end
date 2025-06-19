@@ -19,7 +19,7 @@ export interface ILanding {
     header: { title: string; subtitle?: string };
     carouselSection: { title: string; description?: string; products: ICarouselProduct[]; order: number };
     categorySection: { title: string; description?: string; categories: ICarouselCategory[]; order: number };
-    alert?: { title: string; description?: string; type: AlertType; order: number };
+    alert?: { title: string; description?: string; type: AlertType; order: number } | null;
     isMain: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -43,7 +43,7 @@ export class LandingWithPricedProducts {
     carouselSection: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
     categorySection: { title: string; description?: string; categories: ICarouselCategory[]; order: number };
     isMain: boolean;
-    alert?: { title: string; description?: string; type: AlertType; order: number };
+    alert?: { title: string; description?: string; type: AlertType; order: number } | null;
     createdAt?: Date;
     updatedAt?: Date;
 
