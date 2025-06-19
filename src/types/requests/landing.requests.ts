@@ -147,7 +147,7 @@ export class LandingToModify {
   @ValidateNested()
   @Type(() => AlertSectionDTO)
   @Expose()
-  alert!: AlertSectionDTO;
+  alert!: AlertSectionDTO | null;
 
   @IsBoolean()
   @Expose()
