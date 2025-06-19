@@ -1,7 +1,7 @@
 import { join } from "path";
 import Handlebars from 'handlebars';
 import { readFileSync } from 'fs';
-import { EmailAttachment, sendEmail } from "./mail.service";
+import { EmailAttachment, sendHtmlEmail } from "./mail.service";
 import { UserRepository } from "../repositories/user.repository";
 import { SubscriptionService } from "./subscription.service";
 import { UserNotFound } from "../types/errors/user.errors";
@@ -274,22 +274,6 @@ export class InvoiceService {
   ): Promise<void> {
     const subject = `Cyna: Votre facture ${invoiceResult.invoiceNumber}`;
 
-    const emailText = `
-      Bonjour ${invoiceData.client.name},
-
-      Nous vous remercions pour votre abonnement !
-
-      Vous trouverez ci-joint votre facture n° ${invoiceResult.invoiceNumber} d'un montant de ${invoiceResult.totalAmount} ${invoiceResult.currency}.
-
-      Détails de votre abonnement :
-      - Nom : ${invoiceData.subscription.name}
-      - Plan : ${invoiceData.subscription.planType}
-      - Période : ${new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.startDate)} - ${new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.endDate)}
-
-      Cordialement,
-      L'équipe de Cyna
-    `;
-
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const fs = require('fs');
     const pdfBuffer = fs.readFileSync(pdfFilePath);
@@ -302,7 +286,15 @@ export class InvoiceService {
       }
     ];
 
-    sendEmail(userEmail, subject, emailText, attachments);
+    const templateContent = readFileSync(join(process.cwd(), 'templates', 'send-invoice-template.html'), 'utf-8');
+    const htmlTemplate = Handlebars.compile(templateContent);
+  
+    sendHtmlEmail(
+      userEmail,
+      subject,
+      htmlTemplate({ invoiceResult: invoiceResult, invoiceData: invoiceData, date: new Intl.DateTimeFormat('fr-FR').format(new Date()) }),
+      attachments
+    );
   }
 
   private async saveInvoiceToStorage(
