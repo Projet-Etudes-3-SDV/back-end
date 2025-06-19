@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsArray, ValidateNested, IsNumber, IsBoolean } from "class-validator";
+import { IsString, IsOptional, IsArray, ValidateNested, IsNumber, IsBoolean, ValidateIf } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { ObjectId } from "mongoose";
@@ -147,6 +147,7 @@ export class LandingToModify {
   @ValidateNested()
   @Type(() => AlertSectionDTO)
   @Expose()
+  @ValidateIf((obj) => obj.alert !== null)
   alert!: AlertSectionDTO | null;
 
   @IsBoolean()
