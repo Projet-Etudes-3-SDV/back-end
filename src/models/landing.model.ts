@@ -43,7 +43,7 @@ export class LandingWithPricedProducts {
     carouselSection: { title: string; description?: string; products: PricedCarouselProduct[]; order: number };
     categorySection: { title: string; description?: string; categories: ICarouselCategory[]; order: number };
     isMain: boolean;
-    alert?: { title: string; description?: string; type: AlertType; order: number } | null;
+    alert: { title: string; description?: string; type: AlertType; order: number } | null;
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -59,7 +59,7 @@ export class LandingWithPricedProducts {
         };
 
         this.isMain = landing.isMain;
-        this.alert = landing.alert ? { ...landing.alert } : undefined;
+        this.alert = landing.alert && landing.alert.title ? { ...landing.alert } : null;
         this.createdAt = landing.createdAt;
         this.updatedAt = landing.updatedAt;
     }

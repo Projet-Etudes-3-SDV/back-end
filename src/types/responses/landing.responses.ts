@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString, ValidateIf, ValidateNested } from "class-validator";
+import { IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Expose, Type } from "class-transformer";
 import "reflect-metadata";
 import { HeaderDTO } from "../requests/landing.requests"
@@ -28,8 +28,7 @@ export class LandingPresenter {
   @Expose()
   @ValidateNested()
   @Type(() => AlertSectionPresenter)
-  @ValidateIf((obj) => obj.alert !== null && obj.alert !== undefined)
-  alert: AlertSectionPresenter | null = null;
+  alert!: AlertSectionPresenter | null;
 
   @Expose()
   isMain!: boolean;

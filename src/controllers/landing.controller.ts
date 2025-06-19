@@ -53,6 +53,7 @@ export class LandingController {
       if (!landing) {
         throw new AppError("Landing not found", 404, [], "LANDING_NOT_FOUND");
       }
+      console.log("Main Landing:", landing);
       const landingPresenter = plainToClass(LandingPresenter, landing, { excludeExtraneousValues: true });
       res.status(200).json(landingPresenter);
     } catch (error) {

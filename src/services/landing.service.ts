@@ -82,6 +82,7 @@ export class LandingService {
     if (!landing) {
       throw new MainLandingNotFound();
     }
+
     return await this.enrichLandingWithPrices(landing);
   }
 

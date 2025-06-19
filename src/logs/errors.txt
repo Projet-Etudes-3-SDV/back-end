@@ -3335,4 +3335,18 @@ Expecting 'CLOSE_RAW_BLOCK', 'CLOSE', 'CLOSE_UNESCAPED', 'OPEN_SEXPR', 'CLOSE_SE
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:08:21.008Z 
+    - GET /api/landings 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:16:37.491Z 
+    - GET /api/landings 
+    - 401 
+    - Failed to authenticate token
+    - undefined
+
     
