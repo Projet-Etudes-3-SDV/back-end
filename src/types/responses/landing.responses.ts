@@ -28,7 +28,7 @@ export class LandingPresenter {
   @Expose()
   @ValidateNested()
   @Type(() => AlertSectionPresenter)
-  @ValidateIf((obj) => obj.alert !== null)
+  @ValidateIf((obj) => obj.alert !== null && obj.alert !== undefined)
   alert: AlertSectionPresenter | null = null;
 
   @Expose()
