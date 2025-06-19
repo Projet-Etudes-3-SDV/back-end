@@ -146,7 +146,6 @@ export class LandingToModify {
 
   @ValidateNested()
   @Type(() => AlertSectionDTO)
-  @IsOptional()
   @Expose()
   alert!: AlertSectionDTO;
 
