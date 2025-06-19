@@ -292,7 +292,14 @@ export class InvoiceService {
     sendHtmlEmail(
       userEmail,
       subject,
-      htmlTemplate({ invoiceResult: invoiceResult, invoiceData: invoiceData, date: new Intl.DateTimeFormat('fr-FR').format(new Date()) }),
+      htmlTemplate({ 
+        invoiceResult: invoiceResult,
+        invoiceData: invoiceData, 
+        date: new Intl.DateTimeFormat('fr-FR').format(new Date()), 
+        startDate: new Intl.DateTimeFormat('fr-FR').format(new Date(invoiceData.subscription.startDate)),
+        endDate: new Intl.DateTimeFormat('fr-FR').format(new Date(invoiceData.subscription.endDate)), 
+        planType: invoiceData.subscription.planType === 'monthly' ? ' Mensuel' : ' Annuel',
+      }),
       attachments
     );
   }

@@ -362,7 +362,7 @@
         </div>
         <div class="detail-row">
           <span class="detail-label">Date d'émission :</span>
-          <span class="detail-value">{{ new Intl.DateTimeFormat('fr-FR').format(new Date()) }}</span>
+          <span class="detail-value">{{ date }}</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Client :</span>
@@ -377,17 +377,17 @@
       <div class="subscription-info">
         <h3>Détails de votre abonnement</h3>
         <div class="detail-row">
-          <span class="detail-label">Nom du service :</span>
+          <span class="detail-label">Nom du service : </span>
           <span class="detail-value">{{ invoiceData.subscription.name }}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Plan :</span>
-          <span class="detail-value">{{ invoiceData.subscription.planType }}</span>
+          <span class="detail-label">Plan : </span>
+          <span class="detail-value">{{ planType }}</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Période de couverture :</span>
-          <span class="detail-value">{{ new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.startDate) }} -
-            {{ new Intl.DateTimeFormat('fr-FR').format(invoiceData.subscription.endDate) }}</span>
+          <span class="detail-value">{{ startDate }} -
+            {{ endDate }}</span>
         </div>
       </div>
 
