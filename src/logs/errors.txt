@@ -3720,4 +3720,18 @@ Expecting 'CLOSE_RAW_BLOCK', 'CLOSE', 'CLOSE_UNESCAPED', 'OPEN_SEXPR', 'CLOSE_SE
     - Email ou mot de passe invalide
     - INVALID_CREDENTIALS
 
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:59:23.513Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T08:13:46.474Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
     

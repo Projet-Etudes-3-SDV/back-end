@@ -79,7 +79,11 @@ export class SearchProductCriteria extends AbstractSearchProductCriteria {
 export class AdminSearchProductCriteria extends AbstractSearchProductCriteria {
   @IsOptional()
   @Expose()
-  @Transform(({ value }) => { return value === 'true' })
+  @Transform(({ value }) => {
+    if (value === 'true' || value === true) return true;
+    if (value === 'false' || value === false) return false;
+    return undefined;
+  })
   active: boolean = true;
 
   @IsOptional()

@@ -36,10 +36,10 @@ export class ProductRepository {
 
   async findBy(filters: Partial<AdminSearchProductCriteria>, page: number, limit: number, sortCriteria: SortProductCriteria): Promise<{ products: IProduct[]; total: number }> {
     const skip = (page - 1) * limit;
-
+    console.log("Filters:", filters);
     const query: FilterQuery<AdminSearchProductCriteria> = {};
     if (filters.name) query.name = { $regex: filters.name, $options: "i" };
-    if (filters.available) query.available = filters.available;
+    if (filters.available !== undefined) query.available = filters.available;
     if (filters.category) query.category = filters.category;
     if (filters.id) query.id = filters.id;
     if (filters.stripePriceId) query.stripePriceId = filters.stripePriceId;
