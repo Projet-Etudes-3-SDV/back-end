@@ -1,8 +1,8 @@
 import { Expose, Transform, Type } from "class-transformer";
-import { IsString, IsOptional, IsNumber, Min, Max, IsUUID, ValidateNested} from "class-validator";
+import { IsString, IsOptional, IsNumber, Min, Max, IsUUID, ValidateNested, IsBoolean} from "class-validator";
 import { FeaturesPresenter } from "../responses/product.responses";
 
-export class SearchProductCriteria {
+export abstract class AbstractSearchProductCriteria {
   @IsString()
   @IsOptional()
   @Expose()
@@ -12,11 +12,6 @@ export class SearchProductCriteria {
   @IsOptional()
   @Expose()
   name?: string;
-
-  @IsOptional()
-  @Transform(({ value }) => { return value === 'false' ? false : true })
-  @Expose()
-  available?: boolean;
 
   @IsNumber()
   @IsOptional()
@@ -69,11 +64,33 @@ export class SearchProductCriteria {
   description?: string;
 }
 
-export class AdminSearchProductCriteria extends SearchProductCriteria {
+export class SearchProductCriteria extends AbstractSearchProductCriteria {
+  @IsOptional()
+  @Transform(({ value }) => { return value === 'false' ? false : true })
+  @Expose()
+  active!: boolean
+
+  @IsOptional()
+  @Transform(({ value }) => { return value === 'false' ? false : true })
+  @Expose()
+  available?: boolean;
+}
+
+export class AdminSearchProductCriteria extends AbstractSearchProductCriteria {
   @IsOptional()
   @Expose()
   @Transform(({ value }) => { return value === 'true' })
   active: boolean = true;
+
+  @IsOptional()
+  @Expose()
+  @Transform(({ value }) => {
+    if (value === 'true' || value === true) return true;
+    if (value === 'false' || value === false) return false;
+    return undefined;
+  })
+  @IsBoolean()
+  available?: boolean;
 
   @IsString()
   @IsOptional()

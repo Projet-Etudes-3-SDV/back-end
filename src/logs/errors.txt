@@ -3559,4 +3559,165 @@ Expecting 'CLOSE_RAW_BLOCK', 'CLOSE', 'CLOSE_UNESCAPED', 'OPEN_SEXPR', 'CLOSE_SE
     - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
     - 
 
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:19:53.051Z 
+    - GET /api/products 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:19:53.073Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:07.043Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:20:07.272Z 
+    - GET /api/products 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:07.264Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:07.303Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:07.833Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:07.882Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:08.897Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. Learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:09.178Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:09.417Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. Learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:09.738Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:09.796Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. Learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:20:10.233Z 
+    - GET /api/orders 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:20:10.183Z 
+    - GET /api/products 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:33:27.228Z 
+    - PUT /api/products/f9a10dcc-02a1-45a7-aa76-e42eca17f7d2 
+    - 400 
+    - Validation failed
+    - undefined
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:36:15.767Z 
+    - PUT /api/products/f9a10dcc-02a1-45a7-aa76-e42eca17f7d2 
+    - 400 
+    - Validation failed
+    - undefined
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:36:25.772Z 
+    - PUT /api/products/f9a10dcc-02a1-45a7-aa76-e42eca17f7d2 
+    - 400 
+    - Validation failed
+    - undefined
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:36:59.605Z 
+    - PUT /api/products/f9a10dcc-02a1-45a7-aa76-e42eca17f7d2 
+    - 400 
+    - Validation failed
+    - undefined
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:49:29.928Z 
+    - PUT /api/products/f9a10dcc-02a1-45a7-aa76-e42eca17f7d2 
+    - 400 
+    - Validation failed
+    - undefined
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:49:41.663Z 
+    - PUT /api/products/f9a10dcc-02a1-45a7-aa76-e42eca17f7d2 
+    - 400 
+    - Validation failed
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:52:28.668Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:52:44.026Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
     

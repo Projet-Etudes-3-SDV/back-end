@@ -49,6 +49,7 @@ export class ProductController {
         try {
         const searchCriteria = plainToClass(AdminSearchProductCriteria, req.query);
         const sortCriteria = plainToClass(SortProductCriteria, req.query);
+
         const dtoErrors = await validate(searchCriteria);
         dtoErrors.push(...await validate(sortCriteria));
         if (dtoErrors.length > 0) {
@@ -58,8 +59,10 @@ export class ProductController {
             }));
             throw new AppError("Validation failed", 400, errors);
         }
+
         const { products, total, pages } = await this.productService.getProducts(searchCriteria, sortCriteria);
         const productPresenters = plainToInstance(AdminProductPresenter, products, { excludeExtraneousValues: true });
+
         res.status(200).json({ result: productPresenters, total, pages });
         } catch (error) {
         next(error);
@@ -89,6 +92,7 @@ export class ProductController {
                 }));
                 throw new AppError("Validation failed", 400, errors);
             }
+
             const adminSearchProductCriteria = searchCriteria as AdminSearchProductCriteria;
             adminSearchProductCriteria.active = true;
             const { products, total, pages } = await this.productService.getProducts(adminSearchProductCriteria, sortCriteria);

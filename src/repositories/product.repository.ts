@@ -45,6 +45,7 @@ export class ProductRepository {
     if (filters.stripePriceId) query.stripePriceId = filters.stripePriceId;
     if (filters.stripePriceIdYearly) query.stripePriceIdYearly = filters.stripePriceIdYearly;
     if (filters.stripeProductId) query.stripeProductId = filters.stripeProductId;
+    if (filters.active !== undefined) query.active = filters.active;
     
     if (sortCriteria.sortBy && sortCriteria.sortBy !== "monthlyPrice" && sortCriteria.sortBy !== "yearlyPrice") {
       const sortOrder = sortCriteria.sortOrder === "asc" ? 1 : -1;

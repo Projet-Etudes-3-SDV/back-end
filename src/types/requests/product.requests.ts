@@ -167,6 +167,11 @@ export class ProductToModify {
   @IsOptional()
   @Expose()
   stripePriceIdYearly?: string;
+  
+  @Expose()
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean;
 }
 
 export class ProductToReplace extends ProductToCreate {}
