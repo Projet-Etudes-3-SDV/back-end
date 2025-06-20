@@ -3349,4 +3349,214 @@ Expecting 'CLOSE_RAW_BLOCK', 'CLOSE', 'CLOSE_UNESCAPED', 'OPEN_SEXPR', 'CLOSE_SE
     - Failed to authenticate token
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:30:40.789Z 
+    - GET /api/categories/search 
+    - 404 
+    - Catégorie non trouvée
+    - CATEGORY_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:30:40.879Z 
+    - GET /api/products/search 
+    - 404 
+    - Produit non trouvé
+    - PRODUCT_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:30:44.787Z 
+    - GET /api/categories/search 
+    - 404 
+    - Catégorie non trouvée
+    - CATEGORY_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:30:45.959Z 
+    - GET /api/products/search 
+    - 404 
+    - Produit non trouvé
+    - PRODUCT_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:31:20.367Z 
+    - GET /api/categories/search 
+    - 404 
+    - Catégorie non trouvée
+    - CATEGORY_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:31:20.436Z 
+    - GET /api/products/search 
+    - 404 
+    - Produit non trouvé
+    - PRODUCT_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:31:25.998Z 
+    - GET /api/products/search 
+    - 404 
+    - Produit non trouvé
+    - PRODUCT_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:31:29.888Z 
+    - GET /api/products/search 
+    - 404 
+    - Produit non trouvé
+    - PRODUCT_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:31:32.677Z 
+    - GET /api/products/search 
+    - 404 
+    - Produit non trouvé
+    - PRODUCT_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T13:33:12.669Z 
+    - GET /api/categories/search 
+    - 404 
+    - Catégorie non trouvée
+    - CATEGORY_NOT_FOUND
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:38:54.981Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:29.666Z 
+    - GET /api/users 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:29.671Z 
+    - GET /api/orders 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:29.678Z 
+    - GET /api/subscriptions 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:29.684Z 
+    - GET /api/products/admin 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:32.003Z 
+    - GET /api/users 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:32.012Z 
+    - GET /api/orders 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:32.028Z 
+    - GET /api/subscriptions 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:32.045Z 
+    - GET /api/products/admin 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:34.079Z 
+    - GET /api/users 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:34.085Z 
+    - GET /api/products/admin 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:34.139Z 
+    - GET /api/orders 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:34.157Z 
+    - GET /api/subscriptions 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-19T14:58:39.524Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:11:09.782Z 
+    - GET /api/users/me 
+    - 401 
+    - No token provided
+    - undefined
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:11:30.781Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:11:34.548Z 
+    - POST /api/users/login 
+    - 401 
+    - Email ou mot de passe invalide
+    - INVALID_CREDENTIALS
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:12:10.355Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T07:16:30.713Z 
+    - GET /api/products 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
+    fb838462-85a5-41f9-ba1f-d72bb383ebfa - 127.0.0.1 
+    - 2025-06-20T07:16:30.737Z 
+    - GET /api/products/admin 
+    - 500 
+    - Request rate limit exceeded. You can learn more about rate limits here https://stripe.com/docs/rate-limits.
+    - 
+
     

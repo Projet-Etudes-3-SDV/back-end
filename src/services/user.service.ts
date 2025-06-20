@@ -148,29 +148,12 @@ export class UserService {
     return user;
   }
 
-  async getUsers(searchCriteria: SearchUserCriteria, sortCriteria: SortUserCriteria): Promise<{ users: UserWithSubscriptions[]; total: number; pages: number }> {
+  async getUsers(searchCriteria: SearchUserCriteria, sortCriteria: SortUserCriteria): Promise<{ users: IUser[]; total: number; pages: number }> {
     const { page = 1, limit = 10, ...filters } = searchCriteria;
     const { users, total } = await this.userRepository.findBy(filters, page, limit, sortCriteria);
     const pages = Math.ceil(total / limit);
 
-    const usersWithSubscriptions = await Promise.all(users.map(async (user) => {
-      let subscriptions: IUserSubscription[] = [];
-
-      if (user.stripeCustomerId) {
-        try {
-          subscriptions = await this.subscriptionService.getUserSubscription(user.stripeCustomerId);
-        } catch (error) {
-          console.error(`Erreur lors de la récupération des abonnements pour l'utilisateur ${user.id}:`, error);
-          subscriptions = [];
-        }
-      }
-
-      const userWithSubscriptions: UserWithSubscriptions = new UserWithSubscriptions(user, subscriptions);
-
-      return userWithSubscriptions;
-    }));
-
-    return { users: usersWithSubscriptions, total, pages };
+    return { users: users, total, pages };
   }
 
   async updateUser(id: string, userData: UserToModify): Promise<IUser> {

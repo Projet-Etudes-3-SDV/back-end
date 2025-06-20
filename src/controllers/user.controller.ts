@@ -6,7 +6,7 @@ import { AppError } from "../utils/AppError";
 import { EncodedRequest } from "../utils/EncodedRequest";
 import { JWTService } from "../services/jwt.service";
 import { AdminUserToModify, UserLogin, UserToCreate, UserToModify, ValidateLogin, ValidateUserDTO } from "../types/requests/user.requests";
-import { LiteUserPresenter, UserPresenter } from "../types/responses/user.responses";
+import { AdminUserPresenter, LiteUserPresenter, UserPresenter } from "../types/responses/user.responses";
 import { SearchUserCriteria } from "../types/filters/user.filters";
 import { SortUserCriteria } from "../types/sorts/user.sorts";
 import { AddressToCreate } from "../types/requests/address.requests";
@@ -74,7 +74,7 @@ export class UserController {
         throw new AppError("Validation failed", 400, errors);
       }
       const { users, total, pages } = await this.userService.getUsers(searchCriteria, sortCriteria);
-      const userPresenters = plainToInstance(UserPresenter, users, { excludeExtraneousValues: true });
+      const userPresenters = plainToInstance(AdminUserPresenter, users, { excludeExtraneousValues: true });
       res.status(200).json({ result: userPresenters, total, pages });
     } catch (error) {
       next(error);

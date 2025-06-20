@@ -50,12 +50,6 @@ export class UserPresenter extends LiteUserPresenter {
 
 export class AdminUserPresenter extends LiteUserPresenter {
   @Expose()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CartItemPresenter)
-  cart?: CartItemPresenter;
-
-  @Expose()
   @Type(() => SubscriptionPresenter)
   subscriptions?: SubscriptionPresenter;
 
