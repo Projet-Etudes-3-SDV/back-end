@@ -3734,4 +3734,39 @@ Expecting 'CLOSE_RAW_BLOCK', 'CLOSE', 'CLOSE_UNESCAPED', 'OPEN_SEXPR', 'CLOSE_SE
     - No token provided
     - undefined
 
+    Not connected - 127.0.0.1 
+    - 2025-06-20T11:40:41.332Z 
+    - POST /api/users/validate-login 
+    - 400 
+    - Le code de connexion est invalide
+    - USER_CODE_INVALID
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T11:40:49.729Z 
+    - POST /api/users/validate-login 
+    - 400 
+    - Le code de connexion est invalide
+    - USER_CODE_INVALID
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T11:40:55.918Z 
+    - POST /api/users/validate-login 
+    - 400 
+    - Le code de connexion est invalide
+    - USER_CODE_INVALID
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T11:41:13.284Z 
+    - POST /api/users/validate-login 
+    - 400 
+    - Le code de connexion est invalide
+    - USER_CODE_INVALID
+
+    Not connected - 127.0.0.1 
+    - 2025-06-20T11:46:03.921Z 
+    - POST /api/users/validate 
+    - 400 
+    - Le token de validation de l'utilisateur est invalide ou a expiré
+    - USER_VALIDATION_TOKEN_INVALID
+
     
