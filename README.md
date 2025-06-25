@@ -5,7 +5,26 @@
 
 ## Description
 Cyna API est un backend développé en **TypeScript** avec **Express.js** et **Mongoose**.
-Voir l'ADR pour plus d'informations: https://docs.google.com/document/d/1vzXj49D16qlNJqLY1TJ94E1CEXRugvGdqk6-i8iOxJQ/edit?usp=sharing
+
+Ce projet a été réalisé dans le cadre du projet d'études Bachelor CPI de Sup de Vinci Bordeaux, sur une période de 3 mois.
+Il s’inscrit dans un contexte pédagogique concret visant à simuler la création d’une plateforme e-commerce complète pour une entreprise fictive, Cyna, spécialisée dans la vente de solutions de cybersécurité SaaS (SOC, EDR, XDR).
+
+L'objectif principal était de concevoir et développer une API backend robuste permettant de :
+
+- Gérer des utilisateurs et l’authentification (avec validation par OTP)
+- Mettre en place un système d’abonnements personnalisables
+- Gérer un catalogue de produits SaaS, leur ajout au panier, et la validation via un paiement sécurisé (Stripe)
+- Permettre une gestion centralisée côté administrateur (backoffice)
+- Ce projet comportait également une forte exigence sur la sécurité, la scalabilité, l’expérience mobile-first, et d’une application mobile.
+
+## Équipe projet
+Le développement de l’API a été pris en charge par un groupe de trois étudiants :
+
+Back-End -> Elie Lajoinie
+
+Fullstack -> Arthur Lagneaux
+
+Front-End / Application -> Timéo Avi
 
 ## Fonctionnalités
 - **Authentification JWT** (Middleware sécurisé)
