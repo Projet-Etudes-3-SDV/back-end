@@ -1,18 +1,33 @@
 # Cyna API
 
+**Version:** 1.0.0  
+**Description:** 
+
 ## Description
-Cyna API est un backend développé en **TypeScript** avec **Express.js** et **Mongoose**. Il gère les fonctionnalités essentielles de l'application, notamment l'authentification, la gestion des rôles et la persistance des données via MongoDB.
+Cyna API est un backend développé en **TypeScript** avec **Express.js** et **Mongoose**.
 Voir l'ADR pour plus d'informations: https://docs.google.com/document/d/1vzXj49D16qlNJqLY1TJ94E1CEXRugvGdqk6-i8iOxJQ/edit?usp=sharing
 
 ## Fonctionnalités
 - **Authentification JWT** (Middleware sécurisé)
 - **Gestion des utilisateurs** (Création, mise à jour, suppression)
-- **Gestion des rôles** (Permissions d'accès spécifiques)
+- **Gestion d'abonnements** (Souscription, Annulation, Essai)
+- **Gestion de produits** (Création, Suppression, Modification)
+- **Gestion des rôles** (Permissions d'accès spécifiques, Vue administrateur)
 - **Gestion des erreurs centralisée**
 - **Logging des requêtes**
 - **Configuration modulaire**
 - **Documentation Swagger**
+- **Templates d’e-mail** (Validation, Réinitialisation de mot de passe, Factures)
 
+## 🛠️ Stack technique
+
+- **Node.js**
+- **TypeScript**
+- **Stripe**
+- **MongoDB** (via Mongoose)
+- **Dotenv**
+- **EJS** pour les templates email
+  
 ## Installation
 
 ### Prérequis
@@ -22,7 +37,7 @@ Voir l'ADR pour plus d'informations: https://docs.google.com/document/d/1vzXj49D
 
 ### Clonage du projet
 ```bash
-git clone https://github.com/ton-repo/Cyna-API.git
+git clone https://github.com/Projet-Etudes-3-SDV/back-end
 cd Cyna-API
 ```
 
@@ -34,9 +49,10 @@ npm install
 ## Configuration
 Créer un fichier `.env` à la racine du projet et ajouter :
 ```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/cyna_db
-JWT_SECRET=super_secret_key
+PORT=3000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+STRIPE_SECRET_KEY=your_stripe_key
 ```
 
 ## Démarrage du serveur
@@ -61,21 +77,54 @@ Une fois l'API lancé se rendre sur la page suivante: http://localhost:3000/api-
 │── config/          # Configuration de la base de données
 │── middlewares/     # Middlewares pour l'authentification, logs et erreurs
 │── models/          # Modèles Mongoose
-│── routes/          # Définition des routes de l'API
+│── routes/          # Définition des routes de l'API et de la documentation Swagger
+│── controllers/     # Dossier contenant les controllers
+│── services/        # Contient la logique métier de tous les fichiers
+│── repositories/    # Contient la logique pour intéragir avec la base de donnée non-relationnelle
+│── types/           # Types des requêtes et des réponses
 │── utils/           # Fonctions utilitaires
+│── logs/            # Stock les erreurs, routes utilisés et les paiements
 │── app.ts           # Configuration principale de l'application
 │── server.ts        # Point d'entrée du serveur
+templates/           # Contient les fichiers htmls envoyé par e-mail
+storage/             # Contient les fichiers pdfs des factures
+
 ```
 
 ## Routes principales
-| Méthode | Endpoint         | Description                        |
-|---------|-----------------|------------------------------------|
-| POST    | /users/login     | Connexion de l'utilisateur        |
-| POST    | /users/register  | Inscription d'un utilisateur      |
-| GET     | /users          | Liste des utilisateurs            |
-| GET     | /users/:id      | Récupérer un utilisateur          |
-| PUT     | /users/:id      | Mettre à jour un utilisateur      |
-| DELETE  | /users/:id      | Supprimer un utilisateur         |
+
+### Utilisateurs
+| Méthode | Endpoint          | Description                                |
+| ------- | ----------------- | ------------------------------------------ |
+| POST    | `/users/register` | Inscription d’un utilisateur               |
+| POST    | `/users/login`    | Connexion d’un utilisateur                 |
+| POST    | `/validate-login` | Validation de la connexion via un code OTP |
+
+### Produit
+| Méthode | Endpoint        | Description                           |
+| ------- | --------------- | ------------------------------------- |
+| GET     | `/products`     | Récupérer la liste des produits       |
+| GET     | `/products/:id` | Détails d’un produit spécifique       |
+| POST    | `/products`     | Création d’un nouveau produit (admin) |
+
+### Panier
+| Méthode | Endpoint       | Description                    |
+| ------- | -------------- | ------------------------------ |
+| GET     | `/cart`        | Récupérer le contenu du panier |
+| POST    | `/cart/add`    | Ajouter un produit au panier   |
+| DELETE  | `/cart/remove` | Supprimer un produit du panier |
+
+### Paiement
+| Méthode | Endpoint            | Description                   |
+| ------- | ------------------- | ----------------------------- |
+| POST    | `/payment/checkout` | Lancer un paiement via Stripe |
+
+### Abonnement
+| Méthode | Endpoint             | Description                             |
+| ------- | -------------------- | --------------------------------------- |
+| POST    | `/subscriptions`     | Créer un abonnement                     |
+| GET     | `/subscriptions/me`  | Récupérer l’abonnement de l’utilisateur |
+| DELETE  | `/subscriptions/:id` | Annuler un abonnement                   |
 
 
 ## Licence
