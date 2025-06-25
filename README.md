@@ -1,7 +1,6 @@
 # Cyna API
 
 **Version:** 1.0.0  
-**Description:** 
 
 ## Description
 Cyna API est un backend développé en **TypeScript** avec **Express.js** et **Mongoose**.
