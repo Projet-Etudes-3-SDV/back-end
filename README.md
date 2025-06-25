@@ -55,7 +55,7 @@ Front-End / Application -> Timéo Avi
 
 ### Clonage du projet
 ```bash
-git clone https://github.com/Projet-Etudes-3-SDV/back-end
+git clone https://github.com/Projet-Etudes-3-SDV/back-end.git
 cd Cyna-API
 ```
 
@@ -74,6 +74,12 @@ STRIPE_SECRET_KEY=your_stripe_key
 ```
 
 ## Démarrage du serveur
+
+## Démarrage de stripe
+```bash
+.\stripe.exe login
+.\stripe.exe listen --forward-to=localhost:3000/api/payment/webhook
+```
 
 ### En mode développement
 ```bash
