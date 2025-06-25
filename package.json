@@ -1,7 +1,7 @@
 {
-  "name": "car-management-api",
+  "name": "cyna-api",
   "version": "1.0.0",
-  "description": "API RESTful pour gérer des voitures",
+  "description": "API RESTful pour gérer les utilisateurs, les produits, les commandes et les paiements.",
   "main": "dist/server.js",
   "scripts": {
     "prestart": "npm run lint",
