@@ -68,9 +68,14 @@ npm install
 Créer un fichier `.env` à la racine du projet et ajouter :
 ```env
 PORT=3000
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_key
+MONGODB_URI = your_mongodb_uri
+
+EMAIL = email_to_send_mails_with
+EMAIL_PASSWORD =  password_for_this_email
+
+STRIPE_SECRET_KEY = your_stripe_key
+STRIPE_PUBLIC_KEY = public_key_for_stripe
+STRIPE_WEBHOOK_SECRET = secret_for_strip_webhook
 ```
 
 ## Démarrage du serveur
