@@ -56,7 +56,7 @@ Front-End / Application -> Timéo Avi
 ### Clonage du projet
 ```bash
 git clone https://github.com/Projet-Etudes-3-SDV/back-end.git
-cd Cyna-API
+cd back-end
 ```
 
 ### Installation des dépendances
